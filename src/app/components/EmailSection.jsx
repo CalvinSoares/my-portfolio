@@ -40,10 +40,10 @@ export default function EmailSection() {
   return (
     <section id="Contact" className='grid md:grid-cols-2 h-[900px] items-center justify-center my-12 md:m-12 py-24 gap-6'>
         <div>
-            <h5 className='text-xl font-bold text-white my-2'>Let's Connect</h5>
+            <h5 className='text-xl font-bold text-white my-2'>Let&apos;s Connect</h5>
             <p className='text-[#ADB7BE] b-4 max-w-md'>
                 {" "}
-                I'm currently looking for new opportunities, my inbox is always open. Whether you have a question or just wanto to say hi, I'll try my best to get back to you!
+                I&apos;m currently looking for new opportunities, my inbox is always open. Whether you have a question or just wanto to say hi, I&apos;ll try my best to get back to you!
             </p>
             <div className='sociais flex flex-row gap-2 mt-4'>
                 <Link target='_blank' href="https://github.com/CalvinSoares">
