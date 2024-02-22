@@ -56,7 +56,7 @@ export default function AboutSection() {
               delay: 0,
               duration: 750
             })
-      }, [1000])
+      }, [])
 
     const [tab, setTab] = useState("skills");
     const [ispending, startTransition] = useTransition();
