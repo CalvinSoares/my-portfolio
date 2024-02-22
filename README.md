@@ -7,6 +7,7 @@
 
 ## Tecnologias utilizadas: 
 
+* **NEXT JS**
 * **REACT JS**
 * **TAILWIND**
 * **AOS ANIMATION**
