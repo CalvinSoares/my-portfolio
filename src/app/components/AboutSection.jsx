@@ -1,23 +1,30 @@
 "use client"
-import React, { useTransition, useState } from 'react'
+import React, { useTransition, useState, useEffect } from 'react'
 import Image from 'next/image'
 import TabButton from './TabButton';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 const TAB_DATA = [
     {
         title: "Skills",
         id: "skills",
         content: (
-            <ul className='list-disc pl-2'>
+            <div className='flex'>
+                 <ul className='list-disc pl-2 mr-12'>
                 <li>React.js</li>
                 <li>React Native</li>
                 <li>TypeScript</li>
                 <li>JavaScript</li>
+            </ul>
+            <ul className='list-disc pl-2'>
                 <li>Node.js</li>
                 <li>Express</li>
                 <li>Tailwind</li>
                 <li>Chakra UI</li>
             </ul>
+            </div>
+           
         ),
     },
     {
@@ -26,7 +33,7 @@ const TAB_DATA = [
         content: (
             <ul className='list-disc pl-2'>
                 <li>Analysis and systems development </li>
-                <li>University of Anhanguera</li>
+                <p>- University of Anhanguera</p>
             </ul>
         ),
     },
@@ -35,14 +42,22 @@ const TAB_DATA = [
         id: "certifications",
         content: (
             <ul className='list-disc pl-2'>
-                <li>Front-end development</li>
-                <li>Back-end development</li>
+                <li>2023 - Algorithms and Data Structure in Javascript- freeCodeCamp - 300 hours;</li>
+                <li>2023 - Legacy Responsive Web Design - freeCodeCamp - 300 hours;</li>
             </ul>
         ),
     },
 ]
 
 export default function AboutSection() {
+    useEffect(() =>{
+        AOS.init({
+              easing: 'ease-out-quart',
+              delay: 0,
+              duration: 750
+            })
+      }, [1000])
+
     const [tab, setTab] = useState("skills");
     const [ispending, startTransition] = useTransition();
 
@@ -53,12 +68,16 @@ export default function AboutSection() {
     };
 
   return (
-    <section className='text-white'>
+    <section id="About" className='text-white h-[900px] flex justify-center items-center'>
         <div className='md:grid md:grid-cols-2 gap-8 items-center py-8 px-4 xl:gap-16 sm:py-16 xl:px-16'>
-            <Image src="/images/AboutImg.jpg" alt="About Me Image" width={500} height={500} priority/>
-            <div className='mt-4 md:mt-0 text-left flex flex-col h-full'>
-                <h2 className='text-4xl font-bold text-white mb-4'>About Me</h2>
-                <p className='text-base lg:text-lg'>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Provident maxime labore exercitationem voluptatem dolores tenetur eius. Totam quod alias eius? Dignissimos rerum quisquam itaque nulla quae, totam nisi dolorum consequuntur.</p>
+            <Image data-aos="fade-right" src="/images/AboutImg.jpg" alt="About Me Image" width={500} height={500} priority/>
+            <div data-aos="fade-left" className='mt-4 md:mt-0 text-left flex flex-col h-full'>
+                <h2 className='text-4xl font-bold text-white mb-4'>
+                    About Me
+                </h2>
+                <p className='text-base lg:text-lg'>
+                Graduating in systems analysis and development, passionate about technology and web development. I am currently working as a Freelance Fullstack programmer.
+                </p>
                 <div className='flex flex-row justify-start mt-8'>
                     <TabButton 
                     selectTab={() => handleTabChange("skills")} active={tab === "skills"}>

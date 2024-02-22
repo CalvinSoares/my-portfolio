@@ -1,7 +1,8 @@
 "use client";
-import React, { useState } from 'react'
-import ProjectCard from './ProjectCard'
+import React, { useState, useRef } from 'react';
+import ProjectCard from './ProjectCard';
 import ProjectTag from './ProjectTag';
+import { motion, useInView } from 'framer-motion';
 
 const projectData = [
     {
@@ -36,6 +37,8 @@ const projectData = [
 
 export default function ProjectsSection() {
     const [tag, setTag] = useState("All");
+    const ref = useRef(null);
+    const isInView = useInView(ref, { once: true });
 
     const handleTagChange = (newTag) => {
         setTag(newTag);
@@ -45,12 +48,17 @@ export default function ProjectsSection() {
         project.tag.includes(tag)
     );
 
+    const cardVariants = {
+        initial: { y: 50, opacity: 0 },
+        animate: { y: 0, opacity: 1},
+    }
+
   return (
-    <section id="projects">
+    <section id="Projects" className='flex flex-col justify-center  m-2'>
       <h2 className='text-center text-4xl font-bold text-white mt-4 mb-8 md:mb-12'>
         My Projects
       </h2>
-      <div className='text-white flex flex-row justify-center items-center  gap-2 py-6'>
+      <div className='text-white flex flex-row justify-center items-center gap-2 py-6'>
             <ProjectTag 
             onClick={handleTagChange} 
             name="All" 
@@ -67,19 +75,27 @@ export default function ProjectsSection() {
             isSelected={tag == "Mobile"} 
             />
       </div>  
-      <div className='grid md:grid-cols-3 gap-8 md:gap-12'>
-        {filteredProjects.map((project) => 
-            <ProjectCard 
-                key={project.id} 
-                title={project.title}
-                description={project.description} 
-                imgUrl={project.image} 
-                tags={project.tag}
-                gitUrl={project.gitUrl}
-                previewUrl={project.previewUrl}
-            />
+      <ul  ref={ref} className='grid md:grid-cols-3 gap-8 md:gap-12 cursor-pointer'>
+        {filteredProjects.map((project, index) => 
+            <motion.li 
+            key={index}
+            variants={cardVariants} 
+            initial="initial" 
+            animate={isInView ? "animate" : "inicial"}
+            transition={{ duration: 0.3, delay: index * 0.4 }} 
+            >
+                <ProjectCard 
+                    key={project.id} 
+                    title={project.title}
+                    description={project.description} 
+                    imgUrl={project.image} 
+                    tags={project.tag}
+                    gitUrl={project.gitUrl}
+                    previewUrl={project.previewUrl}
+                />
+            </motion.li>
         )}
-      </div>
+      </ul>
     </section>
   )
 }
