@@ -60,10 +60,10 @@ export default function HeroSection() {
                   </p>
                   
                   <div>                  
-                      <button onClick={downloadPDF} className='px-1 py-1 w-full sm:w-fit rounded-full bg-gradient-to-br from-blue-500 via-purple-500 hover:bg-slate-800 text-white border border-white mt-3'>
-                          <a className='block bg-[#121212] hover:bg-slate-800 rounded-full px-5 py-3'>
+                      <button onClick={downloadPDF} className=' bg-purple-500 bg-gradient-to-br from-blue-500 via-purple-500 px-1 py-1 w-full sm:w-fit rounded-full text-white border border-white mt-3'>
+                          <p className='block bg-[#121212] hover:bg-slate-800 rounded-full px-5 py-3'>
                               Donwload CV
-                          </a>             
+                          </p>             
                       </button>
                   </div>
               </div>
