@@ -34,7 +34,6 @@ const projectData = [
     }
 ];
 
-
 export default function ProjectsSection() {
     const [tag, setTag] = useState("All");
     const ref = useRef(null);
