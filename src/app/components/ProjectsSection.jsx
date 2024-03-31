@@ -16,12 +16,12 @@ const projectData = [
     },
     {
         id: 2,
-        title: "EiCode Web Site",
-        description: "EiCode portfolio",
-        image: "/images/projects/eicodee.png",
+        title: "Dashboard Page",
+        description: "Data management system",
+        image: "/images/projects/dashboard.png",
         tag: ["All", "Web"],
-        gitUrl: "https://github.com/CalvinSoares/EiCodeWebSite",
-        previewUrl: "https://eicodee.com/",
+        gitUrl: "https://github.com/CalvinSoares/ChartsDashboard",
+        previewUrl: "https://charts-dashboard-nine.vercel.app/",
     },
     {
         id: 3,
@@ -31,7 +31,17 @@ const projectData = [
         tag: ["All", "Mobile"],
         gitUrl: "https://github.com/CalvinSoares/word-search-game",
         previewUrl: "/",
-    }
+    },
+    {
+        id: 4,
+        title: "EiCode Web Site",
+        description: "EiCode portfolio",
+        image: "/images/projects/eicodee.png",
+        tag: ["All", "Web"],
+        gitUrl: "https://github.com/CalvinSoares/EiCodeWebSite",
+        previewUrl: "https://eicodee.com/",
+    },
+    
 ];
 
 export default function ProjectsSection() {
