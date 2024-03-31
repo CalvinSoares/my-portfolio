@@ -40,7 +40,7 @@ export default function HeroSection() {
               data-aos="fade-up"
               className='col-span-7 place-self-center text-center sm:text-left'>
                   <h1 className='text-white mb-4 text-4xl sm:text-5xl lg:text-6xl font-extrabold'>
-                    <span className='text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-pink-600'>Hello, I&apos;m{" "}</span> 
+                    <span className='text-transparent pb-8 bg-clip-text bg-[#583ebc]'>Hello, I&apos;m{" "}</span> 
                     <br />
                     <TypeAnimation
                       sequence={[
@@ -61,10 +61,8 @@ export default function HeroSection() {
                   </p>
                   
                   <div>                  
-                      <button onClick={downloadPDF} className=' bg-purple-500 bg-gradient-to-br from-blue-500 via-purple-500 px-1 py-1 w-full sm:w-fit rounded-full text-white border border-white mt-3'>
-                          <p className='block bg-[#121212] hover:bg-slate-800 rounded-full px-5 py-3'>
+                      <button onClick={downloadPDF} className=' bg-[#583ebc] rounded-full text-white mt-3 w-36 h-12 flex items-center justify-center hover:text-[#583ebc] hover:bg-gray-300 font-bold duration-200 hover:scale-110'>
                               Donwload CV
-                          </p>             
                       </button>
                   </div>
               </div>

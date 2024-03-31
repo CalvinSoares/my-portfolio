@@ -2,7 +2,7 @@ import React from 'react'
 import { CodeBracketIcon, EyeIcon } from '@heroicons/react/24/solid'
 import Link from 'next/link'
 
-export default function ProjectCard({ imgUrl, title, description, gitUrl, previewUrl }) {
+export default function ProjectCard({ imgUrl, title, description, gitUrl, previewUrl, tecnologias }) {
   return (
     <div>
       <div 
@@ -22,6 +22,11 @@ export default function ProjectCard({ imgUrl, title, description, gitUrl, previe
       <div className='text-white rounded-b-xl mt-3 bg-[#181818] py-6 px-4'>
         <h5 className='text-xl font-semibold mb-2'>{title}</h5>
         <p className='text-[#ADB7BE]'>{description}</p>
+        <div className='flex flex-wrap items max-w-[400px]'>
+          {tecnologias && tecnologias.map((tecnologia, index) => (
+          <p key={index} className='bg-[#242424] rounded-3xl flex flex-row items-center justify-center min-w-28 mr-2 mt-2'>{tecnologia}</p>
+        ))}
+        </div>       
       </div>
     </div>
   )

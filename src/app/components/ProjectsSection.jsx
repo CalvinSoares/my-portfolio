@@ -13,6 +13,7 @@ const projectData = [
         tag: ["All", "Web"],
         gitUrl: "https://github.com/CalvinSoares/DuNotes",
         previewUrl: "https://du-notes.vercel.app/",
+        tecnologias: ["React", "Typescript", "Node", "Tailwind"]
     },
     {
         id: 2,
@@ -22,6 +23,7 @@ const projectData = [
         tag: ["All", "Web"],
         gitUrl: "https://github.com/CalvinSoares/ChartsDashboard",
         previewUrl: "https://charts-dashboard-nine.vercel.app/",
+        tecnologias: ["React", "Javascript", "Node", "Tailwind"]
     },
     {
         id: 3,
@@ -31,6 +33,7 @@ const projectData = [
         tag: ["All", "Mobile"],
         gitUrl: "https://github.com/CalvinSoares/word-search-game",
         previewUrl: "/",
+        tecnologias: ["React-Native", "Javascript", "Style Components"]
     },
     {
         id: 4,
@@ -40,6 +43,7 @@ const projectData = [
         tag: ["All", "Web"],
         gitUrl: "https://github.com/CalvinSoares/EiCodeWebSite",
         previewUrl: "https://eicodee.com/",
+        tecnologias: ["React", "Tailwind"]
     },
     
 ];
@@ -101,6 +105,7 @@ export default function ProjectsSection() {
                     tags={project.tag}
                     gitUrl={project.gitUrl}
                     previewUrl={project.previewUrl}
+                    tecnologias={project.tecnologias}
                 />
             </motion.li>
         )}

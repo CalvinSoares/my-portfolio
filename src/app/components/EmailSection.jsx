@@ -107,11 +107,9 @@ export default function EmailSection() {
                 </div>
                 <button
                 type='submit'
-                className='bg-purple-500 bg-gradient-to-br from-blue-500 via-purple-500 text-white font-medium py-2 px-2 rounded-lg w-full '
+                className='bg-[#583ebc] rounded-lg text-white mt-3 h-12 flex items-center justify-center hover:text-[#583ebc] hover:bg-gray-300 font-bold duration-200 hover:scale-105 w-full '
                 >
-                    <a className='block bg-[#121212] hover:bg-slate-800 rounded-lg px-5 py-3'>
-                        Send message
-                    </a> 
+                    Send message
                 </button>                           
             </form>
             )} 

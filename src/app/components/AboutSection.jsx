@@ -19,7 +19,7 @@ const TAB_DATA = [
             </ul>
             <ul className='list-disc pl-2'>
                 <li>Node.js</li>
-                <li>Express</li>
+                <li>MongoDB</li>
                 <li>Tailwind</li>
                 <li>Chakra UI</li>
             </ul>
