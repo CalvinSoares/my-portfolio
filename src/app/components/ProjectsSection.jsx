@@ -7,13 +7,13 @@ import { motion, useInView } from 'framer-motion';
 const projectData = [
     {
         id: 1,
-        title: "React Notes Web Site",
-        description: "creation of notes",
-        image: "/images/projects/duNotes.png",
+        title: "Banco Bet (freelancer)",
+        description: "Front-end of an internal system for bank management of affiliate accounts through managing accounts. It included a login system with authentication and account management, as well as several functionalities for managing subordinate accounts and creating new accounts.",
+        image: "/images/projects/bank1.png",
         tag: ["All", "Web"],
-        gitUrl: "https://github.com/CalvinSoares/DuNotes",
-        previewUrl: "https://du-notes.vercel.app/",
-        tecnologias: ["React", "Typescript", "Node", "Tailwind"]
+        gitUrl: "",
+        previewUrl: "https://www.linkedin.com/feed/update/urn:li:activity:7181364631100088320/",
+        tecnologias: ["React", "JavaScript", "Node", "Tailwind"]
     },
     {
         id: 2,
@@ -27,7 +27,7 @@ const projectData = [
     },
     {
         id: 3,
-        title: "Search Game",
+        title: "Search Game (freelancer)",
         description: "word search app",
         image: "/images/projects/searchGame.png",
         tag: ["All", "Mobile"],
@@ -44,6 +44,16 @@ const projectData = [
         gitUrl: "https://github.com/CalvinSoares/EiCodeWebSite",
         previewUrl: "https://eicodee.com/",
         tecnologias: ["React", "Tailwind"]
+    },
+    {
+        id: 5,
+        title: "React Notes Web Site",
+        description: "creation of notes",
+        image: "/images/projects/duNotes.png",
+        tag: ["All", "Web"],
+        gitUrl: "https://github.com/CalvinSoares/DuNotes",
+        previewUrl: "https://du-notes.vercel.app/",
+        tecnologias: ["React", "Typescript", "Node", "Tailwind"]
     },
     
 ];
