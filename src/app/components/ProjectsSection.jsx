@@ -21,9 +21,9 @@ const projectData = [
         description: "Data management system",
         image: "/images/projects/dashboard.png",
         tag: ["All", "Web"],
-        gitUrl: "https://github.com/CalvinSoares/ChartsDashboard",
-        previewUrl: "https://charts-dashboard-nine.vercel.app/",
-        tecnologias: ["React", "Javascript", "Node", "Tailwind"]
+        gitUrl: "https://github.com/CalvinSoares/dashboardEcharts",
+        previewUrl: "https://dashboard-echarts.vercel.app/",
+        tecnologias: ["Next", "TypeScript", "Node", "Tailwind", "MongoDB"]
     },
     {
         id: 3,
