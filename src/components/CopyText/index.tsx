@@ -1,11 +1,13 @@
 "use client"
-import { color } from 'framer-motion';
 import Image from 'next/image';
 import React, { useState } from 'react';
-import { FaClipboard, FaCheck } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 
-const CopyText = ({ text }) => {
+interface CopyTextProps {
+  text: string;
+}
+
+const CopyText = ({ text }: CopyTextProps) => {
   const [copied, setCopied] = useState(false);
 
   const handleCopy = () => {

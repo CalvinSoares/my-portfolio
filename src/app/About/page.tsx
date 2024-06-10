@@ -1,6 +1,4 @@
-
 import Header from '../../components/Header'
-import { motion } from 'framer-motion'
 import Link from 'next/link';
 import Image from 'next/image';
 import TiktokIcon from "../../../public/images/tiktok.svg"
