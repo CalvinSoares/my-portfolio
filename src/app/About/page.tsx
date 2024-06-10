@@ -1,8 +1,5 @@
 "use client"
 import Header from '../../components/Header'
-import { SiTypescript, SiTailwindcss, SiNextdotjs, SiMongodb, SiNestjs, SiJest } from 'react-icons/si';
-import { FaReact, FaNode, FaGitAlt, FaDocker } from 'react-icons/fa';
-import { BiLogoPostgresql } from 'react-icons/bi';
 import { motion } from 'framer-motion'
 import Link from 'next/link';
 import Image from 'next/image';
@@ -47,47 +44,102 @@ export default function AboutSection() {
                 </h2>
                 <div className='grid grid-cols-2 md:flex'>         
                     <div className='col-span- flex flex-col items-center cursor-pointer hover:text-blue-700 hover:scale-95 duration-200 mx-4'>
-                        <SiTypescript style={{ marginInline: 12 }} className='mb-4 w-6 h-6 md:w-12 md:h-12'/>
+                        <Image
+                            src="/ts.svg"
+                            alt=""
+                            width={200}
+                            height={200}
+                            style={{ marginInline: 12 }} className='mb-4 w-6 h-6 md:w-12 md:h-12'/>
                         <span className='text-lg font-bold'>Typescript</span>
                     </div>
                     <div className='flex flex-col items-center cursor-pointer hover:text-sky-500 hover:scale-95 duration-200 mx-4'> 
-                        <FaReact style={{ marginInline: 12 }} className='mb-4 w-6 h-6 md:w-12 md:h-12' />
+                        <Image
+                            src="/react.svg"
+                            alt=""
+                            width={200}
+                            height={200}
+                            style={{ marginInline: 12 }} className='mb-4 w-6 h-6 md:w-12 md:h-12' />
                         <span className='text-lg font-bold'>React</span>
                     </div>
                     <div className='flex flex-col items-center cursor-pointer hover:text-teal-400 hover:scale-95 duration-200 mx-4'>
-                        <SiTailwindcss  style={{ marginInline: 12 }} className='mb-4 w-6 h-6 md:w-12 md:h-12' />
+                        <Image
+                            src="/tailwind.svg"
+                            alt=""
+                            width={200}
+                            height={200}
+                            style={{ marginInline: 12 }}  className='mb-4 w-6 h-6 md:w-12 md:h-12' />
                         <span className='text-lg font-bold'>Tailwindcss</span>
                     </div>
                     <div className='flex flex-col items-center cursor-pointer hover:text-emerald-500 hover:scale-95 duration-200 mx-4'>
-                        <FaNode style={{ marginInline: 12 }} className='mb-4 w-6 h-6 md:w-12 md:h-12' />
+                        <Image
+                            src="/node.svg"
+                            alt=""
+                            width={200}
+                            height={200} 
+                            style={{ marginInline: 12 }} className='mb-4 w-6 h-6 md:w-12 md:h-12' />
                         <span className='text-lg font-bold'>Node</span>
                     </div>
                     <div className='flex flex-col items-center cursor-pointer hover:text-gray-900 hover:scale-95 duration-200 mx-4'>
-                        <SiNextdotjs style={{ marginInline: 12 }} className='mb-4 w-6 h-6 md:w-12 md:h-12' />
+                        <Image
+                            src="/next.svg"
+                            alt=""
+                            width={200}
+                            height={200} 
+                            style={{ marginInline: 12 }} className='mb-4 w-6 h-6 md:w-12 md:h-12' />
                         <span className='text-lg font-bold'>Next</span>
                     </div>
                     <div className='flex flex-col items-center cursor-pointer hover:text-green-600 hover:scale-95 duration-200 mx-4'>
-                        <SiMongodb style={{ marginInline: 12 }} className='mb-4 w-6 h-6 md:w-12 md:h-12' />
+                        <Image
+                            src="/mongo.svg"
+                            alt=""
+                            width={200}
+                            height={200} 
+                            style={{ marginInline: 12 }} className='mb-4 w-6 h-6 md:w-12 md:h-12' />
                         <span className='text-lg font-bold'>MongoDB</span>
                     </div>
                     <div className='flex flex-col items-center cursor-pointer hover:text-blue-800 hover:scale-95 duration-200 mx-4'>
-                        <BiLogoPostgresql style={{ marginInline: 12 }} className='mb-4 w-6 h-6 md:w-12 md:h-12' />
+                        <Image
+                            src="/postgresql.svg"
+                            alt=""
+                            width={200}
+                            height={200} 
+                            style={{ marginInline: 12 }} className='mb-4 w-6 h-6 md:w-12 md:h-12' />
                         <span className='text-lg font-bold'>PostreSQL</span>
                     </div>
                     <div className='flex flex-col items-center cursor-pointer hover:text-red-700 hover:scale-95 duration-200 mx-4'>
-                        <SiNestjs style={{ marginInline: 12 }} className='mb-4 w-6 h-6 md:w-12 md:h-12' />
+                        <Image
+                            src="/nest.svg"
+                            alt=""
+                            width={200}
+                            height={200} 
+                            style={{ marginInline: 12 }} className='mb-4 w-6 h-6 md:w-12 md:h-12' />
                         <span className='text-lg font-bold'>Nest</span>
                     </div>
                     <div className='flex flex-col items-center cursor-pointer hover:text-red-500 hover:scale-95 duration-200 mx-4'>
-                        <FaGitAlt style={{ marginInline: 12 }} className='mb-4 w-6 h-6 md:w-12 md:h-12' />
+                        <Image
+                            src="git.svg"
+                            alt=""
+                            width={200}
+                            height={200} 
+                            style={{ marginInline: 12 }} className='mb-4 w-6 h-6 md:w-12 md:h-12' />
                         <span className='text-lg font-bold'>Git</span>
                     </div>
                     <div className='flex flex-col items-center cursor-pointer hover:text-sky-500 hover:scale-95 duration-200 mx-4'>
-                        <FaDocker style={{ marginInline: 12 }} className='mb-4 w-6 h-6 md:w-12 md:h-12' />
+                        <Image
+                            src="docker.svg"
+                            alt=""
+                            width={200}
+                            height={200} 
+                            style={{ marginInline: 12 }} className='mb-4 w-6 h-6 md:w-12 md:h-12' />
                         <span className='text-lg font-bold'>Docker</span>
                     </div>
                     <div className='flex flex-col items-center cursor-pointer hover:text-orange-600 hover:scale-95 duration-200 mx-4'>
-                        <SiJest style={{ marginInline: 12 }} className='mb-4 w-6 h-6 md:w-12 md:h-12' />
+                        <Image
+                            src="/jest.svg"
+                            alt=""
+                            width={200}
+                            height={200} 
+                            style={{ marginInline: 12 }} className='mb-4 w-6 h-6 md:w-12 md:h-12' />
                         <span className='text-lg font-bold'>Jest</span>
                     </div>
                 </div>
