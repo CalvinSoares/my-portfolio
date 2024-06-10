@@ -1,4 +1,4 @@
-"use client"
+
 import Header from '../../components/Header'
 import { motion } from 'framer-motion'
 import Link from 'next/link';
@@ -34,7 +34,7 @@ export default function AboutSection() {
                     My name is Calvin Soares, I simply love everything related to technology, especially when it comes to programming. I have a strong focus on <span className='font-bold text-purple-300'>front-end</span> and <span className='font-bold text-purple-300'>back-end</span>, with experience in creating <span className='font-bold text-purple-300'>fullstack</span> applications.
                     </p>
                     <p className='text-xl text-center md:text-lg mt-12'>
-                        I started my journey in the world of programming when I was around 11 years old, I enjoyed creating pixel art style games. Today I'm focused on <span className='font-bold text-purple-300'>Back-end Development</span>.
+                        I started my journey in the world of programming when I was around 11 years old, I enjoyed creating pixel art style games. Today I&apos;m focused on <span className='font-bold text-purple-300'>Back-end Development</span>.
                     </p>
                 </div>
             </div>
