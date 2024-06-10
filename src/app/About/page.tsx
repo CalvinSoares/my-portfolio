@@ -1,16 +1,8 @@
 "use client"
 import Header from '../../components/Header'
-import { SiTypescript } from "react-icons/si";
-import { SiTailwindcss } from "react-icons/si";
-import { FaReact } from "react-icons/fa";
-import { FaNode } from "react-icons/fa";
-import { SiNextdotjs } from "react-icons/si";
-import { SiMongodb } from "react-icons/si";
-import { BiLogoPostgresql } from "react-icons/bi";
-import { SiNestjs } from "react-icons/si";
-import { FaGitAlt } from "react-icons/fa";
-import { FaDocker } from "react-icons/fa";
-import { SiJest } from "react-icons/si";
+import { SiTypescript, SiTailwindcss, SiNextdotjs, SiMongodb, SiNestjs, SiJest } from 'react-icons/si';
+import { FaReact, FaNode, FaGitAlt, FaDocker } from 'react-icons/fa';
+import { BiLogoPostgresql } from 'react-icons/bi';
 import { motion } from 'framer-motion'
 import Link from 'next/link';
 import Image from 'next/image';
