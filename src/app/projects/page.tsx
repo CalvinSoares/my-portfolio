@@ -48,7 +48,8 @@ const projectData = [
     image: "/images/projects/searchGame.png",
     tag: ["All", "Mobile"],
     gitUrl: "https://github.com/CalvinSoares/word-search-game",
-    previewUrl: "/",
+    previewUrl:
+      "https://play.google.com/store/apps/details?id=wordl.searc.game&pcampaignid=web_share",
     tecnologias: ["React-Native", "Javascript", "Style Components"],
   },
   {
