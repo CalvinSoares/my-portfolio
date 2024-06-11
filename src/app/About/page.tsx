@@ -4,10 +4,8 @@ import Image from "next/image";
 import TiktokIcon from "../../../public/images/tiktok.svg";
 import GithubIcon from "../../../public/images/github.svg";
 import LinkedinIcon from "../../../public/images/linkedin.svg";
-import { GetDATA } from "../loading";
 
 export default async function AboutSection() {
-  const erick = await GetDATA();
   return (
     <section id="About" className="text-gray-200 bg-[#121212]">
       <div className="pt-0 md:pt-8">

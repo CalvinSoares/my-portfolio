@@ -5,7 +5,7 @@ export function GetDATA() {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve("erick2");
-    }, 1000);
+    }, 100);
   });
 }
 

@@ -6,8 +6,8 @@ import Image from "next/image";
 interface ProjectCardProps {
   title: string;
   description: string;
-  gitUrl: string;
-  previewUrl: string;
+  gitUrl?: string;
+  previewUrl?: string;
   imgUrl: string;
   tags: string[];
   tecnologias: string[];
@@ -51,16 +51,22 @@ export default function ProjectCard({
           ))}
         </div>
         <div className="flex space-x-4">
-          <Link href={gitUrl} passHref>
-            <div className="flex items-center justify-center w-10 h-10 bg-[#583ebc] rounded-full hover:scale-125  duration-300">
-              <CodeBracketIcon className="h-6 w-6 text-white" />
-            </div>
-          </Link>
-          <Link href={previewUrl} passHref>
-            <div className="flex items-center justify-center w-10 h-10 bg-[#583ebc] rounded-full hover:scale-125 duration-300">
-              <EyeIcon className="h-6 w-6 text-white" />
-            </div>
-          </Link>
+          {gitUrl && (
+            <Link href={gitUrl} target="_blank" passHref>
+              <div className="flex items-center justify-center w-28 h-10 md:w-44 md:h-10 bg-[#583ebc] rounded-full hover:scale-105 border-2 hover:bg-[#191919] border-[#583ebc] duration-700 ease-in-out">
+                <p className="mr-1 text-xs md:text-base">Code</p>
+                <CodeBracketIcon className="w-4 h-4 md:h-6 md:w-6 text-white" />
+              </div>
+            </Link>
+          )}
+          {previewUrl && (
+            <Link href={previewUrl} target="_blank" passHref>
+              <div className="flex items-center justify-center w-28 h-10 md:w-44 md:h-10 bg-[#583ebc] rounded-full hover:scale-105 border-2 hover:bg-[#191919] border-[#583ebc] duration-700 ease-in-out">
+                <p className="mr-1 text-xs md:text-base">Take a look!</p>
+                <EyeIcon className="w-4 h-4 md:h-6 md:w-6 text-white" />
+              </div>
+            </Link>
+          )}
         </div>
       </div>
     </div>

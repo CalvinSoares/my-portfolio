@@ -9,7 +9,6 @@ import GithubIcon from "../../../public/images/github.svg";
 import LinkedinIcon from "../../../public/images/linkedin.svg";
 import Link from "next/link";
 import Image from "next/image";
-import { GetDATA } from "../loading";
 
 const projectData = [
   {
@@ -19,7 +18,6 @@ const projectData = [
       "Front-end of an internal system for bank management of affiliate accounts through managing accounts. It included a login system with authentication and account management.",
     image: "/images/projects/bank1.png",
     tag: ["All", "Web"],
-    gitUrl: "",
     previewUrl:
       "https://www.linkedin.com/feed/update/urn:li:activity:7181364631100088320/",
     tecnologias: ["React", "JavaScript", "Node", "Tailwind"],
@@ -30,7 +28,6 @@ const projectData = [
     description: "Web-Site apresentation of Arcade Lunar",
     image: "/images/projects/arcadelunar.png",
     tag: ["All", "Web"],
-    gitUrl: "",
     previewUrl: "https://arcadelunar-two.vercel.app/pt",
     tecnologias: ["Next", "Typescript", "Tailwind", "I18n", "Framer-Motion"],
   },
@@ -83,7 +80,6 @@ export default async function ProjectsSection() {
     initial: { y: 50, opacity: 0 },
     animate: { y: 0, opacity: 1 },
   };
-  const erick = await GetDATA();
   return (
     <section
       id="Projects"
@@ -146,14 +142,6 @@ export default async function ProjectsSection() {
             </motion.li>
           ))}
         </ul>
-        <div className="hidden md:flex">
-          <div className="absolute md:bottom-[-1800px] right-32 h-32 w-2 bg-[#583ebc]" />
-          <div className="absolute md:bottom-[-1800px] right-28 h-8 w-2 bg-[#583ebc]" />
-        </div>
-        <div className="hidden md:flex">
-          <div className="absolute md:bottom-[-1800px] left-32 h-32 w-2 bg-[#583ebc]" />
-          <div className="absolute md:bottom-[-1800px] left-28 h-8 w-2 bg-[#583ebc]" />
-        </div>
         <div className="flex flex-col text-center items-center justify-center mt-24">
           <Link
             href="/Contact"

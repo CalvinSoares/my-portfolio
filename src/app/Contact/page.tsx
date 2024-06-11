@@ -8,10 +8,8 @@ import Header from "../../components/Header";
 import CopyText from "../../components/CopyText";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { GetDATA } from "../loading";
 
 export default async function EmailSection() {
-  const erick = await GetDATA();
   return (
     <section id="Contact" className="bg-[#121212] ">
       <div className="pt-0 md:pt-8">
