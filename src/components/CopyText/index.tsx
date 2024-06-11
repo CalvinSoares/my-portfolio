@@ -1,7 +1,7 @@
-"use client"
-import Image from 'next/image';
-import React, { useState } from 'react';
-import { toast } from 'react-toastify';
+"use client";
+import Image from "next/image";
+import React, { useState } from "react";
+import { toast } from "react-toastify";
 
 interface CopyTextProps {
   text: string;
@@ -13,13 +13,13 @@ const CopyText = ({ text }: CopyTextProps) => {
   const handleCopy = () => {
     navigator.clipboard.writeText(text).then(() => {
       setCopied(true);
-      toast.success('Contato Copiado!!!', {
-        position: 'top-right',
+      toast.success("Contato Copiado!!!", {
+        position: "top-right",
         autoClose: 3000,
-        theme: 'dark',
+        theme: "dark",
         progressStyle: {
-          color: 'purple'
-        }
+          color: "purple",
+        },
       });
       setTimeout(() => setCopied(false), 3000);
     });
@@ -28,21 +28,15 @@ const CopyText = ({ text }: CopyTextProps) => {
   return (
     <div className="flex items-center">
       <p className="text-white mr-2">{text}</p>
-      <button onClick={handleCopy} className="flex items-center justify-center p-2 rounded-full bg-gray-800 hover:bg-gray-700">
-        {copied 
-        ? <Image 
-          src="/check.svg"
-          alt=''
-          width={20}
-          height={20}
-        /> 
-        : <Image 
-          src="/copy.svg"
-          alt=''
-          width={20}
-          height={20}
-        />
-        }
+      <button
+        onClick={handleCopy}
+        className="flex items-center justify-center p-2 rounded-full bg-gray-800 hover:bg-gray-700"
+      >
+        {copied ? (
+          <Image src="/check.svg" alt="" width={20} height={20} />
+        ) : (
+          <Image src="/copy.svg" alt="" width={20} height={20} />
+        )}
       </button>
     </div>
   );
