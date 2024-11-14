@@ -6,6 +6,7 @@ export function GetDATA() {
     setTimeout(() => {
       resolve("erick2");
     }, 100);
+    
   });
 }
 
