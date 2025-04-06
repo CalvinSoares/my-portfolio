@@ -216,9 +216,9 @@ export default function Home() {
             <pre className="text-gray-300 font-mono text-sm">
               <code>
                 {`const skills = {
-  frontend: ['React', 'Next.js', 'Tailwind'],
-  backend: ['Node.js', 'Express', 'MongoDB'],
-  languages: ['JavaScript', 'TypeScript'],
+  frontend: ['React', 'Next.js', 'Tailwind', 'React Native', 'Angular'],
+  backend: ['Nest.js','Node.js', 'Express', 'MongoDB', 'Docker', 'CloudFlare', 'Kubernetes'],
+  languages: ['JavaScript', 'TypeScript', 'ASP.NET'],
 };`}
               </code>
             </pre>
