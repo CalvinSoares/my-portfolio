@@ -204,7 +204,7 @@ export default function Home() {
 
           {/* Code Element */}
           <motion.div
-            className="mb-8 p-4 bg-[#1a1a1a] rounded-lg border border-[#2a2a2a] max-w-md"
+            className="mb-8 p-4 bg-[#1a1a1a] rounded-lg border border-[#2a2a2a] max-w-2xl"
             variants={itemVariants}
           >
             <div className="flex items-center gap-2 mb-2">
@@ -217,7 +217,8 @@ export default function Home() {
               <code>
                 {`const skills = {
   frontend: ['React', 'Next.js', 'Tailwind', 'React Native', 'Angular'],
-  backend: ['Nest.js','Node.js', 'Express', 'MongoDB', 'Docker', 'CloudFlare', 'Kubernetes'],
+  backend: ['Nest.js','Node.js', 'Express', 'MongoDB', 'Docker', 'CloudFlare', 
+  'Kubernetes'],
   languages: ['JavaScript', 'TypeScript', 'ASP.NET'],
 };`}
               </code>
