@@ -29,7 +29,7 @@ export default function Header() {
           </button>
         </div>
         <div className="menu hidden md:block md:w-auto" id="navbar">
-          <div className="flex items-center md:p-0 md:flex-row md:space-x-8 ">
+          <div className="flex text-white items-center md:p-0 md:flex-row md:space-x-8 ">
             <Link
               className="items-center flex justify-center w-32 h-12 rounded-3xl hover:bg-[#583ebc] duration-300 cursor-pointer"
               href="/"
