@@ -1,16 +1,44 @@
-import React from "react";
+"use client";
 
-export default function ProjectTag({ name, onClick, isSelected }) {
-  const buttonStyles = isSelected
-    ? "text-white bg-[#583ebc]"
-    : "text-[#ADB7BE] border-slate-600 hover:border-white";
+import { motion } from "framer-motion";
+
+interface ProjectTagProps {
+  name: string;
+  onClick: (name: string) => void;
+  isSelected: boolean;
+}
+
+export default function ProjectTag({
+  name,
+  onClick,
+  isSelected,
+}: ProjectTagProps) {
+  const variants = {
+    default: { scale: 1 },
+    selected: { scale: 1.05 },
+  };
 
   return (
-    <button
-      className={`${buttonStyles} rounded-full hover:bg-[#583ebc] px-6 py-3 text-xl cursor-pointer duration-300`}
+    <motion.button
+      className={`px-4 py-2 rounded-full text-white transition-all duration-300 ${
+        isSelected
+          ? "bg-[#583ebc] font-medium shadow-lg shadow-[#583ebc]/30"
+          : "bg-[#1e1e1e]/60 backdrop-blur-sm border border-[#2a2a2a] hover:border-[#583ebc]/50"
+      }`}
       onClick={() => onClick(name)}
+      variants={variants}
+      animate={isSelected ? "selected" : "default"}
+      whileHover={{ scale: 1.05 }}
+      whileTap={{ scale: 0.95 }}
+      transition={{ type: "spring", stiffness: 400, damping: 15 }}
     >
-      {name}
-    </button>
+      <motion.span
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.2 }}
+      >
+        {name}
+      </motion.span>
+    </motion.button>
   );
 }

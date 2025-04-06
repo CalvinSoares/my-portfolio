@@ -1,74 +1,208 @@
-import React from "react";
-import { CodeBracketIcon, EyeIcon } from "@heroicons/react/24/solid";
-import Link from "next/link";
+"use client";
+
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { ExternalLink, Github, Eye, Info } from "lucide-react";
 import Image from "next/image";
+import ProjectDetailsModal from "../ProjectDetailsModal";
 
 interface ProjectCardProps {
   title: string;
   description: string;
-  gitUrl?: string;
-  previewUrl?: string;
   imgUrl: string;
   tags: string[];
+  gitUrl?: string;
+  previewUrl?: string;
   tecnologias: string[];
+  isHovered?: boolean;
 }
 
 export default function ProjectCard({
-  imgUrl,
   title,
   description,
+  imgUrl,
+  tags,
   gitUrl,
   previewUrl,
   tecnologias,
+  isHovered = false,
 }: ProjectCardProps) {
+  const [showDetails, setShowDetails] = useState(false);
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
+
+  const cardVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1 },
+    hover: {
+      scale: 1.03,
+      boxShadow: "0 10px 30px -10px rgba(88, 62, 188, 0.4)",
+      transition: {
+        scale: {
+          type: "spring",
+          stiffness: 400,
+          damping: 10,
+        },
+      },
+    },
+  };
+
+  const imageVariants = {
+    hidden: { scale: 1.2, opacity: 0 },
+    visible: {
+      scale: 1,
+      opacity: 1,
+      transition: { duration: 0.5 },
+    },
+  };
+
+  const glowVariants = {
+    inactive: { opacity: 0 },
+    active: {
+      opacity: 0.7,
+      transition: { duration: 0.3 },
+    },
+  };
+
   return (
-    <div className="flex flex-col items-center rounded-lg p-4 shadow-md">
-      <div className="flex-shrink-0 bg-[#282828] w-[300px] h-[200px] md:w-[700px] md:h-[300px] flex justify-center items-center rounded-tl-xl rounded-tr-xl hover:h-64 md:hover:h-96 duration-500">
-        <div className="w-[200px] h-[150px] md:w-[380px] md:h-[300px]  py-8 hover:w-[250px] hover:h-[180px] md:hover:w-[450px] md:hover:h-[380px] duration-500  ">
-          <Image
-            src={imgUrl}
-            alt=""
-            layout="responsive"
-            width={900}
-            height={900}
-            className="rounded-lg bg-cover"
-          />
+    <>
+      <motion.div
+        className="bg-[#1e1e1e]/60 backdrop-blur-sm rounded-xl overflow-hidden h-full flex flex-col shadow-lg border border-[#2a2a2a] relative"
+        variants={cardVariants}
+        animate={isHovered ? "hover" : "visible"}
+        whileHover="hover"
+      >
+        {/* Glow effect when hovered */}
+        <motion.div
+          className="absolute -inset-0.5 bg-gradient-to-r from-[#2f2069] to-[#5c3bc7] rounded-xl blur-md"
+          variants={glowVariants}
+          initial="inactive"
+          animate={isHovered ? "active" : "inactive"}
+          style={{ zIndex: -1 }}
+        />
+
+        <div className="relative overflow-hidden group">
+          <motion.div
+            className="w-full h-48 bg-gray-800"
+            variants={imageVariants}
+            initial="hidden"
+            animate={isImageLoaded ? "visible" : "hidden"}
+          >
+            <Image
+              src={imgUrl || "/placeholder.svg"}
+              alt={title}
+              width={500}
+              height={300}
+              className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-110"
+              onLoad={() => setIsImageLoaded(true)}
+            />
+          </motion.div>
+
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+            <div className="p-4 w-full">
+              <div className="flex justify-end gap-2">
+                {gitUrl && (
+                  <motion.a
+                    href={gitUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-[#1e1e1e]/80 p-2 rounded-full hover:bg-[#583ebc] transition-colors"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <Github className="w-5 h-5 text-white" />
+                  </motion.a>
+                )}
+
+                {previewUrl && (
+                  <motion.a
+                    href={previewUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="bg-[#1e1e1e]/80 p-2 rounded-full hover:bg-[#583ebc] transition-colors"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <ExternalLink className="w-5 h-5 text-white" />
+                  </motion.a>
+                )}
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-      <div className="flex flex-col w-[300px] h-[300px] md:w-[700px] md:h-[300px] rounded-bl-xl rounded-br-xl flex-grow bg-[#191919] p-4">
-        <h3 className="text-2xl md:text-4xl font-semibold text-white mb-2">
-          {title}
-        </h3>
-        <p className="text-gray-400 mb-4 text-sm md:text-md">{description}</p>
-        <div className="flex flex-wrap max-w-sm mb-4">
-          {tecnologias.map((tech, index) => (
-            <span
-              key={index}
-              className="px-2 py-1 mr-2 mt-2 md:mr-4 md:mt-4 bg-gray-800 text-xs md:text-lg text-white rounded-md"
+
+        <div className="p-4 flex flex-col flex-grow">
+          <h3 className="text-xl font-bold text-white mb-2">{title}</h3>
+          <p className="text-gray-300 text-sm mb-4 flex-grow">{description}</p>
+
+          <div className="flex flex-wrap gap-2 mt-auto">
+            {tecnologias.slice(0, 3).map((tech, index) => (
+              <span
+                key={index}
+                className="text-xs px-2 py-1 rounded-full bg-[#2a2a2a] text-gray-300"
+              >
+                {tech}
+              </span>
+            ))}
+            {tecnologias.length > 3 && (
+              <span className="text-xs px-2 py-1 rounded-full bg-[#2a2a2a] text-gray-300">
+                +{tecnologias.length - 3}
+              </span>
+            )}
+          </div>
+
+          {/* Action buttons at the bottom of the card */}
+          <div className="flex gap-2 mt-4">
+            {previewUrl && (
+              <a
+                href={previewUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-1.5 bg-[#583ebc] hover:bg-[#4a32a0] text-white text-sm px-3 py-1.5 rounded-md transition-colors flex-1"
+              >
+                <Eye className="w-4 h-4" />
+                <span>View Site</span>
+              </a>
+            )}
+
+            {gitUrl && (
+              <a
+                href={gitUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-center gap-1.5 bg-[#2a2a2a] hover:bg-[#3a3a3a] text-white text-sm px-3 py-1.5 rounded-md transition-colors flex-1"
+              >
+                <Github className="w-4 h-4" />
+                <span>View Code</span>
+              </a>
+            )}
+
+            {/* Details button moved to the bottom of the card */}
+            <motion.button
+              onClick={() => setShowDetails(true)}
+              className="flex items-center justify-center gap-1.5 bg-[#1e1e1e] hover:bg-[#583ebc] text-white text-sm px-3 py-1.5 rounded-md border border-[#583ebc]/50 transition-colors"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
             >
-              {tech}
-            </span>
-          ))}
+              <Info className="w-4 h-4" />
+              <span>Details</span>
+            </motion.button>
+          </div>
         </div>
-        <div className="flex space-x-4">
-          {gitUrl && (
-            <Link href={gitUrl} target="_blank" passHref>
-              <div className="flex items-center justify-center w-28 h-10 md:w-44 md:h-10 bg-[#583ebc] rounded-full hover:scale-105 border-2 hover:bg-[#191919] border-[#583ebc] duration-700 ease-in-out">
-                <p className="mr-1 text-xs md:text-base">Code</p>
-                <CodeBracketIcon className="w-4 h-4 md:h-6 md:w-6 text-white" />
-              </div>
-            </Link>
-          )}
-          {previewUrl && (
-            <Link href={previewUrl} target="_blank" passHref>
-              <div className="flex items-center justify-center w-28 h-10 md:w-44 md:h-10 bg-[#583ebc] rounded-full hover:scale-105 border-2 hover:bg-[#191919] border-[#583ebc] duration-700 ease-in-out">
-                <p className="mr-1 text-xs md:text-base">Take a look!</p>
-                <EyeIcon className="w-4 h-4 md:h-6 md:w-6 text-white" />
-              </div>
-            </Link>
-          )}
-        </div>
-      </div>
-    </div>
+      </motion.div>
+
+      {/* Separate Project Details Modal Component */}
+      <ProjectDetailsModal
+        isOpen={showDetails}
+        onClose={() => setShowDetails(false)}
+        project={{
+          title,
+          description,
+          imgUrl,
+          gitUrl,
+          previewUrl,
+          tecnologias,
+        }}
+      />
+    </>
   );
 }
