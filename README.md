@@ -3,7 +3,8 @@
 </p>
 <h1 align="center">Personal portfolio</h1>
 
-[![Site preview](https://github.com/CalvinSoares/my-portfolio/assets/99036067/98017306-b6be-4ae1-9d6a-c1dd6fde665c)](https://calvinsoares.vercel.app/)
+[![Site preview](https://github.com/user-attachments/assets/7c06511d-6486-40b4-b89d-0451681f68fb)](https://calvinsoares.vercel.app/)
+
 
 ## Tecnologias utilizadas: 
 
