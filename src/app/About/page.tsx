@@ -135,7 +135,7 @@ export default function AboutSection() {
       />
 
       {/* Header */}
-      <div className="relative z-10">
+      <div className="relative z-50">
         <Header />
       </div>
 

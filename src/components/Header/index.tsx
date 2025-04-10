@@ -14,7 +14,7 @@ export default function Header() {
   };
 
   return (
-    <nav className=" bg-[#242424] rounded-none md:rounded-full mx-auto w-screen md:w-[90%]  hover:shadow-[#583ebc] hover:shadow-md duration-500 cursor-pointer">
+    <nav className=" bg-[#242424] rounded-none md:rounded-full z-50 mx-auto w-screen md:w-[90%]  hover:shadow-[#583ebc] hover:shadow-md duration-500 cursor-pointer">
       <div className="flex container flex-wrap items-center justify-around mx-auto py-4 px-2">
         <div className="md:hidden">
           <button

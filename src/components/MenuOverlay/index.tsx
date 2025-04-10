@@ -78,7 +78,7 @@ export default function MenuOverlay({ isOpen, onClose }: MenuOverlayProps) {
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className="fixed inset-0 z-40 bg-[#121212]/95 backdrop-blur-md flex flex-col items-center justify-center"
+          className="fixed inset-0 z-50 bg-[#121212]/95 backdrop-blur-md flex flex-col items-center justify-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
