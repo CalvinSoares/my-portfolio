@@ -35,7 +35,7 @@ const projectData = [
     description: "Web-Site apresentation of Arcade Lunar",
     image: "/images/projects/arcadelunar.png",
     tag: ["All", "Web"],
-    previewUrl: "https://arcadelunar-two.vercel.app/pt",
+    previewUrl: "https://arcadelunar.com.br",
     tecnologias: ["Next", "Typescript", "Tailwind", "I18n", "Framer-Motion"],
   },
   {
