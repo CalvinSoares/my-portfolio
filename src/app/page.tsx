@@ -129,7 +129,7 @@ export default function Home() {
   return (
     <section
       id="Home"
-      className="relative h-screen w-full overflow-hidden bg-[#121212]"
+      className="relative h-screen w-full overflow-y-auto  bg-[#121212]"
       ref={containerRef}
     >
       {/* Background Elements */}
@@ -148,12 +148,12 @@ export default function Home() {
       />
 
       {/* Header */}
-      <div className="relative z-10">
+      <div className="relative z-50">
         <Header />
       </div>
 
       {/* Main Content */}
-      <div className="relative z-10 flex flex-col md:flex-row justify-center md:justify-between items-center px-6 md:px-20 h-[calc(100vh-80px)]">
+      <div className="relative z-10 flex flex-col md:flex-row justify-center md:justify-between items-center px-6 md:px-20 h-screen my-14 md:mb-2">
         {/* Left Column - Text Content */}
         <motion.div
           className="w-full md:w-1/2 mt-20 md:mt-0"
@@ -202,28 +202,61 @@ export default function Home() {
             with cutting-edge technologies and user-centered design.
           </motion.p>
 
-          {/* Code Element */}
-          <motion.div
-            className="mb-8 p-4 bg-[#1a1a1a] rounded-lg border border-[#2a2a2a] max-w-2xl"
-            variants={itemVariants}
-          >
-            <div className="flex items-center gap-2 mb-2">
-              <div className="w-3 h-3 rounded-full bg-red-500"></div>
-              <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
-              <div className="w-3 h-3 rounded-full bg-green-500"></div>
-              <div className="text-gray-400 text-xs ml-2">skills.js</div>
-            </div>
-            <pre className="text-gray-300 font-mono text-sm">
-              <code>
-                {`const skills = {
-  frontend: ['React', 'Next.js', 'Tailwind', 'React Native', 'Angular'],
-  backend: ['Nest.js','Node.js', 'Express', 'MongoDB', 'Docker', 'CloudFlare', 
-  'Kubernetes'],
+          <div className="flex flex-col md:flex-row items-center justify-items-center gap-2 md:gap-8">
+            <motion.div
+              className="mb-0 md:mb-8 p-4 bg-[#1a1a1a] rounded-lg border border-[#2a2a2a] w-full sm:max-w-xl md:max-w-xl overflow-x-auto"
+              variants={itemVariants}
+            >
+              <div className="flex items-center gap-2 mb-2">
+                <div className="w-3 h-3 rounded-full bg-red-500"></div>
+                <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+                <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                <div className="text-gray-400 text-xs ml-2 whitespace-nowrap">
+                  skills.js
+                </div>
+              </div>
+              <pre className="text-gray-300 font-mono text-sm whitespace-pre-wrap break-words">
+                <code>
+                  {`const skills = {
+  frontend: ['React', 'Next.js', 'Tailwind', 
+  'React Native', 'Angular'],
+  backend: ['Nest.js','Node.js', 'Express', 
+  'MongoDB', 'Docker', 'CloudFlare', 'Kubernetes'],
   languages: ['JavaScript', 'TypeScript', 'ASP.NET'],
 };`}
-              </code>
-            </pre>
-          </motion.div>
+                </code>
+              </pre>
+            </motion.div>
+
+            <motion.div
+              className="flex gap-4 items-center justify-center my-4 md:my-12"
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+            >
+              {socialLinks.map((link, index) => (
+                <motion.a
+                  key={link.name}
+                  href={link.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={`w-12 h-12 flex items-center justify-center bg-[#1e1e1e]/60 backdrop-blur-sm rounded-full text-white ${link.color} transition-colors duration-300 border border-white/10`}
+                  custom={index}
+                  variants={socialVariants}
+                  whileHover={{ y: -8, scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                >
+                  <Image
+                    src={link.icon || "/placeholder.svg"}
+                    alt={`${link.name} Icon`}
+                    width={24}
+                    height={24}
+                    className="w-5 h-5"
+                  />
+                </motion.a>
+              ))}
+            </motion.div>
+          </div>
 
           {/* Buttons */}
           <motion.div
@@ -232,7 +265,7 @@ export default function Home() {
           >
             <motion.button
               onClick={downloadPDF}
-              className="group relative overflow-hidden rounded-full px-6 py-3 bg-[#583ebc] text-white font-medium flex items-center gap-2"
+              className="group relative flex items-center justify-center overflow-hidden rounded-full px-6 py-3 bg-[#583ebc] text-white font-medium gap-2"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >
@@ -261,7 +294,7 @@ export default function Home() {
 
         {/* Right Column - Visual Elements */}
         <motion.div
-          className="hidden md:flex flex-col items-center justify-center relative"
+          className="hidden md:flex flex-col items-center justify-center relative mb-8 md:mb-0"
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.8, delay: 0.5 }}
@@ -409,36 +442,6 @@ next react`}</code>
           </div>
         </motion.div>
       </div>
-
-      {/* Social Links */}
-      <motion.div
-        className="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-10 flex gap-4"
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-      >
-        {socialLinks.map((link, index) => (
-          <motion.a
-            key={link.name}
-            href={link.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`p-3 bg-[#1e1e1e]/60 backdrop-blur-sm rounded-full text-white ${link.color} transition-colors duration-300 border border-white/10`}
-            custom={index}
-            variants={socialVariants}
-            whileHover={{ y: -8, scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-          >
-            <Image
-              src={link.icon || "/placeholder.svg"}
-              alt={`${link.name} Icon`}
-              width={24}
-              height={24}
-              className="w-5 h-5"
-            />
-          </motion.a>
-        ))}
-      </motion.div>
     </section>
   );
 }

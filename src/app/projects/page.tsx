@@ -179,7 +179,7 @@ export default function ProjectsSection() {
         style={{ y: y2 }}
       />
 
-      <div className="pt-0 md:pt-8 relative z-10">
+      <div className="pt-0 md:pt-8 relative z-50">
         <Header />
       </div>
 
