@@ -129,7 +129,7 @@ export default function Home() {
   return (
     <section
       id="Home"
-      className="relative h-screen w-full overflow-y-auto  bg-[#121212]"
+      className="relative h-screen w-full overflow-y-auto overflow-hidden  bg-[#121212]"
       ref={containerRef}
     >
       {/* Background Elements */}
@@ -148,7 +148,7 @@ export default function Home() {
       />
 
       {/* Header */}
-      <div className="relative z-50">
+      <div className="pt-0 md:pt-8 relative z-50">
         <Header />
       </div>
 

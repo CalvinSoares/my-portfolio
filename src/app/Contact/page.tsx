@@ -124,7 +124,7 @@ export default function ContactSection() {
       </div>
 
       {/* Header */}
-      <div className="relative z-50">
+      <div className="pt-0 md:pt-8 relative z-50">
         <Header />
       </div>
 
