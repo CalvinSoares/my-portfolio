@@ -1,0 +1,59 @@
+{
+  "nav": {
+    "home": "Início",
+    "about": "Sobre",
+    "project": "Projetos",
+    "contact": "Contato"
+  },
+  "hero": {
+    "greeting": "Olá, eu sou",
+    "role": "Desenvolvedor Fullstack",
+    "description": "Bem-vindo ao meu portfólio pessoal. Crio aplicações web modernas com tecnologias de ponta e design centrado no usuário.",
+    "download_cv": "Baixar CV",
+    "about_me": "Sobre Mim"
+  },
+  "projects": {
+    "section_title": "Meus Projetos",
+    "subtitle": "Explore meus trabalhos mais recentes e soluções criativas em plataformas web e mobile",
+    "filter_all": "Todos",
+    "filter_web": "Web",
+    "filter_mobile": "Mobile",
+    "filter_label": "Filtro",
+    "view_site": "Ver Site",
+    "view_code": "Ver Código",
+    "details": "Detalhes",
+    "contact_me": "Entre em Contato",
+    "technologies": "Tecnologias",
+    "visit_website": "Visitar Site",
+    "view_source_code": "Ver Código Fonte",
+    "portfolio_showcase": "Portfólio"
+  },
+  "about": {
+    "role": "Desenvolvedor Fullstack",
+    "p1_start": "Eu simplesmente amo tudo relacionado à tecnologia, especialmente quando se trata de programação. Tenho um forte foco em",
+    "and": "e",
+    "p1_mid": ", com experiência na criação de aplicações",
+    "applications": ".",
+    "p2_start": "Comecei minha jornada no mundo da programação por volta dos 11 anos, gostava de criar jogos em pixel art. Hoje estou focado em",
+    "backend_dev": "Desenvolvimento Back-end",
+    "expertise": "Minha Expertise",
+    "skills": "Habilidades",
+    "cta_projects": "Ver Meus Projetos"
+  },
+  "contact": {
+    "badge": "Entre em Contato",
+    "title": "Contate-me",
+    "description": "Estou atualmente procurando novas oportunidades. Se você tiver uma dúvida ou apenas quiser dizer oi, farei o meu melhor para responder!",
+    "info_title": "Informações de Contato",
+    "label_email": "Email",
+    "label_phone": "Telefone",
+    "connect": "Conecte-se comigo",
+    "available_status": "Disponível Atualmente",
+    "available_desc": "Estou disponível para trabalhos freelance e posições de tempo integral. Se você está procurando um desenvolvedor para se juntar à sua equipe, vamos conversar!",
+    "view_work": "Ver Meu Trabalho",
+    "toast_fill_fields": "Por favor, preencha todos os campos",
+    "toast_success": "Mensagem enviada com sucesso!",
+    "toast_copy_email": "Email copiado para a área de transferência!",
+    "toast_copy_phone": "Telefone copiado para a área de transferência!"
+  }
+}

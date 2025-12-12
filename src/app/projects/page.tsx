@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import {
   motion,
   AnimatePresence,
@@ -15,24 +15,38 @@ import ProjectTag from "../../components/ProjectTag";
 import ProjectCard from "../../components/ProjectCard";
 import { ArrowUpRight, Filter, Sparkles } from "lucide-react";
 import ParticleBackground from "../../components/particleBackground";
+import { useLanguage } from "../../context/LanguageContext";
 
-// Project data remains the same
 const projectData = [
   {
     id: 1,
-    title: "Banco Bet",
-    description:
-      "Front-end of an internal system for bank management of affiliate accounts through managing accounts. It included a login system with authentication and account management.",
-    image: "/images/projects/bank1.png",
+    title: "QuackLinks",
+    descriptionEn:
+      "A link centralization platform that redefines the standard. Designed for content creators and businesses to unify their digital footprint on a highly customizable landing page. Featuring native Spotify integration, a community-driven template ecosystem, and real-time analytics, it provides total creative control to make every 'link in bio' stand out.",
+    descriptionPt:
+      "Uma plataforma centralizadora de links que vai além do básico. Permite que criadores de conteúdo e empresas unifiquem sua presença digital em uma única página altamente personalizável. Com recursos exclusivos como integração nativa com Spotify, uma comunidade vibrante de templates e análises de tráfego em tempo real, oferece total liberdade criativa para que seu 'link na bio' seja tão único quanto sua marca.",
+    image: "/images/projects/quacklinks.png",
     tag: ["All", "Web"],
-    previewUrl:
-      "https://www.linkedin.com/feed/update/urn:li:activity:7181364631100088320/",
-    tecnologias: ["React", "JavaScript", "Node", "Tailwind"],
+    previewUrl: "https://quacklinks.duckdns.org/",
+    tecnologias: [
+      "Vue",
+      "TypeScript",
+      "Tailwind",
+      "Pinia",
+      "Node",
+      "Fastify",
+      "Postgresql",
+      "Oracle",
+      "Prisma",
+      "Jest",
+      "Docker",
+    ],
   },
   {
     id: 2,
     title: "Arcade Lunar",
-    description: "Web-Site apresentation of Arcade Lunar",
+    descriptionEn: "Web-Site presentation of Arcade Lunar",
+    descriptionPt: "Web-Site de apresentação do Arcade Lunar",
     image: "/images/projects/arcadelunar.png",
     tag: ["All", "Web"],
     previewUrl: "https://arcadelunar.com.br",
@@ -41,7 +55,8 @@ const projectData = [
   {
     id: 3,
     title: "Logistic Dashboard",
-    description: "Logistic management system",
+    descriptionEn: "Logistic management system",
+    descriptionPt: "Sistema de gerenciamento logístico",
     image: "/images/projects/logistic.png",
     tag: ["All", "Web"],
     gitUrl: "https://github.com/CalvinSoares/logistic-system",
@@ -52,7 +67,8 @@ const projectData = [
   {
     id: 4,
     title: "Search Game (freelancer)",
-    description: "word search app",
+    descriptionEn: "Word search app",
+    descriptionPt: "Aplicativo de caça-palavras",
     image: "/images/projects/searchGame.png",
     tag: ["All", "Mobile"],
     gitUrl: "https://github.com/CalvinSoares/word-search-game",
@@ -63,7 +79,8 @@ const projectData = [
   {
     id: 5,
     title: "Dashboard Page",
-    description: "Data management system",
+    descriptionEn: "Data management system",
+    descriptionPt: "Sistema de gerenciamento de dados",
     image: "/images/projects/dashboard.png",
     tag: ["All", "Web"],
     gitUrl: "https://github.com/CalvinSoares/dashboardEcharts",
@@ -72,8 +89,22 @@ const projectData = [
   },
   {
     id: 6,
+    title: "Banco Bet",
+    descriptionEn:
+      "Front-end of an internal system for bank management of affiliate accounts.",
+    descriptionPt:
+      "Front-end de um sistema interno para gestão bancária de contas de afiliados.",
+    image: "/images/projects/bank1.png",
+    tag: ["All", "Web"],
+    previewUrl:
+      "https://www.linkedin.com/feed/update/urn:li:activity:7181364631100088320/",
+    tecnologias: ["React", "JavaScript", "Node", "Tailwind"],
+  },
+  {
+    id: 7,
     title: "React Notes Web Site",
-    description: "creation of notes",
+    descriptionEn: "Creation of notes application",
+    descriptionPt: "Criação de aplicação de notas",
     image: "/images/projects/duNotes.png",
     tag: ["All", "Web"],
     gitUrl: "https://github.com/CalvinSoares/DuNotes",
@@ -86,6 +117,9 @@ export default function ProjectsSection() {
   const [tag, setTag] = useState("All");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [hoveredProject, setHoveredProject] = useState<number | null>(null);
+
+  const { t, language } = useLanguage();
+
   const sectionRef = useRef(null);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.1 });
@@ -94,7 +128,6 @@ export default function ProjectsSection() {
     offset: ["start end", "end start"],
   });
 
-  // Parallax effect for background elements
   const y1 = useTransform(scrollYProgress, [0, 1], [0, -100]);
   const y2 = useTransform(scrollYProgress, [0, 1], [0, -200]);
   const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
@@ -108,15 +141,9 @@ export default function ProjectsSection() {
     project.tag.includes(tag)
   );
 
-  // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
+    visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
   };
 
   const itemVariants = {
@@ -124,20 +151,12 @@ export default function ProjectsSection() {
     visible: {
       y: 0,
       opacity: 1,
-      transition: {
-        type: "spring",
-        stiffness: 100,
-        damping: 12,
-      },
+      transition: { type: "spring", stiffness: 100, damping: 12 },
     },
     hover: {
       y: -10,
       scale: 1.03,
-      transition: {
-        type: "spring",
-        stiffness: 400,
-        damping: 10,
-      },
+      transition: { type: "spring", stiffness: 400, damping: 10 },
     },
   };
 
@@ -151,10 +170,7 @@ export default function ProjectsSection() {
     visible: {
       opacity: 1,
       y: 0,
-      transition: {
-        duration: 0.7,
-        ease: [0.22, 1, 0.36, 1],
-      },
+      transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
     },
   };
 
@@ -164,12 +180,10 @@ export default function ProjectsSection() {
       className="min-w-full min-h-screen flex flex-col justify-center bg-[#121212] relative overflow-hidden"
       ref={sectionRef}
     >
-      {/* Animated Background */}
       <div className="absolute inset-0 z-0 opacity-40">
         <ParticleBackground />
       </div>
 
-      {/* Gradient Orbs */}
       <motion.div
         className="absolute top-20 -left-32 w-96 h-96 rounded-full bg-gradient-to-r from-purple-700/30 to-indigo-700/20 blur-3xl"
         style={{ y: y1 }}
@@ -197,11 +211,13 @@ export default function ProjectsSection() {
             transition={{ delay: 0.2, duration: 0.5 }}
           >
             <Sparkles size={16} className="animate-pulse" />
-            <span className="text-sm font-medium">Portfolio Showcase</span>
+            <span className="text-sm font-medium">
+              {t("projects.portfolio_showcase")}
+            </span>
           </motion.div>
 
           <h2 className="text-center text-4xl md:text-5xl font-bold text-white mb-4 bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">
-            My Projects
+            {t("projects.section_title")}
           </h2>
 
           <motion.p
@@ -210,12 +226,11 @@ export default function ProjectsSection() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4 }}
           >
-            Explore my latest work and creative solutions across web and mobile
-            platforms
+            {t("projects.subtitle")}
           </motion.p>
         </motion.div>
 
-        {/* Filter section with mobile toggle */}
+        {/* Filter section */}
         <div className="relative mb-12">
           <div className="flex justify-center items-center">
             <motion.div
@@ -226,17 +241,17 @@ export default function ProjectsSection() {
             >
               <ProjectTag
                 onClick={handleTagChange}
-                name="All"
+                name={t("projects.filter_all")}
                 isSelected={tag === "All"}
               />
               <ProjectTag
-                onClick={handleTagChange}
-                name="Web"
+                onClick={() => handleTagChange("Web")}
+                name={t("projects.filter_web")}
                 isSelected={tag === "Web"}
               />
               <ProjectTag
-                onClick={handleTagChange}
-                name="Mobile"
+                onClick={() => handleTagChange("Mobile")}
+                name={t("projects.filter_mobile")}
                 isSelected={tag === "Mobile"}
               />
             </motion.div>
@@ -250,11 +265,12 @@ export default function ProjectsSection() {
               animate={{ opacity: 1 }}
             >
               <Filter size={16} />
-              <span>Filter: {tag}</span>
+              <span>
+                {t("projects.filter_label")}: {tag}
+              </span>
             </motion.button>
           </div>
 
-          {/* Mobile filter dropdown */}
           <AnimatePresence>
             {isFilterOpen && (
               <motion.div
@@ -269,19 +285,19 @@ export default function ProjectsSection() {
                     className={`text-left px-4 py-2 rounded-md ${tag === "All" ? "bg-[#583ebc] text-white" : "text-white hover:bg-[#2a2a2a]"}`}
                     onClick={() => handleTagChange("All")}
                   >
-                    All
+                    {t("projects.filter_all")}
                   </button>
                   <button
                     className={`text-left px-4 py-2 rounded-md ${tag === "Web" ? "bg-[#583ebc] text-white" : "text-white hover:bg-[#2a2a2a]"}`}
                     onClick={() => handleTagChange("Web")}
                   >
-                    Web
+                    {t("projects.filter_web")}
                   </button>
                   <button
                     className={`text-left px-4 py-2 rounded-md ${tag === "Mobile" ? "bg-[#583ebc] text-white" : "text-white hover:bg-[#2a2a2a]"}`}
                     onClick={() => handleTagChange("Mobile")}
                   >
-                    Mobile
+                    {t("projects.filter_mobile")}
                   </button>
                 </div>
               </motion.div>
@@ -289,7 +305,6 @@ export default function ProjectsSection() {
           </AnimatePresence>
         </div>
 
-        {/* Projects Grid */}
         <motion.div
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10"
           variants={containerVariants}
@@ -312,7 +327,6 @@ export default function ProjectsSection() {
                 onHoverEnd={() => setHoveredProject(null)}
                 className="relative"
               >
-                {/* Connection lines between projects */}
                 {index < filteredProjects.length - 1 && (
                   <motion.div
                     className="absolute top-1/2 right-0 w-8 h-px bg-[#583ebc]/30 hidden lg:block"
@@ -328,7 +342,12 @@ export default function ProjectsSection() {
 
                 <ProjectCard
                   title={project.title}
-                  description={project.description}
+                  // Lógica de seleção de idioma para a descrição
+                  description={
+                    language === "pt"
+                      ? project.descriptionPt
+                      : project.descriptionEn
+                  }
                   imgUrl={project.image}
                   tags={project.tag}
                   gitUrl={project?.gitUrl}
@@ -341,7 +360,6 @@ export default function ProjectsSection() {
           </AnimatePresence>
         </motion.div>
 
-        {/* Contact and Social Links */}
         <motion.div
           className="flex flex-col text-center items-center justify-center mt-24"
           initial={{ opacity: 0, y: 30 }}
@@ -357,7 +375,7 @@ export default function ProjectsSection() {
             <span className="absolute inset-0 w-full h-full border border-white/20 rounded-full"></span>
             <span className="relative z-10 flex items-center gap-2 text-white">
               <span className="transition-transform duration-300 group-hover:translate-x-[-4px]">
-                Contact Me
+                {t("projects.contact_me")}
               </span>
               <ArrowUpRight className="w-4 h-4 transition-all duration-300 group-hover:translate-x-1 group-hover:translate-y-[-4px]" />
             </span>
@@ -382,7 +400,6 @@ export default function ProjectsSection() {
                 />
               </Link>
             </motion.div>
-
             <motion.div
               whileHover={{ y: -8, scale: 1.1 }}
               transition={{ type: "spring", stiffness: 400 }}
@@ -401,7 +418,6 @@ export default function ProjectsSection() {
                 />
               </Link>
             </motion.div>
-
             <motion.div
               whileHover={{ y: -8, scale: 1.1 }}
               transition={{ type: "spring", stiffness: 400 }}

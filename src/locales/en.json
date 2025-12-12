@@ -1,0 +1,59 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "project": "Project",
+    "contact": "Contact"
+  },
+  "hero": {
+    "greeting": "Hi, I'm",
+    "role": "Fullstack Developer",
+    "description": "Welcome to my personal portfolio. I create modern web applications with cutting-edge technologies and user-centered design.",
+    "download_cv": "Download CV",
+    "about_me": "About Me"
+  },
+  "projects": {
+    "section_title": "My Projects",
+    "subtitle": "Explore my latest work and creative solutions across web and mobile platforms",
+    "filter_all": "All",
+    "filter_web": "Web",
+    "filter_mobile": "Mobile",
+    "filter_label": "Filter",
+    "view_site": "View Site",
+    "view_code": "View Code",
+    "details": "Details",
+    "contact_me": "Contact Me",
+    "technologies": "Technologies",
+    "visit_website": "Visit Website",
+    "view_source_code": "View Source Code",
+    "portfolio_showcase": "Portfolio Showcase"
+  },
+  "about": {
+    "role": "Fullstack Developer",
+    "p1_start": "I simply love everything related to technology, especially when it comes to programming. I have a strong focus on",
+    "and": "and",
+    "p1_mid": ", with experience in creating",
+    "applications": "applications.",
+    "p2_start": "I started my journey in the world of programming when I was around 11 years old, I enjoyed creating pixel art style games. Today I'm focused on",
+    "backend_dev": "Back-end Development",
+    "expertise": "My Expertise",
+    "skills": "Skills",
+    "cta_projects": "See My Projects"
+  },
+  "contact": {
+    "badge": "Get In Touch",
+    "title": "Contact Me",
+    "description": "I'm currently looking for new opportunities. Whether you have a question or just want to say hi, I'll try my best to get back to you!",
+    "info_title": "Contact Information",
+    "label_email": "Email",
+    "label_phone": "Phone",
+    "connect": "Connect with me",
+    "available_status": "Currently Available",
+    "available_desc": "I'm currently available for freelance work and full-time positions. If you're looking for a developer to join your team, let's talk!",
+    "view_work": "View My Work",
+    "toast_fill_fields": "Please fill in all fields",
+    "toast_success": "Message sent successfully!",
+    "toast_copy_email": "Email copied to clipboard!",
+    "toast_copy_phone": "Phone number copied to clipboard!"
+  }
+}

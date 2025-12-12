@@ -7,11 +7,16 @@ import Image from "next/image";
 import Header from "../../components/Header";
 import { ArrowRight, Sparkles } from "lucide-react";
 import ParticleField from "../../components/ParticlesField";
+// 1. Importar o hook de tradução
+import { useLanguage } from "../../context/LanguageContext";
 
 export default function AboutSection() {
   const containerRef = useRef<HTMLDivElement>(null);
   const aboutRef = useRef<HTMLDivElement>(null);
   const skillsRef = useRef<HTMLDivElement>(null);
+
+  // 2. Inicializar o hook
+  const { t } = useLanguage();
 
   const isAboutInView = useInView(aboutRef, { once: true, amount: 0.3 });
   const isSkillsInView = useInView(skillsRef, { once: true, amount: 0.3 });
@@ -185,7 +190,7 @@ export default function AboutSection() {
                 variants={itemVariants}
               >
                 <Sparkles size={16} className="animate-pulse" />
-                <span className="text-sm font-medium">Fullstack Developer</span>
+                <span className="text-sm font-medium">{t("about.role")}</span>
               </motion.div>
 
               <motion.h1
@@ -200,28 +205,17 @@ export default function AboutSection() {
                 variants={itemVariants}
               >
                 <p className="text-gray-300 text-lg leading-relaxed mb-4">
-                  I simply love everything related to technology, especially
-                  when it comes to programming. I have a strong focus on{" "}
+                  {t("about.p1_start")}{" "}
                   <span className="text-[#a48eff] font-semibold">
                     front-end
                   </span>{" "}
-                  and{" "}
+                  {t("about.and")}{" "}
                   <span className="text-[#a48eff] font-semibold">back-end</span>
-                  , with experience in creating{" "}
+                  {t("about.p1_mid")}{" "}
                   <span className="text-[#a48eff] font-semibold">
                     fullstack
                   </span>{" "}
-                  applications.
-                </p>
-
-                <p className="text-gray-300 text-lg leading-relaxed">
-                  I started my journey in the world of programming when I was
-                  around 11 years old, I enjoyed creating pixel art style games.
-                  Today I'm focused on{" "}
-                  <span className="text-[#a48eff] font-semibold">
-                    Back-end Development
-                  </span>
-                  .
+                  {t("about.applications")}
                 </p>
               </motion.div>
 
@@ -263,9 +257,13 @@ export default function AboutSection() {
           >
             <motion.div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#583ebc]/20 border border-[#583ebc]/30 text-[#a48eff] mb-4">
               <Sparkles size={16} className="animate-pulse" />
-              <span className="text-sm font-medium">My Expertise</span>
+              <span className="text-sm font-medium">
+                {t("about.expertise")}
+              </span>
             </motion.div>
-            <h2 className="text-3xl font-bold text-white">Skills</h2>
+            <h2 className="text-3xl font-bold text-white">
+              {t("about.skills")}
+            </h2>
           </motion.div>
 
           {/* Skills Grid */}
@@ -326,7 +324,7 @@ export default function AboutSection() {
               whileTap={{ scale: 0.95 }}
             >
               <span className="relative z-10 flex items-center gap-2 group-hover:text-white transition-colors duration-300">
-                See My Projects
+                {t("about.cta_projects")}
                 <ArrowRight className="w-5 h-5 transition-transform duration-300 group-hover:translate-x-1" />
               </span>
               <span className="absolute inset-0 bg-[#583ebc] translate-y-full transition-transform duration-300 group-hover:translate-y-0"></span>
