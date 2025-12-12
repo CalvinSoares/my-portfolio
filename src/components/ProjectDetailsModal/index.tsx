@@ -7,6 +7,8 @@ import Link from "next/link";
 import SpaceshipBackground from "../SpaceShips";
 import { createPortal } from "react-dom";
 import { useEffect, useState } from "react";
+// Importar o Hook
+import { useLanguage } from "../../context/LanguageContext";
 
 interface ProjectDetailsModalProps {
   isOpen: boolean;
@@ -27,16 +29,14 @@ export default function ProjectDetailsModal({
   project,
 }: ProjectDetailsModalProps) {
   const [mounted, setMounted] = useState(false);
+  // Usar Contexto
+  const { t } = useLanguage();
 
-  // Only mount the portal on the client side
   useEffect(() => {
     setMounted(true);
-
-    // Prevent scrolling when modal is open
     if (isOpen) {
       document.body.style.overflow = "hidden";
     }
-
     return () => {
       document.body.style.overflow = "";
     };
@@ -48,10 +48,7 @@ export default function ProjectDetailsModal({
       opacity: 1,
       scale: 1,
       y: 0,
-      transition: {
-        duration: 0.4,
-        ease: [0.22, 1, 0.36, 1],
-      },
+      transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] },
     },
   };
 
@@ -60,17 +57,12 @@ export default function ProjectDetailsModal({
     visible: (i: number) => ({
       opacity: 1,
       scale: 1,
-      transition: {
-        delay: i * 0.05,
-        duration: 0.2,
-      },
+      transition: { delay: i * 0.05, duration: 0.2 },
     }),
   };
 
-  // Don't render anything on the server
   if (!mounted) return null;
 
-  // Use createPortal to render the modal at the document body level
   return createPortal(
     <AnimatePresence>
       {isOpen && (
@@ -78,7 +70,6 @@ export default function ProjectDetailsModal({
           className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm overflow-hidden"
           onClick={onClose}
         >
-          {/* Spaceship background effect */}
           <div className="absolute inset-0 overflow-hidden">
             <SpaceshipBackground />
           </div>
@@ -135,7 +126,7 @@ export default function ProjectDetailsModal({
                 transition={{ delay: 0.3 }}
               >
                 <h3 className="text-lg font-semibold text-white mb-3">
-                  Technologies
+                  {t("projects.technologies")}
                 </h3>
                 <div className="flex flex-wrap gap-2">
                   {project.tecnologias.map((tech, index) => (
@@ -167,7 +158,9 @@ export default function ProjectDetailsModal({
                     className="flex items-center gap-2 bg-[#2a2a2a] hover:bg-[#3a3a3a] text-white px-4 py-2 rounded-lg transition-colors"
                   >
                     <Github className="w-5 h-5" />
-                    <span className="font-medium">View Source Code</span>
+                    <span className="font-medium">
+                      {t("projects.view_source_code")}
+                    </span>
                   </Link>
                 )}
 
@@ -179,7 +172,9 @@ export default function ProjectDetailsModal({
                     className="flex items-center gap-2 bg-[#583ebc] hover:bg-[#4a32a0] text-white px-4 py-2 rounded-lg transition-colors group"
                   >
                     <Eye className="w-5 h-5" />
-                    <span className="font-medium">Visit Website</span>
+                    <span className="font-medium">
+                      {t("projects.visit_website")}
+                    </span>
                     <ArrowUpRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:translate-y-[-2px]" />
                   </Link>
                 )}

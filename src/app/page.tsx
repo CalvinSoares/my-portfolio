@@ -8,15 +8,15 @@ import { ReactTyped } from "react-typed";
 import { Download, User, Code, Sparkles } from "lucide-react";
 import Header from "../components/Header";
 import ParticleField from "../components/ParticlesField";
+import { useLanguage } from "../context/LanguageContext";
 
 export default function Home() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [isLoaded, setIsLoaded] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll();
-  const y = useTransform(scrollYProgress, [0, 1], [0, 300]);
+  const { t } = useLanguage();
 
-  // Handle mouse movement for parallax effect
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({
@@ -27,7 +27,6 @@ export default function Home() {
 
     window.addEventListener("mousemove", handleMouseMove);
 
-    // Set loaded state after a small delay for animations
     const timer = setTimeout(() => {
       setIsLoaded(true);
     }, 500);
@@ -48,7 +47,6 @@ export default function Home() {
     document.body.removeChild(link);
   };
 
-  // Calculate parallax effect based on mouse position
   const calculateParallax = (depth = 10) => {
     if (!containerRef.current) return { x: 0, y: 0 };
 
@@ -61,7 +59,6 @@ export default function Home() {
     return { x: offsetX, y: offsetY };
   };
 
-  // Variants for staggered animations
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -100,7 +97,6 @@ export default function Home() {
     }),
   };
 
-  // Parallax values for different elements
   const parallax1 = calculateParallax(20);
   const parallax2 = calculateParallax(40);
   const parallax3 = calculateParallax(60);
@@ -167,7 +163,7 @@ export default function Home() {
             variants={itemVariants}
           >
             <Sparkles size={16} className="animate-pulse" />
-            <span className="text-sm font-medium">Fullstack Developer</span>
+            <span className="text-sm font-medium">{t("hero.role")}</span>
           </motion.div>
 
           {/* Main Heading */}
@@ -176,7 +172,7 @@ export default function Home() {
             variants={itemVariants}
             style={{ x: parallax1.x / 2, y: parallax1.y / 2 }}
           >
-            <h2 className="text-gray-400 text-xl mb-2">Hi, I'm</h2>
+            <h2 className="text-gray-400 text-xl mb-2">{t("hero.greeting")}</h2>
             <h1 className="text-5xl md:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-500 mb-2">
               <ReactTyped
                 strings={["Calvin Soares"]}
@@ -189,7 +185,7 @@ export default function Home() {
             </h1>
             <div className="flex items-center gap-2 mt-2">
               <div className="h-px w-8 bg-[#583ebc]"></div>
-              <p className="text-[#583ebc] font-medium">Fullstack Developer</p>
+              <p className="text-[#583ebc] font-medium">{t("hero.role")}</p>
             </div>
           </motion.div>
 
@@ -198,8 +194,7 @@ export default function Home() {
             className="text-gray-300 text-lg mb-8 max-w-lg"
             variants={itemVariants}
           >
-            Welcome to my personal portfolio. I create modern web applications
-            with cutting-edge technologies and user-centered design.
+            {t("hero.description")}
           </motion.p>
 
           <div className="flex flex-col md:flex-row items-center justify-items-center gap-2 md:gap-8">
@@ -219,9 +214,9 @@ export default function Home() {
                 <code>
                   {`const skills = {
   frontend: ['React', 'Next.js', 'Tailwind', 
-  'React Native', 'Angular'],
+  'React Native', 'Vue.js'],
   backend: ['Nest.js','Node.js', 'Express', 
-  'MongoDB', 'Docker', 'CloudFlare', 'Kubernetes'],
+  'MongoDB', 'Docker', 'CloudFlare', 'Oracle', 'Kubernetes'],
   languages: ['JavaScript', 'TypeScript', 'ASP.NET'],
 };`}
                 </code>
@@ -271,7 +266,7 @@ export default function Home() {
             >
               <span className="relative z-10 flex items-center gap-2">
                 <Download className="w-5 h-5" />
-                Download CV
+                {t("hero.download_cv")}
               </span>
               <span className="absolute inset-0 bg-gradient-to-r from-[#583ebc] to-[#7c5ce6] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
             </motion.button>
@@ -284,7 +279,7 @@ export default function Home() {
               >
                 <span className="relative z-10 flex items-center gap-2 group-hover:text-white transition-colors duration-300">
                   <User className="w-5 h-5" />
-                  About Me
+                  {t("hero.about_me")}
                 </span>
                 <span className="absolute inset-0 bg-[#583ebc] translate-y-full transition-transform duration-300 group-hover:translate-y-0"></span>
               </motion.button>

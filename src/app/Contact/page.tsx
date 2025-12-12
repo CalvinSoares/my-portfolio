@@ -1,7 +1,6 @@
 "use client";
 
 import type React from "react";
-
 import { useState, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import Link from "next/link";
@@ -9,52 +8,22 @@ import Image from "next/image";
 import Header from "../../components/Header";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import {
-  Copy,
-  CheckCircle,
-  Mail,
-  Phone,
-  Send,
-  MapPin,
-  Sparkles,
-} from "lucide-react";
+import { Copy, CheckCircle, Mail, Phone, MapPin, Sparkles } from "lucide-react";
 import ParticleField from "../../components/ParticlesField";
 
+import { useLanguage } from "../../context/LanguageContext";
+
 export default function ContactSection() {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [message, setMessage] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [copiedPhone, setCopiedPhone] = useState(false);
 
-  const formRef = useRef<HTMLDivElement>(null);
+  const { t } = useLanguage();
+
   const contactInfoRef = useRef<HTMLDivElement>(null);
-  const isFormInView = useInView(formRef, { once: true, amount: 0.3 });
   const isContactInfoInView = useInView(contactInfoRef, {
     once: true,
     amount: 0.3,
   });
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-
-    if (!name || !email || !message) {
-      toast.error("Please fill in all fields");
-      return;
-    }
-
-    setIsSubmitting(true);
-
-    // Simulate form submission
-    setTimeout(() => {
-      toast.success("Message sent successfully!");
-      setName("");
-      setEmail("");
-      setMessage("");
-      setIsSubmitting(false);
-    }, 1500);
-  };
 
   const copyToClipboard = (text: string, type: "email" | "phone") => {
     navigator.clipboard.writeText(text);
@@ -62,11 +31,13 @@ export default function ContactSection() {
     if (type === "email") {
       setCopiedEmail(true);
       setTimeout(() => setCopiedEmail(false), 2000);
-      toast.success("Email copied to clipboard!");
+      // Tradução do Toast de cópia de email
+      toast.success(t("contact.toast_copy_email"));
     } else {
       setCopiedPhone(true);
       setTimeout(() => setCopiedPhone(false), 2000);
-      toast.success("Phone number copied to clipboard!");
+      // Tradução do Toast de cópia de telefone
+      toast.success(t("contact.toast_copy_phone"));
     }
   };
 
@@ -157,7 +128,7 @@ export default function ContactSection() {
             transition={{ delay: 0.3, duration: 0.5 }}
           >
             <Sparkles size={16} className="animate-pulse" />
-            <span className="text-sm font-medium">Get In Touch</span>
+            <span className="text-sm font-medium">{t("contact.badge")}</span>
           </motion.div>
 
           <motion.h1
@@ -166,7 +137,7 @@ export default function ContactSection() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.7 }}
           >
-            Contact Me
+            {t("contact.title")}
           </motion.h1>
 
           <motion.p
@@ -175,13 +146,11 @@ export default function ContactSection() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5, duration: 0.7 }}
           >
-            I'm currently looking for new opportunities. Whether you have a
-            question or just want to say hi, I'll try my best to get back to
-            you!
+            {t("contact.description")}
           </motion.p>
         </motion.div>
 
-        <div className="max-w-6xl mx-auto  gap-12">
+        <div className="max-w-6xl mx-auto gap-12">
           {/* Contact Information */}
           <motion.div
             ref={contactInfoRef}
@@ -197,7 +166,7 @@ export default function ContactSection() {
                 variants={itemVariants}
               >
                 <MapPin className="w-5 h-5 text-[#583ebc]" />
-                Contact Information
+                {t("contact.info_title")}
               </motion.h2>
 
               <motion.div
@@ -209,7 +178,9 @@ export default function ContactSection() {
                     <Mail className="w-5 h-5 text-[#583ebc]" />
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-white font-medium mb-1">Email</h3>
+                    <h3 className="text-white font-medium mb-1">
+                      {t("contact.label_email")}
+                    </h3>
                     <div className="flex items-center justify-between">
                       <p className="text-gray-400">calvinsoares19@gmail.com</p>
                       <button
@@ -233,7 +204,9 @@ export default function ContactSection() {
                     <Phone className="w-5 h-5 text-[#583ebc]" />
                   </div>
                   <div className="flex-1">
-                    <h3 className="text-white font-medium mb-1">Phone</h3>
+                    <h3 className="text-white font-medium mb-1">
+                      {t("contact.label_phone")}
+                    </h3>
                     <div className="flex items-center justify-between">
                       <p className="text-gray-400">+55 (21) 99230-3043</p>
                       <button
@@ -257,7 +230,9 @@ export default function ContactSection() {
                 className="bg-[#1e1e1e]/60 backdrop-blur-sm rounded-xl p-6 border border-[#2a2a2a]"
                 variants={itemVariants}
               >
-                <h3 className="text-white font-medium mb-4">Connect with me</h3>
+                <h3 className="text-white font-medium mb-4">
+                  {t("contact.connect")}
+                </h3>
                 <div className="flex gap-4">
                   {socialLinks.map((link, index) => (
                     <motion.a
@@ -295,12 +270,12 @@ export default function ContactSection() {
             >
               <div className="flex items-center gap-3 mb-4">
                 <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
-                <h3 className="text-white font-medium">Currently Available</h3>
+                <h3 className="text-white font-medium">
+                  {t("contact.available_status")}
+                </h3>
               </div>
               <p className="text-white/90 mb-4">
-                I'm currently available for freelance work and full-time
-                positions. If you're looking for a developer to join your team,
-                let's talk!
+                {t("contact.available_desc")}
               </p>
               <Link href="/projects">
                 <motion.button
@@ -308,7 +283,7 @@ export default function ContactSection() {
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                 >
-                  View My Work
+                  {t("contact.view_work")}
                   <svg
                     width="16"
                     height="16"
