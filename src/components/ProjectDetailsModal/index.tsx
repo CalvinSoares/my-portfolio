@@ -1,13 +1,12 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import { X, ArrowUpRight, Eye, Github } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import SpaceshipBackground from "../SpaceShips";
 import { createPortal } from "react-dom";
-import { useEffect, useState } from "react";
-// Importar o Hook
+import { useEffect, useState, useRef } from "react";
 import { useLanguage } from "../../context/LanguageContext";
 
 interface ProjectDetailsModalProps {
@@ -29,18 +28,33 @@ export default function ProjectDetailsModal({
   project,
 }: ProjectDetailsModalProps) {
   const [mounted, setMounted] = useState(false);
-  // Usar Contexto
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const shouldReduceMotion = useReducedMotion();
   const { t } = useLanguage();
 
   useEffect(() => {
     setMounted(true);
     if (isOpen) {
       document.body.style.overflow = "hidden";
+      closeButtonRef.current?.focus();
     }
     return () => {
       document.body.style.overflow = "";
     };
   }, [isOpen]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        onClose();
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isOpen, onClose]);
 
   const detailsVariants = {
     hidden: { opacity: 0, scale: 0.9, y: 20 },
@@ -69,9 +83,12 @@ export default function ProjectDetailsModal({
         <div
           className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm overflow-hidden"
           onClick={onClose}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="project-details-title"
         >
           <div className="absolute inset-0 overflow-hidden">
-            <SpaceshipBackground />
+            {!shouldReduceMotion && <SpaceshipBackground />}
           </div>
 
           <motion.div
@@ -91,10 +108,12 @@ export default function ProjectDetailsModal({
                 className="w-full h-56 object-cover rounded-t-xl"
               />
               <motion.button
+                ref={closeButtonRef}
                 onClick={onClose}
                 className="absolute top-4 right-4 bg-black/50 p-2 rounded-full hover:bg-[#583ebc] transition-colors"
                 whileHover={{ scale: 1.1, rotate: 90 }}
                 whileTap={{ scale: 0.9 }}
+                aria-label="Close project details"
               >
                 <X className="w-5 h-5 text-white" />
               </motion.button>
@@ -102,6 +121,7 @@ export default function ProjectDetailsModal({
 
             <div className="p-6">
               <motion.h2
+                id="project-details-title"
                 className="text-2xl font-bold text-white mb-4"
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}

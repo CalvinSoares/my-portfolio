@@ -25,15 +25,19 @@ export default function ParticleBackground() {
 
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+    const isCompactScreen = window.innerWidth < 768;
+    const shouldConnectParticles = !prefersReducedMotion && !isCompactScreen;
+    const shouldTrackMouse = !prefersReducedMotion && !isCompactScreen;
 
-    // Set canvas to full screen
     const handleResize = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
       initParticles();
     };
 
-    // Track mouse position
     const handleMouseMove = (e: MouseEvent) => {
       mousePosition.current = {
         x: e.clientX,
@@ -41,10 +45,13 @@ export default function ParticleBackground() {
       };
     };
 
-    // Initialize particles
     const initParticles = () => {
       particles.current = [];
-      const particleCount = Math.min(Math.floor(window.innerWidth / 10), 100);
+      const particleCount = prefersReducedMotion
+        ? 0
+        : isCompactScreen
+          ? Math.min(Math.floor(window.innerWidth / 28), 20)
+          : Math.min(Math.floor(window.innerWidth / 18), 42);
 
       for (let i = 0; i < particleCount; i++) {
         particles.current.push({
@@ -70,44 +77,37 @@ export default function ParticleBackground() {
       return colors[Math.floor(Math.random() * colors.length)];
     };
 
-    // Animation loop
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Update and draw particles
       particles.current.forEach((particle, index) => {
-        // Move particles
         particle.x += particle.speedX;
         particle.y += particle.speedY;
 
-        // Wrap around edges
         if (particle.x > canvas.width) particle.x = 0;
         if (particle.x < 0) particle.x = canvas.width;
         if (particle.y > canvas.height) particle.y = 0;
         if (particle.y < 0) particle.y = canvas.height;
 
-        // Draw particle
         ctx.beginPath();
         ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
         ctx.fillStyle = particle.color;
         ctx.fill();
 
-        // Connect particles that are close to each other
-        connectParticles(particle, index);
+        if (shouldConnectParticles) {
+          connectParticles(particle, index);
+        }
 
-        // Interact with mouse
         const dx = mousePosition.current.x - particle.x;
         const dy = mousePosition.current.y - particle.y;
         const distance = Math.sqrt(dx * dx + dy * dy);
 
-        if (distance < 100) {
-          // Push particles away from mouse
+        if (shouldTrackMouse && distance < 100) {
           const angle = Math.atan2(dy, dx);
           const force = (100 - distance) / 1000;
           particle.speedX -= Math.cos(angle) * force;
           particle.speedY -= Math.sin(angle) * force;
 
-          // Limit speed
           const maxSpeed = 2;
           const speed = Math.sqrt(
             particle.speedX * particle.speedX +
@@ -119,7 +119,6 @@ export default function ParticleBackground() {
           }
         }
 
-        // Add some randomness to movement
         if (Math.random() < 0.01) {
           particle.speedX += (Math.random() - 0.5) * 0.1;
           particle.speedY += (Math.random() - 0.5) * 0.1;
@@ -129,7 +128,6 @@ export default function ParticleBackground() {
       animationFrameId.current = requestAnimationFrame(animate);
     };
 
-    // Connect nearby particles with lines
     const connectParticles = (particle: Particle, index: number) => {
       for (let i = index + 1; i < particles.current.length; i++) {
         const otherParticle = particles.current[i];
@@ -148,18 +146,21 @@ export default function ParticleBackground() {
       }
     };
 
-    // Set up event listeners
     window.addEventListener("resize", handleResize);
-    window.addEventListener("mousemove", handleMouseMove);
+    if (shouldTrackMouse) {
+      window.addEventListener("mousemove", handleMouseMove);
+    }
 
-    // Initialize
     handleResize();
-    animate();
+    if (!prefersReducedMotion) {
+      animate();
+    }
 
-    // Clean up
     return () => {
       window.removeEventListener("resize", handleResize);
-      window.removeEventListener("mousemove", handleMouseMove);
+      if (shouldTrackMouse) {
+        window.removeEventListener("mousemove", handleMouseMove);
+      }
       if (animationFrameId.current) {
         cancelAnimationFrame(animationFrameId.current);
       }

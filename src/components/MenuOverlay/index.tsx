@@ -13,6 +13,7 @@ import {
   Linkedin,
   ExternalLink,
 } from "lucide-react";
+import { useLanguage } from "../../context/LanguageContext";
 
 interface MenuOverlayProps {
   isOpen: boolean;
@@ -21,16 +22,21 @@ interface MenuOverlayProps {
 
 export default function MenuOverlay({ isOpen, onClose }: MenuOverlayProps) {
   const pathname = usePathname();
+  const { language, setLanguage, t } = useLanguage();
 
   const menuItems = [
-    { name: "Home", path: "/", icon: <Home className="w-5 h-5" /> },
-    { name: "About", path: "/About", icon: <User className="w-5 h-5" /> },
+    { name: t("nav.home"), path: "/", icon: <Home className="w-5 h-5" /> },
+    { name: t("nav.about"), path: "/About", icon: <User className="w-5 h-5" /> },
     {
-      name: "Projects",
+      name: t("nav.project"),
       path: "/projects",
       icon: <FolderKanban className="w-5 h-5" />,
     },
-    { name: "Contact", path: "/Contact", icon: <Mail className="w-5 h-5" /> },
+    {
+      name: t("nav.contact"),
+      path: "/Contact",
+      icon: <Mail className="w-5 h-5" />,
+    },
   ];
 
   const socialLinks = [
@@ -79,6 +85,7 @@ export default function MenuOverlay({ isOpen, onClose }: MenuOverlayProps) {
       {isOpen && (
         <motion.div
           className="fixed inset-0 z-50 bg-[#121212]/95 backdrop-blur-md flex flex-col items-center justify-center"
+          id="mobile-menu"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -116,9 +123,9 @@ export default function MenuOverlay({ isOpen, onClose }: MenuOverlayProps) {
                 />
               </div>
               <h2 className="text-white font-bold text-xl mt-4">
-                Calvin Soares
+                {t("common.profile_name")}
               </h2>
-              <p className="text-gray-400 text-sm">Frontend Developer</p>
+              <p className="text-gray-400 text-sm">{t("common.profile_role")}</p>
             </motion.div>
 
             {/* Navigation Links */}
@@ -145,6 +152,40 @@ export default function MenuOverlay({ isOpen, onClose }: MenuOverlayProps) {
                   </Link>
                 </motion.div>
               ))}
+            </motion.div>
+
+            <motion.div
+              className="flex items-center gap-3 mb-8"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.45 }}
+            >
+              <button
+                onClick={() => setLanguage("pt")}
+                className={`p-1 rounded-full transition-all ${language === "pt" ? "ring-2 ring-[#583ebc] scale-110" : "opacity-70 grayscale hover:grayscale-0"}`}
+                aria-label={t("nav.language_pt")}
+              >
+                <Image
+                  src="https://flagcdn.com/w40/br.png"
+                  alt="Português"
+                  width={28}
+                  height={28}
+                  className="rounded-full object-cover h-7 w-7"
+                />
+              </button>
+              <button
+                onClick={() => setLanguage("en")}
+                className={`p-1 rounded-full transition-all ${language === "en" ? "ring-2 ring-[#583ebc] scale-110" : "opacity-70 grayscale hover:grayscale-0"}`}
+                aria-label={t("nav.language_en")}
+              >
+                <Image
+                  src="https://flagcdn.com/w40/us.png"
+                  alt="English"
+                  width={28}
+                  height={28}
+                  className="rounded-full object-cover h-7 w-7"
+                />
+              </button>
             </motion.div>
 
             {/* Social Links */}

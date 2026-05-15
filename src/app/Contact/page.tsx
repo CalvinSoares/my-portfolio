@@ -8,7 +8,15 @@ import Image from "next/image";
 import Header from "../../components/Header";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { Copy, CheckCircle, Mail, Phone, MapPin, Sparkles } from "lucide-react";
+import {
+  Copy,
+  CheckCircle,
+  Mail,
+  Phone,
+  MapPin,
+  Sparkles,
+  MessageCircle,
+} from "lucide-react";
 import ParticleField from "../../components/ParticlesField";
 
 import { useLanguage } from "../../context/LanguageContext";
@@ -16,6 +24,10 @@ import { useLanguage } from "../../context/LanguageContext";
 export default function ContactSection() {
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [copiedPhone, setCopiedPhone] = useState(false);
+  const email = "calvinsoares17@gmail.com";
+  const phoneDisplay = "+55 (21) 99230-3043";
+  const phoneRaw = "+5521992303043";
+  const whatsappUrl = `https://wa.me/${phoneRaw.replace("+", "")}`;
 
   const { t } = useLanguage();
 
@@ -181,13 +193,17 @@ export default function ContactSection() {
                     <h3 className="text-white font-medium mb-1">
                       {t("contact.label_email")}
                     </h3>
-                    <div className="flex items-center justify-between">
-                      <p className="text-gray-400">calvinsoares19@gmail.com</p>
+                    <div className="flex items-center justify-between gap-4">
+                      <a
+                        href={`mailto:${email}`}
+                        className="text-gray-300 transition-colors hover:text-white break-all"
+                      >
+                        {email}
+                      </a>
                       <button
-                        onClick={() =>
-                          copyToClipboard("calvinsoares19@gmail.com", "email")
-                        }
+                        onClick={() => copyToClipboard(email, "email")}
                         className="p-2 rounded-full hover:bg-[#2a2a2a] transition-colors"
+                        aria-label={t("contact.copy_email")}
                       >
                         {copiedEmail ? (
                           <CheckCircle className="w-5 h-5 text-green-500" />
@@ -207,13 +223,17 @@ export default function ContactSection() {
                     <h3 className="text-white font-medium mb-1">
                       {t("contact.label_phone")}
                     </h3>
-                    <div className="flex items-center justify-between">
-                      <p className="text-gray-400">+55 (21) 99230-3043</p>
+                    <div className="flex items-center justify-between gap-4">
+                      <a
+                        href={`tel:${phoneRaw}`}
+                        className="text-gray-300 transition-colors hover:text-white"
+                      >
+                        {phoneDisplay}
+                      </a>
                       <button
-                        onClick={() =>
-                          copyToClipboard("+55 (21) 992303043", "phone")
-                        }
+                        onClick={() => copyToClipboard(phoneRaw, "phone")}
                         className="p-2 rounded-full hover:bg-[#2a2a2a] transition-colors"
+                        aria-label={t("contact.copy_phone")}
                       >
                         {copiedPhone ? (
                           <CheckCircle className="w-5 h-5 text-green-500" />
@@ -256,6 +276,40 @@ export default function ContactSection() {
                       />
                     </motion.a>
                   ))}
+                </div>
+              </motion.div>
+
+              <motion.div
+                className="bg-[#1e1e1e]/60 backdrop-blur-sm rounded-xl p-6 border border-[#2a2a2a] mt-6"
+                variants={itemVariants}
+              >
+                <h3 className="text-white font-medium mb-4">
+                  {t("contact.quick_actions")}
+                </h3>
+                <div className="grid gap-3 md:grid-cols-3">
+                  <a
+                    href={`mailto:${email}`}
+                    className="flex items-center justify-center gap-2 rounded-xl bg-[#583ebc] px-4 py-3 text-sm font-medium text-white transition-colors hover:bg-[#4a32a0]"
+                  >
+                    <Mail className="h-4 w-4" />
+                    {t("contact.send_email")}
+                  </a>
+                  <a
+                    href={whatsappUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center justify-center gap-2 rounded-xl bg-emerald-600 px-4 py-3 text-sm font-medium text-white transition-colors hover:bg-emerald-500"
+                  >
+                    <MessageCircle className="h-4 w-4" />
+                    {t("contact.whatsapp")}
+                  </a>
+                  <a
+                    href={`tel:${phoneRaw}`}
+                    className="flex items-center justify-center gap-2 rounded-xl bg-white/5 px-4 py-3 text-sm font-medium text-white transition-colors hover:bg-white/10"
+                  >
+                    <Phone className="h-4 w-4" />
+                    {t("contact.call_now")}
+                  </a>
                 </div>
               </motion.div>
             </div>
