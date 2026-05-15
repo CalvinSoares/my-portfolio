@@ -10,23 +10,23 @@ import { useLanguage } from "../../context/LanguageContext";
 interface ProjectCardProps {
   title: string;
   description: string;
+  role?: string;
   imgUrl: string;
   tags: string[];
   gitUrl?: string;
   previewUrl?: string;
   tecnologias: string[];
-  isHovered?: boolean;
 }
 
 export default function ProjectCard({
   title,
   description,
+  role,
   imgUrl,
   tags,
   gitUrl,
   previewUrl,
   tecnologias,
-  isHovered = false,
 }: ProjectCardProps) {
   const [showDetails, setShowDetails] = useState(false);
   const [isImageLoaded, setIsImageLoaded] = useState(false);
@@ -51,20 +51,22 @@ export default function ProjectCard({
     inactive: { opacity: 0 },
     active: { opacity: 0.7, transition: { duration: 0.3 } },
   };
+  const visibleTechs = tecnologias.slice(0, 4);
+  const extraTechCount = tecnologias.length - visibleTechs.length;
 
   return (
     <>
       <motion.div
         className="bg-[#1e1e1e]/60 backdrop-blur-sm rounded-xl overflow-hidden h-full flex flex-col shadow-lg border border-[#2a2a2a] relative"
         variants={cardVariants}
-        animate={isHovered ? "hover" : "visible"}
+        animate="visible"
         whileHover="hover"
       >
         <motion.div
           className="absolute -inset-0.5 bg-gradient-to-r from-[#2f2069] to-[#5c3bc7] rounded-xl blur-md"
           variants={glowVariants}
           initial="inactive"
-          animate={isHovered ? "active" : "inactive"}
+          whileHover="active"
           style={{ zIndex: -1 }}
         />
 
@@ -96,6 +98,7 @@ export default function ProjectCard({
                     className="bg-[#1e1e1e]/80 p-2 rounded-full hover:bg-[#583ebc] transition-colors"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.95 }}
+                    aria-label={`${t("projects.open_repository")} ${title}`}
                   >
                     <Github className="w-5 h-5 text-white" />
                   </motion.a>
@@ -108,6 +111,7 @@ export default function ProjectCard({
                     className="bg-[#1e1e1e]/80 p-2 rounded-full hover:bg-[#583ebc] transition-colors"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 0.95 }}
+                    aria-label={`${t("projects.open_preview")} ${title}`}
                   >
                     <ExternalLink className="w-5 h-5 text-white" />
                   </motion.a>
@@ -119,10 +123,15 @@ export default function ProjectCard({
 
         <div className="p-4 flex flex-col flex-grow">
           <h3 className="text-xl font-bold text-white mb-2">{title}</h3>
+          {role && (
+            <p className="mb-2 text-xs uppercase tracking-[0.18em] text-[#a48eff]">
+              {role}
+            </p>
+          )}
           <p className="text-gray-300 text-sm mb-4 flex-grow">{description}</p>
 
           <div className="flex flex-wrap gap-2 mt-auto">
-            {tecnologias.slice(0, 6).map((tech, index) => (
+            {visibleTechs.map((tech, index) => (
               <span
                 key={index}
                 className="text-xs px-2 py-1 rounded-full bg-[#2a2a2a] text-gray-300"
@@ -130,9 +139,9 @@ export default function ProjectCard({
                 {tech}
               </span>
             ))}
-            {tecnologias.length > 3 && (
+            {extraTechCount > 0 && (
               <span className="text-xs px-2 py-1 rounded-full bg-[#2a2a2a] text-gray-300">
-                +{tecnologias.length - 3}
+                +{extraTechCount}
               </span>
             )}
           </div>
@@ -167,6 +176,7 @@ export default function ProjectCard({
               className="flex items-center justify-center gap-1.5 bg-[#1e1e1e] hover:bg-[#583ebc] text-white text-sm px-3 py-1.5 rounded-md border border-[#583ebc]/50 transition-colors"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              aria-label={`${t("projects.view_details_for")} ${title}`}
             >
               <Info className="w-4 h-4" />
               <span>{t("projects.details")}</span>

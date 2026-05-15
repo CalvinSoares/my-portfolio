@@ -28,8 +28,11 @@ export default function SpaceshipBackground() {
 
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
+    const prefersReducedMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)"
+    ).matches;
+    const isCompactScreen = window.innerWidth < 768;
 
-    // Set canvas to full screen
     const handleResize = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
@@ -37,10 +40,13 @@ export default function SpaceshipBackground() {
       initSpaceships();
     };
 
-    // Initialize stars
     const initStars = () => {
       stars.current = [];
-      const starCount = Math.min(Math.floor(window.innerWidth / 3), 200);
+      const starCount = prefersReducedMotion
+        ? 0
+        : isCompactScreen
+          ? Math.min(Math.floor(window.innerWidth / 12), 50)
+          : Math.min(Math.floor(window.innerWidth / 5), 110);
 
       for (let i = 0; i < starCount; i++) {
         stars.current.push({
@@ -52,10 +58,9 @@ export default function SpaceshipBackground() {
       }
     };
 
-    // Initialize spaceships
     const initSpaceships = () => {
       spaceships.current = [];
-      const shipCount = 8;
+      const shipCount = prefersReducedMotion ? 0 : isCompactScreen ? 3 : 5;
 
       for (let i = 0; i < shipCount; i++) {
         const size = Math.random() * 10 + 5;
@@ -83,13 +88,11 @@ export default function SpaceshipBackground() {
       return colors[Math.floor(Math.random() * colors.length)];
     };
 
-    // Draw a spaceship
     const drawSpaceship = (ship: Spaceship) => {
       ctx.save();
       ctx.translate(ship.x, ship.y);
       ctx.rotate(ship.rotation);
 
-      // Draw the trail
       for (let i = 0; i < ship.trail.length; i++) {
         const trail = ship.trail[i];
         ctx.beginPath();
@@ -98,7 +101,6 @@ export default function SpaceshipBackground() {
         ctx.fill();
       }
 
-      // Draw the spaceship body
       ctx.beginPath();
       ctx.moveTo(ship.size, 0);
       ctx.lineTo(-ship.size / 2, ship.size / 2);
@@ -108,7 +110,6 @@ export default function SpaceshipBackground() {
       ctx.fillStyle = ship.color;
       ctx.fill();
 
-      // Draw the cockpit
       ctx.beginPath();
       ctx.arc(ship.size / 3, 0, ship.size / 4, 0, Math.PI * 2);
       ctx.fillStyle = "#ffffff";
@@ -117,34 +118,27 @@ export default function SpaceshipBackground() {
       ctx.restore();
     };
 
-    // Animation loop
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Draw stars
       stars.current.forEach((star) => {
         ctx.beginPath();
         ctx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
         ctx.fillStyle = `rgba(255, 255, 255, ${star.opacity})`;
         ctx.fill();
 
-        // Make stars twinkle
         star.opacity += (Math.random() - 0.5) * 0.05;
         star.opacity = Math.max(0.2, Math.min(1, star.opacity));
       });
 
-      // Update and draw spaceships
       spaceships.current.forEach((ship) => {
-        // Update position
         const dx = Math.cos(ship.rotation) * ship.speed;
         const dy = Math.sin(ship.rotation) * ship.speed;
         ship.x += dx;
         ship.y += dy;
 
-        // Update rotation
         ship.rotation += ship.rotationSpeed;
 
-        // Add trail
         if (Math.random() > 0.5) {
           ship.trail.push({
             x: -ship.size / 2,
@@ -152,41 +146,35 @@ export default function SpaceshipBackground() {
             opacity: 0.8,
           });
 
-          // Limit trail length
           if (ship.trail.length > 10) {
             ship.trail.shift();
           }
         }
 
-        // Update trail
         ship.trail.forEach((trail) => {
           trail.opacity -= 0.05;
         });
 
-        // Remove faded trail particles
         ship.trail = ship.trail.filter((trail) => trail.opacity > 0);
 
-        // Wrap around edges
         if (ship.x > canvas.width + ship.size) ship.x = -ship.size;
         if (ship.x < -ship.size) ship.x = canvas.width + ship.size;
         if (ship.y > canvas.height + ship.size) ship.y = -ship.size;
         if (ship.y < -ship.size) ship.y = canvas.height + ship.size;
 
-        // Draw the spaceship
         drawSpaceship(ship);
       });
 
       animationFrameId.current = requestAnimationFrame(animate);
     };
 
-    // Set up event listeners
     window.addEventListener("resize", handleResize);
 
-    // Initialize
     handleResize();
-    animate();
+    if (!prefersReducedMotion) {
+      animate();
+    }
 
-    // Clean up
     return () => {
       window.removeEventListener("resize", handleResize);
       if (animationFrameId.current) {

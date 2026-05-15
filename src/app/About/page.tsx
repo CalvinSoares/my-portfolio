@@ -20,6 +20,30 @@ export default function AboutSection() {
 
   const isAboutInView = useInView(aboutRef, { once: true, amount: 0.3 });
   const isSkillsInView = useInView(skillsRef, { once: true, amount: 0.3 });
+  const focusAreas = [
+    {
+      title: t("about.focus_title_1"),
+      text: t("about.focus_text_1"),
+    },
+    {
+      title: t("about.focus_title_2"),
+      text: t("about.focus_text_2"),
+    },
+    {
+      title: t("about.focus_title_3"),
+      text: t("about.focus_text_3"),
+    },
+  ];
+  const featuredExperienceTags = [
+    "Next.js",
+    "Redis",
+    "Amazon SQS",
+    "Amazon RDS",
+    "Amazon EC2",
+    "Kubernetes",
+    "ArgoCD",
+    "CI/CD",
+  ];
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -205,18 +229,62 @@ export default function AboutSection() {
                 variants={itemVariants}
               >
                 <p className="text-gray-300 text-lg leading-relaxed mb-4">
-                  {t("about.p1_start")}{" "}
-                  <span className="text-[#a48eff] font-semibold">
-                    front-end
-                  </span>{" "}
-                  {t("about.and")}{" "}
-                  <span className="text-[#a48eff] font-semibold">back-end</span>
-                  {t("about.p1_mid")}{" "}
-                  <span className="text-[#a48eff] font-semibold">
-                    fullstack
-                  </span>{" "}
-                  {t("about.applications")}
+                  {t("about.summary_1")}
                 </p>
+                <p className="text-gray-400 text-lg leading-relaxed">
+                  {t("about.summary_2")}
+                </p>
+              </motion.div>
+
+              <motion.div
+                className="mt-8 grid gap-4 md:grid-cols-3"
+                variants={itemVariants}
+              >
+                {focusAreas.map((item) => (
+                  <div
+                    key={item.title}
+                    className="rounded-2xl border border-white/10 bg-white/5 p-4 backdrop-blur-sm"
+                  >
+                    <p className="mb-2 text-sm font-semibold text-[#c2b5ff]">
+                      {item.title}
+                    </p>
+                    <p className="text-sm leading-relaxed text-gray-300">
+                      {item.text}
+                    </p>
+                  </div>
+                ))}
+              </motion.div>
+
+              <motion.div
+                className="mt-8 rounded-3xl border border-white/10 bg-[#171717]/80 p-6 backdrop-blur-sm"
+                variants={itemVariants}
+              >
+                <p className="mb-2 text-xs uppercase tracking-[0.2em] text-[#a48eff]">
+                  {t("about.featured_experience")}
+                </p>
+                <div className="flex flex-col gap-3 md:flex-row md:items-start md:justify-between">
+                  <div>
+                    <h3 className="text-xl font-semibold text-white">
+                      {t("about.featured_company")}
+                    </h3>
+                    <p className="text-sm text-gray-400">
+                      {t("about.featured_role")}
+                    </p>
+                  </div>
+                </div>
+                <p className="mt-4 text-gray-300 leading-relaxed">
+                  {t("about.featured_summary")}
+                </p>
+                <div className="mt-5 flex flex-wrap gap-2">
+                  {featuredExperienceTags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-gray-200"
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
               </motion.div>
 
               {/* Social Links */}
