@@ -4,39 +4,41 @@ import { motion } from "framer-motion";
 
 interface ProjectTagProps {
   name: string;
-  onClick: (name: string) => void;
+  onClick: () => void;
   isSelected: boolean;
+  className?: string;
 }
 
 export default function ProjectTag({
   name,
   onClick,
   isSelected,
+  className = "",
 }: ProjectTagProps) {
-  const variants = {
-    default: { scale: 1 },
-    selected: { scale: 1.05 },
-  };
-
   return (
     <motion.button
-      className={`px-4 py-2 rounded-full text-white transition-all duration-300 ${
-        isSelected
-          ? "bg-[#583ebc] font-medium shadow-lg shadow-[#583ebc]/30"
-          : "bg-[#1e1e1e]/60 backdrop-blur-sm border border-[#2a2a2a] hover:border-[#583ebc]/50"
-      }`}
-      onClick={() => onClick(name)}
-      variants={variants}
-      animate={isSelected ? "selected" : "default"}
-      whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 0.95 }}
-      transition={{ type: "spring", stiffness: 400, damping: 15 }}
+      className={`relative inline-flex items-center justify-center overflow-hidden rounded-full px-4 py-2 text-sm text-white ${className}`}
+      onClick={onClick}
+      whileHover={{ scale: 1.03, y: -1 }}
+      whileTap={{ scale: 0.98 }}
+      transition={{ type: "spring", stiffness: 460, damping: 30, mass: 0.7 }}
     >
-      <motion.span
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.2 }}
-      >
+      {isSelected ? (
+        <motion.span
+          layoutId="project-tab-active"
+          className="absolute inset-0 rounded-full border border-[#7c5ce6]/35 bg-gradient-to-r from-[#3f2a84] via-[#583ebc] to-[#7c5ce6] shadow-lg shadow-[#583ebc]/20"
+          transition={{
+            type: "spring",
+            stiffness: 520,
+            damping: 34,
+            mass: 0.65,
+          }}
+        />
+      ) : (
+        <span className="absolute inset-0 rounded-full border border-white/10 bg-white/[0.04] backdrop-blur-sm transition-colors duration-200 hover:border-white/15 hover:bg-white/[0.07]" />
+      )}
+
+      <motion.span className="relative z-10 font-medium tracking-[0.01em]">
         {name}
       </motion.span>
     </motion.button>
