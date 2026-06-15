@@ -24,6 +24,15 @@ body {
   min-height: 100vh;
 }
 
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
 ::selection {
   background: rgba(var(--accent-rgb), 0.35);
   color: #fff;
@@ -52,10 +61,22 @@ button {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+
+  .marquee-track {
+    animation: none !important;
+    transform: none !important;
+  }
 }
 
 @layer utilities {
   .text-balance {
     text-wrap: balance;
+  }
+
+  .marquee-track {
+    width: max-content;
+    display: flex;
+    align-items: center;
+    animation: marquee 28s linear infinite;
   }
 }

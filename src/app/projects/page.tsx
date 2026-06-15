@@ -6,13 +6,23 @@ import {
   AnimatePresence,
   useInView,
   useReducedMotion,
+  useScroll,
+  useTransform,
+  useMotionValueEvent,
 } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import Header from "../../components/Header";
 import ProjectTag from "../../components/ProjectTag";
 import ProjectCard from "../../components/ProjectCard";
-import { ArrowUpRight, Filter, Sparkles } from "lucide-react";
+import {
+  ArrowUpRight,
+  Filter,
+  Gem,
+  Github,
+  MessageCircle,
+  Sparkles,
+} from "lucide-react";
 import ParticleBackground from "../../components/particleBackground";
 import { useLanguage } from "../../context/LanguageContext";
 
@@ -83,22 +93,71 @@ const projectData = [
   },
   {
     id: 3,
-    title: "Arcade Lunar",
-    descriptionEn: "Web-Site presentation of Arcade Lunar",
-    descriptionPt: "Web-Site de apresentação do Arcade Lunar",
-    roleEn: "Landing page and visual presentation of the brand.",
-    rolePt: "Landing page e apresentação visual da marca.",
+    title: "MCC Financeiro",
+    descriptionEn:
+      "A full-stack financial management platform built to centralize cash flow, accounts, categories, transactions and operational insights through a modern dashboard, responsive workflows and a structured backend API.",
+    descriptionPt:
+      "Uma plataforma full stack de gestão financeira criada para centralizar fluxo de caixa, contas, categorias, transações e indicadores operacionais por meio de um dashboard moderno, fluxos responsivos e uma API backend estruturada.",
+    roleEn:
+      "Worked across both front-end and back-end, building the dashboard, financial management flows, authentication integration, theme system, reusable UI components and the API structure responsible for business rules, data access and financial summaries.",
+    rolePt:
+      "Atuei tanto no front-end quanto no back-end, construindo o dashboard, os fluxos de gestão financeira, a integração de autenticação, o sistema de temas, componentes reutilizáveis de UI e a estrutura da API responsável por regras de negócio, acesso aos dados e consolidação dos resumos financeiros.",
     impactEn:
-      "Improved brand perception with a stronger visual identity and clearer digital presence.",
+      "Delivered a stronger full-stack foundation for the financial product, improving daily operation visibility with secure data flows, organized domain logic and clear monitoring of balances, overdue items, recent transactions and category-based expense analysis.",
     impactPt:
-      "Melhorou a percepção da marca com identidade visual forte e presença digital mais clara.",
-    image: "/images/projects/arcadelunar.png",
+      "Entregou uma base full stack mais sólida para o produto financeiro, melhorando a visibilidade da operação com fluxos seguros de dados, lógica de domínio organizada e acompanhamento claro de saldos, atrasos, lançamentos recentes e análise de despesas por categoria.",
+    image: "/images/projects/financeiro.png",
     tag: ["All", "Web"],
-    previewUrl: "https://arcadelunar.com.br",
-    tecnologias: ["Next", "Typescript", "Tailwind", "I18n", "Framer-Motion"],
+    previewUrl: "https://finance.paglemon.org",
+    tecnologias: [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "Tailwind CSS",
+      "Recharts",
+      "Context API",
+      "Node.js",
+      "REST API",
+      "Authentication",
+      "Responsive Design",
+      "Dark/Light Theme",
+    ],
   },
   {
     id: 4,
+    featured: true,
+    title: "iChef24",
+    descriptionEn:
+      "An AI-powered recipe SaaS that combines personalized recipe generation, recipe management, subscription plans, favorites, history and a culinary community through integrated web, mobile and backend experiences.",
+    descriptionPt:
+      "Um SaaS de receitas com IA que combina geracao personalizada de receitas, gerenciamento de receitas, planos por assinatura, favoritos, historico e comunidade culinaria em uma experiencia integrada entre web, mobile e backend.",
+    roleEn:
+      "Worked across the full stack, building the web experience, mobile app flows and backend API architecture responsible for authentication, recipe generation with AI, plan control, payments, community features and real-time updates.",
+    rolePt:
+      "Atuei de ponta a ponta no produto, construindo a experiencia web, os fluxos do app mobile e a arquitetura da API backend responsavel por autenticacao, geracao de receitas com IA, controle de planos, pagamentos, recursos de comunidade e atualizacoes em tempo real.",
+    impactEn:
+      "Delivered a stronger product foundation for an AI culinary platform, improving how users create, save and share recipes while supporting subscription monetization, multilingual access and scalable integrations for payments, image handling and user engagement.",
+    impactPt:
+      "Entregou uma base mais solida para uma plataforma culinaria com IA, melhorando a forma como usuarios criam, salvam e compartilham receitas, ao mesmo tempo em que sustenta monetizacao por assinatura, acesso multilingue e integracoes escalaveis para pagamentos, imagens e engajamento.",
+    image: "/images/projects/ichef-web.png",
+    tag: ["All", "Web", "Mobile"],
+    previewUrl: "https://ichef24.com/",
+    tecnologias: [
+      "Next.js",
+      "React",
+      "TypeScript",
+      "NestJS",
+      "PostgreSQL",
+      "Redis",
+      "Stripe",
+      "OpenAI",
+      "Socket.IO",
+      "Tailwind CSS",
+      "Expo / React Native",
+    ],
+  },
+  {
+    id: 5,
     title: "Logistic Dashboard",
     descriptionEn: "Logistic management system",
     descriptionPt: "Sistema de gerenciamento logístico",
@@ -118,7 +177,7 @@ const projectData = [
     tecnologias: ["React", "TypeScript", "Node", "Tailwind", "MongoDB"],
   },
   {
-    id: 5,
+    id: 6,
     title: "Search Game (freelancer)",
     descriptionEn: "Word search app",
     descriptionPt: "Aplicativo de caça-palavras",
@@ -137,7 +196,7 @@ const projectData = [
     tecnologias: ["React-Native", "Javascript", "Style Components"],
   },
   {
-    id: 6,
+    id: 7,
     title: "Dashboard Page",
     descriptionEn: "Data management system",
     descriptionPt: "Sistema de gerenciamento de dados",
@@ -154,7 +213,7 @@ const projectData = [
     tecnologias: ["Next", "TypeScript", "Node", "Tailwind", "MongoDB"],
   },
   {
-    id: 7,
+    id: 8,
     title: "Banco Bet",
     descriptionEn:
       "Front-end of an internal system for bank management of affiliate accounts.",
@@ -173,7 +232,7 @@ const projectData = [
     tecnologias: ["React", "JavaScript", "Node", "Tailwind"],
   },
   {
-    id: 8,
+    id: 9,
     title: "React Notes Web Site",
     descriptionEn: "Creation of notes application",
     descriptionPt: "Criação de aplicação de notas",
@@ -195,9 +254,11 @@ const projectData = [
 export default function ProjectsSection() {
   const [tag, setTag] = useState<ProjectFilter>("All");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [showStickyTabs, setShowStickyTabs] = useState(false);
   const shouldReduceMotion = useReducedMotion();
   const { t, language } = useLanguage();
   const ref = useRef(null);
+  const featuredRef = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, amount: 0.1 });
   const filterLabels: Record<ProjectFilter, string> = {
     All: t("projects.filter_all"),
@@ -225,11 +286,13 @@ export default function ProjectsSection() {
   };
 
   const itemVariants = {
-    hidden: { y: 50, opacity: 0 },
+    hidden: { y: 56, opacity: 0, scale: 0.96, filter: "blur(10px)" },
     visible: {
       y: 0,
       opacity: 1,
-      transition: { type: "spring", stiffness: 100, damping: 12 },
+      scale: 1,
+      filter: "blur(0px)",
+      transition: { type: "spring", stiffness: 110, damping: 16 },
     },
   };
 
@@ -247,10 +310,38 @@ export default function ProjectsSection() {
     },
   };
 
+  const sectionReveal = {
+    hidden: { opacity: 0, y: 32, filter: "blur(10px)" },
+    visible: {
+      opacity: 1,
+      y: 0,
+      filter: "blur(0px)",
+      transition: {
+        duration: 0.65,
+        ease: [0.22, 1, 0.36, 1],
+      },
+    },
+  };
+
+  const { scrollYProgress } = useScroll({
+    target: featuredRef,
+    offset: ["start end", "end start"],
+  });
+  const { scrollY } = useScroll();
+  const featuredImageY = useTransform(
+    scrollYProgress,
+    [0, 1],
+    shouldReduceMotion ? [0, 0] : [-18, 18],
+  );
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    setShowStickyTabs(latest > 260);
+  });
+
   return (
     <section
       id="Projects"
-      className="min-w-full min-h-screen flex flex-col justify-center bg-[#121212] relative overflow-hidden"
+      className="relative flex min-h-screen min-w-full flex-col justify-center overflow-hidden bg-[#121212]"
     >
       <div className="absolute inset-0 z-0 opacity-40">
         <ParticleBackground />
@@ -279,17 +370,54 @@ export default function ProjectsSection() {
         <Header />
       </div>
 
-      <div className="p-6 md:p-12 relative z-10" ref={ref}>
+      <AnimatePresence>
+        {showStickyTabs && (
+          <motion.aside
+            className="fixed right-6 top-1/2 z-[80] hidden -translate-y-1/2 xl:block"
+            initial={{ opacity: 0, x: 32, scale: 0.96 }}
+            animate={{ opacity: 1, x: 0, scale: 1 }}
+            exit={{ opacity: 0, x: 24, scale: 0.97 }}
+            transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <div className="rounded-[1.5rem] border border-white/10 bg-[#0f0f10]/82 p-2 backdrop-blur-xl shadow-2xl shadow-black/30">
+              <div className="flex flex-col gap-2">
+                <ProjectTag
+                  onClick={() => handleTagChange("All")}
+                  name={filterLabels.All}
+                  isSelected={tag === "All"}
+                  className="w-24 justify-center text-[13px]"
+                />
+                <ProjectTag
+                  onClick={() => handleTagChange("Web")}
+                  name={filterLabels.Web}
+                  isSelected={tag === "Web"}
+                  className="w-24 justify-center text-[13px]"
+                />
+                <ProjectTag
+                  onClick={() => handleTagChange("Mobile")}
+                  name={filterLabels.Mobile}
+                  isSelected={tag === "Mobile"}
+                  className="w-24 justify-center text-[13px]"
+                />
+              </div>
+            </div>
+          </motion.aside>
+        )}
+      </AnimatePresence>
+
+      <div className="relative z-10 p-6 md:p-12" ref={ref}>
         <motion.div
-          className="flex flex-col items-center justify-center mb-12"
+          className="mx-auto mb-12 max-w-3xl text-center"
           variants={titleVariants}
           initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.4 }}
         >
           <motion.div
             className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#583ebc]/20 border border-[#583ebc]/30 text-[#a48eff] mb-4"
             initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true, amount: 0.4 }}
             transition={{ delay: 0.2, duration: 0.5 }}
           >
             <Sparkles size={16} className="animate-pulse" />
@@ -303,7 +431,7 @@ export default function ProjectsSection() {
           </h2>
 
           <motion.p
-            className="text-gray-400 text-center max-w-xl"
+            className="mx-auto max-w-2xl text-center text-gray-400"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4 }}
@@ -312,38 +440,49 @@ export default function ProjectsSection() {
           </motion.p>
         </motion.div>
 
-        <div className="relative mb-12">
-          <div className="flex justify-center items-center">
-            <motion.div
-              className="hidden md:flex flex-row justify-center items-center gap-3 py-6"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 0.5 }}
-            >
-              <ProjectTag
-                onClick={() => handleTagChange("All")}
-                name={filterLabels.All}
-                isSelected={tag === "All"}
-              />
-              <ProjectTag
-                onClick={() => handleTagChange("Web")}
-                name={filterLabels.Web}
-                isSelected={tag === "Web"}
-              />
-              <ProjectTag
-                onClick={() => handleTagChange("Mobile")}
-                name={filterLabels.Mobile}
-                isSelected={tag === "Mobile"}
-              />
-            </motion.div>
+        <div className="relative mx-auto mb-14 max-w-6xl">
+          <div className="flex items-center justify-center">
+            <AnimatePresence mode="wait">
+              {(!showStickyTabs || typeof window === "undefined") && (
+                <motion.div
+                  key="top-tabs"
+                  className="hidden rounded-full border border-white/10 bg-[#101011]/75 p-1.5 md:flex md:items-center md:justify-center md:gap-1.5"
+                  initial={{ opacity: 0, y: 18, scale: 0.98 }}
+                  whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -14, scale: 0.98 }}
+                  viewport={{ once: true, amount: 0.8 }}
+                  transition={{ duration: 0.26, ease: [0.22, 1, 0.36, 1] }}
+                >
+                  <ProjectTag
+                    onClick={() => handleTagChange("All")}
+                    name={filterLabels.All}
+                    isSelected={tag === "All"}
+                    className="min-w-[84px]"
+                  />
+                  <ProjectTag
+                    onClick={() => handleTagChange("Web")}
+                    name={filterLabels.Web}
+                    isSelected={tag === "Web"}
+                    className="min-w-[84px]"
+                  />
+                  <ProjectTag
+                    onClick={() => handleTagChange("Mobile")}
+                    name={filterLabels.Mobile}
+                    isSelected={tag === "Mobile"}
+                    className="min-w-[84px]"
+                  />
+                </motion.div>
+              )}
+            </AnimatePresence>
 
-            {/* Mobile filter toggle */}
             <motion.button
-              className="md:hidden flex items-center gap-2 text-white bg-[#1e1e1e]/80 backdrop-blur-sm px-4 py-2 rounded-full border border-[#583ebc]"
+              className="flex items-center gap-2 rounded-full border border-[#583ebc] bg-[#1e1e1e]/80 px-4 py-2 text-white backdrop-blur-sm md:hidden"
               onClick={() => setIsFilterOpen(!isFilterOpen)}
               whileTap={{ scale: 0.95 }}
               initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true, amount: 0.8 }}
             >
               <Filter size={16} />
               <span>
@@ -355,7 +494,7 @@ export default function ProjectsSection() {
           <AnimatePresence>
             {isFilterOpen && (
               <motion.div
-                className="md:hidden absolute z-20 mt-2 w-full bg-[#1e1e1e]/90 backdrop-blur-md rounded-lg border border-[#583ebc] overflow-hidden"
+                className="absolute z-20 mt-2 w-full overflow-hidden rounded-2xl border border-[#583ebc] bg-[#1e1e1e]/90 backdrop-blur-md md:hidden"
                 variants={filterVariants}
                 initial="closed"
                 animate="open"
@@ -386,229 +525,353 @@ export default function ProjectsSection() {
           </AnimatePresence>
         </div>
 
-        {featuredProject && (
+        <AnimatePresence mode="wait">
           <motion.div
-            className="mb-14 overflow-hidden rounded-[2rem] border border-white/10 bg-[#171717]/85 backdrop-blur-md"
-            initial={{ opacity: 0, y: 30 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-            transition={{ delay: 0.2, duration: 0.5 }}
+            key={tag}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.34, ease: [0.22, 1, 0.36, 1] }}
           >
-            <div className="grid gap-0 lg:grid-cols-[1.2fr_0.8fr]">
-              <div className="relative min-h-[320px] overflow-hidden">
-                <Image
-                  src={featuredProject.image}
-                  alt={featuredProject.title}
-                  fill
-                  className="object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#121212] via-[#121212]/55 to-transparent" />
-                <div className="absolute left-6 top-6 inline-flex items-center gap-2 rounded-full border border-[#583ebc]/30 bg-[#583ebc]/20 px-4 py-1.5 text-sm font-medium text-[#c2b5ff]">
-                  <Sparkles size={16} className="animate-pulse" />
-                  <span>{t("projects.featured_badge")}</span>
-                </div>
-              </div>
-
-              <div className="p-6 md:p-8">
-                <p className="mb-3 text-sm uppercase tracking-[0.2em] text-[#a48eff]">
-                  {t("projects.featured_title")}
-                </p>
-                <h3 className="mb-4 text-3xl font-bold text-white">
-                  {featuredProject.title}
-                </h3>
-                <p className="mb-6 text-gray-300 leading-relaxed">
-                  {language === "pt"
-                    ? featuredProject.descriptionPt
-                    : featuredProject.descriptionEn}
-                </p>
-
-                <div className="grid gap-4 md:grid-cols-2">
-                  <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                    <p className="mb-2 text-xs uppercase tracking-[0.2em] text-gray-400">
-                      {t("projects.featured_role")}
-                    </p>
-                    <p className="text-sm leading-relaxed text-gray-200">
-                      {language === "pt"
-                        ? featuredProject.rolePt
-                        : featuredProject.roleEn}
-                    </p>
-                  </div>
-                  <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
-                    <p className="mb-2 text-xs uppercase tracking-[0.2em] text-gray-400">
-                      {t("projects.featured_impact")}
-                    </p>
-                    <p className="text-sm leading-relaxed text-gray-200">
-                      {language === "pt"
-                        ? featuredProject.impactPt
-                        : featuredProject.impactEn}
-                    </p>
-                  </div>
-                </div>
-
-                <div className="mt-6 flex flex-wrap gap-2">
-                  {featuredProject.tecnologias.map((tech) => (
-                    <span
-                      key={tech}
-                      className="rounded-full border border-white/10 bg-[#221a43] px-3 py-1 text-xs text-[#ddd6ff]"
-                    >
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-
-                <div className="mt-8 flex flex-wrap gap-3">
-                  {featuredProject.previewUrl && (
-                    <Link
-                      href={featuredProject.previewUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 rounded-full bg-[#583ebc] px-5 py-3 font-medium text-white transition-colors hover:bg-[#4a32a0]"
-                    >
-                      {t("projects.visit_website")}
-                      <ArrowUpRight className="h-4 w-4" />
-                    </Link>
-                  )}
-                  {featuredProject.gitUrl && (
-                    <Link
-                      href={featuredProject.gitUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-3 font-medium text-white transition-colors hover:bg-white/10"
-                    >
-                      {t("projects.view_source_code")}
-                      <ArrowUpRight className="h-4 w-4" />
-                    </Link>
-                  )}
-                </div>
-              </div>
-            </div>
-          </motion.div>
-        )}
-
-        <motion.div
-          className="mb-6"
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ delay: 0.3, duration: 0.45 }}
-        >
-          <h3 className="text-2xl font-semibold text-white">
-            {t("projects.all_projects_title")}
-          </h3>
-        </motion.div>
-
-        <motion.div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-10"
-          variants={containerVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-        >
-          <AnimatePresence mode="wait">
-            {gridProjects.map((project) => (
+            {featuredProject && (
               <motion.div
-                key={project.id}
-                variants={itemVariants}
+                ref={featuredRef}
+                className="mx-auto mb-16 max-w-6xl overflow-hidden rounded-[2rem] border border-white/10 bg-[#171717]/85 backdrop-blur-md"
+                variants={sectionReveal}
+                initial="hidden"
+                whileInView="visible"
+                viewport={{ once: true, amount: 0.18 }}
+              >
+                <div className="grid gap-0 lg:grid-cols-[1.2fr_0.8fr]">
+                  <motion.div
+                    className="relative min-h-[320px] overflow-hidden"
+                    initial={{ opacity: 0, scale: 1.04 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true, amount: 0.25 }}
+                    transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+                  >
+                    <motion.div
+                      className="absolute inset-0"
+                      style={{ y: featuredImageY }}
+                    >
+                      <Image
+                        src={featuredProject.image}
+                        alt={featuredProject.title}
+                        fill
+                        className="object-cover scale-[1.06]"
+                      />
+                    </motion.div>
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#121212] via-[#121212]/55 to-transparent" />
+                    <div className="absolute left-6 top-6 inline-flex items-center gap-2 rounded-full border border-[#583ebc]/20 bg-[#583ebc]/10 px-4 py-1.5 text-sm font-medium text-white/85">
+                      <Sparkles size={16} className="animate-pulse" />
+                      <span>{t("projects.featured_badge")}</span>
+                    </div>
+                  </motion.div>
+
+                  <motion.div
+                    className="p-6 md:p-8"
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, amount: 0.2 }}
+                    variants={{
+                      hidden: { opacity: 0 },
+                      visible: {
+                        opacity: 1,
+                        transition: {
+                          staggerChildren: 0.08,
+                          delayChildren: 0.16,
+                        },
+                      },
+                    }}
+                  >
+                    <motion.p
+                      className="mb-3 text-sm uppercase tracking-[0.2em] text-gray-400"
+                      variants={itemVariants}
+                    >
+                      {t("projects.featured_title")}
+                    </motion.p>
+                    <motion.h3
+                      className="mb-4 text-3xl font-bold text-white"
+                      variants={itemVariants}
+                    >
+                      {featuredProject.title}
+                    </motion.h3>
+                    <motion.p
+                      className="mb-6 text-gray-300 leading-relaxed"
+                      variants={itemVariants}
+                    >
+                      {language === "pt"
+                        ? featuredProject.descriptionPt
+                        : featuredProject.descriptionEn}
+                    </motion.p>
+
+                    <motion.div
+                      className="grid gap-6 border-y border-white/10 py-6 md:grid-cols-2"
+                      variants={itemVariants}
+                    >
+                      <div>
+                        <p className="text-xs uppercase tracking-[0.2em] text-gray-500">
+                          {t("projects.featured_role")}
+                        </p>
+                        <p className="mt-3 text-sm leading-relaxed text-gray-200">
+                          {language === "pt"
+                            ? featuredProject.rolePt
+                            : featuredProject.roleEn}
+                        </p>
+                      </div>
+                      <div>
+                        <p className="text-xs uppercase tracking-[0.2em] text-gray-500">
+                          {t("projects.featured_impact")}
+                        </p>
+                        <p className="mt-3 text-sm leading-relaxed text-gray-200">
+                          {language === "pt"
+                            ? featuredProject.impactPt
+                            : featuredProject.impactEn}
+                        </p>
+                      </div>
+                    </motion.div>
+
+                    <motion.div
+                      className="mt-6 flex flex-wrap gap-2"
+                      variants={itemVariants}
+                    >
+                      {featuredProject.tecnologias.map((tech) => (
+                        <span
+                          key={tech}
+                          className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-gray-200"
+                        >
+                          {tech}
+                        </span>
+                      ))}
+                    </motion.div>
+
+                    <motion.div
+                      className="mt-8 flex flex-wrap gap-3"
+                      variants={itemVariants}
+                    >
+                      {featuredProject.previewUrl && (
+                        <Link
+                          href={featuredProject.previewUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 rounded-full bg-[#583ebc] px-5 py-3 font-medium text-white transition-colors hover:bg-[#4a32a0]"
+                        >
+                          {t("projects.website")}
+                          <ArrowUpRight className="h-4 w-4" />
+                        </Link>
+                      )}
+                      {featuredProject.gitUrl && (
+                        <Link
+                          href={featuredProject.gitUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-3 font-medium text-white transition-colors hover:bg-white/10"
+                        >
+                          {t("projects.code")}
+                          <ArrowUpRight className="h-4 w-4" />
+                        </Link>
+                      )}
+                    </motion.div>
+                  </motion.div>
+                </div>
+              </motion.div>
+            )}
+
+            <motion.div
+              className="mx-auto mb-6 flex max-w-6xl items-end justify-between gap-6"
+              variants={sectionReveal}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.5 }}
+            >
+              <div>
+                <h3 className="text-2xl font-semibold text-white">
+                  {t("projects.all_projects_title")}
+                </h3>
+                <p className="mt-2 max-w-2xl text-sm text-gray-400">
+                  {t("projects.featured_description")}
+                </p>
+              </div>
+            </motion.div>
+
+            <motion.div
+              className="mx-auto grid max-w-6xl grid-cols-1 gap-8 md:gap-10 lg:grid-cols-2"
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true, amount: 0.08 }}
+            >
+              {gridProjects.map((project, index) => (
+                <motion.div
+                  key={`${tag}-${project.id}`}
+                  layout
+                  initial={{
+                    opacity: 0,
+                    x: shouldReduceMotion ? 0 : index % 2 === 0 ? -42 : 42,
+                    y: 28,
+                    scale: 0.985,
+                  }}
+                  animate={{
+                    opacity: 1,
+                    x: 0,
+                    y: 0,
+                    scale: 1,
+                  }}
+                  exit={{
+                    opacity: 0,
+                    x: shouldReduceMotion ? 0 : index % 2 === 0 ? -26 : 26,
+                    y: 16,
+                    scale: 0.985,
+                  }}
+                  transition={{
+                    duration: 0.48,
+                    delay: shouldReduceMotion ? 0 : 0.04 + index * 0.055,
+                    ease: [0.22, 1, 0.36, 1],
+                  }}
+                  className="relative"
+                >
+                  <ProjectCard
+                    title={project.title}
+                    description={
+                      language === "pt"
+                        ? project.descriptionPt
+                        : project.descriptionEn
+                    }
+                    role={language === "pt" ? project.rolePt : project.roleEn}
+                    imgUrl={project.image}
+                    tags={project.tag}
+                    gitUrl={project?.gitUrl}
+                    previewUrl={project?.previewUrl}
+                    tecnologias={project.tecnologias}
+                  />
+                </motion.div>
+              ))}
+
+              <motion.div
+                key={`cta-${tag}`}
                 layout
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0, y: 20 }}
-                transition={{ duration: 0.3 }}
+                initial={{
+                  opacity: 0,
+                  x: shouldReduceMotion
+                    ? 0
+                    : gridProjects.length % 2 === 0
+                      ? -42
+                      : 42,
+                  y: 28,
+                  scale: 0.985,
+                }}
+                animate={{ opacity: 1, x: 0, y: 0, scale: 1 }}
+                exit={{
+                  opacity: 0,
+                  x: shouldReduceMotion
+                    ? 0
+                    : gridProjects.length % 2 === 0
+                      ? -26
+                      : 26,
+                  y: 16,
+                  scale: 0.985,
+                }}
+                transition={{
+                  duration: 0.48,
+                  delay: shouldReduceMotion
+                    ? 0
+                    : 0.08 + gridProjects.length * 0.055,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
                 className="relative"
               >
-                <ProjectCard
-                  title={project.title}
-                  description={
-                    language === "pt"
-                      ? project.descriptionPt
-                      : project.descriptionEn
-                  }
-                  role={language === "pt" ? project.rolePt : project.roleEn}
-                  imgUrl={project.image}
-                  tags={project.tag}
-                  gitUrl={project?.gitUrl}
-                  previewUrl={project?.previewUrl}
-                  tecnologias={project.tecnologias}
-                />
+                <div className="flex h-full flex-col overflow-hidden rounded-[2rem] border border-white/10 bg-[#151515]/90 backdrop-blur-md">
+                  <div className="relative flex min-h-[280px] items-center justify-center overflow-hidden bg-gradient-to-br from-[#171717] via-[#111111] to-[#090909]">
+                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(88,62,188,0.18),transparent_35%),linear-gradient(135deg,rgba(255,255,255,0.04),transparent)]" />
+                    <motion.div
+                      animate={
+                        shouldReduceMotion
+                          ? undefined
+                          : { y: [0, -10, 0], opacity: [0.7, 1, 0.7] }
+                      }
+                      transition={{
+                        repeat: Infinity,
+                        duration: 4.5,
+                        ease: "easeInOut",
+                      }}
+                      className="relative z-10 text-center"
+                    >
+                      <Gem className="mx-auto h-10 w-10 text-white/70" />
+                      <p className="mt-4 text-sm font-semibold uppercase tracking-[0.2em] text-white/45">
+                        {t("projects.cta_card_badge")}
+                      </p>
+                    </motion.div>
+                  </div>
+
+                  <div className="flex flex-grow flex-col p-6 md:p-7">
+                    <h3 className="text-3xl font-semibold text-white">
+                      {t("projects.cta_card_title")}
+                    </h3>
+                    <p className="mt-3 text-lg font-medium text-gray-300">
+                      {t("projects.cta_card_subtitle")}
+                    </p>
+                    <p className="mt-5 flex-grow text-[15px] leading-relaxed text-gray-300">
+                      {t("projects.cta_card_description")}
+                    </p>
+
+                    <div className="mt-6 flex flex-wrap gap-2.5">
+                      {[
+                        t("hero.metrics_delivery_value"),
+                        t("hero.metrics_stack_value"),
+                        t("hero.metrics_experience_value"),
+                      ].map((item) => (
+                        <span
+                          key={item}
+                          className="rounded-full bg-white/5 px-3 py-1.5 text-xs text-gray-200 shadow-[0_0_0_1px_rgba(255,255,255,0.06)]"
+                        >
+                          {item}
+                        </span>
+                      ))}
+                    </div>
+
+                    <div className="mt-8 flex flex-wrap gap-3">
+                      <Link
+                        href="https://github.com/CalvinSoares"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm font-medium text-white transition-colors hover:bg-white/10"
+                      >
+                        <Github className="h-4 w-4" />
+                        GitHub
+                      </Link>
+                      <Link
+                        href="/Contact"
+                        className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-medium text-black transition-colors hover:bg-white/90"
+                      >
+                        <MessageCircle className="h-4 w-4" />
+                        {t("projects.contact_me")}
+                      </Link>
+                    </div>
+                  </div>
+                </div>
               </motion.div>
-            ))}
-          </AnimatePresence>
-        </motion.div>
+            </motion.div>
+          </motion.div>
+        </AnimatePresence>
 
         <motion.div
-          className="flex flex-col text-center items-center justify-center mt-24"
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ delay: 0.5, duration: 0.5 }}
+          className="mx-auto mt-20 max-w-3xl border-t border-white/10 pt-10 text-center"
+          variants={sectionReveal}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.5 }}
         >
+          <p className="mb-6 text-gray-300">{t("contact.description")}</p>
           <Link
             href="/Contact"
-            className="group relative overflow-hidden rounded-full mt-3 w-48 h-12 flex items-center justify-center font-bold"
+            className="group relative mt-3 inline-flex items-center justify-center overflow-hidden rounded-full border border-[#583ebc]/40 bg-[#171717]/70 px-6 py-3 text-sm font-medium text-white shadow-lg shadow-[#583ebc]/10"
           >
-            <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-[#583ebc] to-[#7c5ce6] opacity-80"></span>
-            <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-[#583ebc] to-[#7c5ce6] opacity-0 group-hover:opacity-80 transition-opacity duration-300"></span>
-            <span className="absolute inset-0 w-full h-full border border-white/20 rounded-full"></span>
-            <span className="relative z-10 flex items-center gap-2 text-white">
-              <span className="transition-transform duration-300 group-hover:translate-x-[-4px]">
-                {t("projects.contact_me")}
-              </span>
-              <ArrowUpRight className="w-4 h-4 transition-all duration-300 group-hover:translate-x-1 group-hover:translate-y-[-4px]" />
+            <span className="absolute inset-0 bg-gradient-to-r from-[#583ebc] to-[#7c5ce6] opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
+            <span className="relative z-10 flex items-center gap-2">
+              {t("projects.contact_me")}
+              <ArrowUpRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
             </span>
           </Link>
-
-          <div className="sociais flex gap-4 mt-8 mb-12">
-            <motion.div
-              whileHover={{ y: -8, scale: 1.1 }}
-              transition={{ type: "spring", stiffness: 400 }}
-            >
-              <Link
-                target="_blank"
-                href="https://github.com/CalvinSoares"
-                className="block p-3 bg-[#1e1e1e]/60 backdrop-blur-sm rounded-full hover:bg-[#583ebc] transition-colors duration-300 border border-white/10"
-              >
-                <Image
-                  src="/images/github.svg"
-                  alt="Github Icon"
-                  width={24}
-                  height={24}
-                  className="w-5 h-5"
-                />
-              </Link>
-            </motion.div>
-            <motion.div
-              whileHover={{ y: -8, scale: 1.1 }}
-              transition={{ type: "spring", stiffness: 400 }}
-            >
-              <Link
-                target="_blank"
-                href="https://www.linkedin.com/in/calvinsoares/"
-                className="block p-3 bg-[#1e1e1e]/60 backdrop-blur-sm rounded-full hover:bg-[#583ebc] transition-colors duration-300 border border-white/10"
-              >
-                <Image
-                  src="/images/linkedin.svg"
-                  alt="Linkedin Icon"
-                  width={24}
-                  height={24}
-                  className="w-5 h-5"
-                />
-              </Link>
-            </motion.div>
-            <motion.div
-              whileHover={{ y: -8, scale: 1.1 }}
-              transition={{ type: "spring", stiffness: 400 }}
-            >
-              <Link
-                target="_blank"
-                href="https://www.tiktok.com/@pato_programador?lang=pt-BR"
-                className="block p-3 bg-[#1e1e1e]/60 backdrop-blur-sm rounded-full hover:bg-[#583ebc] transition-colors duration-300 border border-white/10"
-              >
-                <Image
-                  src="/images/tiktok.svg"
-                  alt="Tiktok Icon"
-                  width={24}
-                  height={24}
-                  className="w-5 h-5"
-                />
-              </Link>
-            </motion.div>
-          </div>
         </motion.div>
       </div>
     </section>

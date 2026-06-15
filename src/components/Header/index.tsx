@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/solid";
 import MenuOverlay from "../MenuOverlay";
-import devImg from "../../../public/images/devImg.jpg";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useLanguage } from "../../context/LanguageContext";
@@ -42,34 +41,11 @@ export default function Header() {
           </button>
         </div>
         <div className="menu hidden md:block md:w-auto" id="navbar">
-          <div className="flex text-white items-center md:p-0 md:flex-row md:space-x-8">
-            {navItems.slice(0, 2).map((item) => (
+          <div className="flex items-center text-white md:flex-row md:gap-3 md:p-0">
+            {navItems.map((item) => (
               <Link
                 key={item.href}
-                className={`items-center flex justify-center w-32 h-12 rounded-3xl duration-300 cursor-pointer ${
-                  pathname === item.href
-                    ? "bg-[#583ebc] text-white shadow-lg shadow-[#583ebc]/30"
-                    : "hover:bg-[#583ebc]"
-                }`}
-                href={item.href}
-              >
-                {item.label}
-              </Link>
-            ))}
-
-            <div>
-              <Image
-                src={devImg}
-                alt={t("common.profile_name")}
-                className="rounded-full w-[50px] h-[50px] mx-6 sm:mx-12 md:mx-12 lg:mx-24"
-                priority
-              />
-            </div>
-
-            {navItems.slice(2).map((item) => (
-              <Link
-                key={item.href}
-                className={`items-center flex justify-center w-32 h-12 rounded-3xl duration-300 cursor-pointer ${
+                className={`flex h-12 min-w-[116px] items-center justify-center rounded-3xl px-5 duration-300 cursor-pointer ${
                   pathname === item.href
                     ? "bg-[#583ebc] text-white shadow-lg shadow-[#583ebc]/30"
                     : "hover:bg-[#583ebc]"
