@@ -80,3 +80,10 @@ button {
     animation: marquee 28s linear infinite;
   }
 }
+
+.shapegrid-canvas {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
