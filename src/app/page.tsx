@@ -6,7 +6,7 @@ import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, BriefcaseBusiness, Mail, Sparkles } from "lucide-react";
 import Header from "../components/Header";
-import ParticleField from "../components/ParticlesField";
+import ShapeGrid from "../components/ShapeGrid";
 import { useLanguage } from "../context/LanguageContext";
 
 export default function Home() {
@@ -93,8 +93,22 @@ export default function Home() {
       className="relative min-h-screen w-full overflow-hidden bg-[#121212]"
     >
       <div className="absolute inset-0 z-0">
-        <ParticleField />
+        <ShapeGrid
+          direction="diagonal"
+          speed={1.15}
+          borderColor="#5d35ff"
+          squareSize={44}
+          hoverFillColor="rgba(82, 39, 255, 0.32)"
+          shape="hexagon"
+          hoverTrailAmount={16}
+          glowColor="#7c5ce6"
+          ambientGlow={0.95}
+          pulseStrength={1.15}
+        />
       </div>
+      <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_top,rgba(82,39,255,0.16),transparent_35%),linear-gradient(180deg,rgba(18,18,18,0.2)_0%,rgba(18,18,18,0.72)_55%,rgba(18,18,18,0.92)_100%)]" />
+      <div className="absolute inset-x-0 top-0 z-0 h-32 bg-gradient-to-b from-[#121212] to-transparent" />
+      <div className="absolute inset-x-0 bottom-0 z-0 h-32 bg-gradient-to-t from-[#121212] to-transparent" />
 
       <motion.div
         className="absolute top-20 -left-32 h-96 w-96 rounded-full bg-gradient-to-r from-purple-700/20 to-indigo-700/10 blur-3xl"

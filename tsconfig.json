@@ -10,6 +10,12 @@
     "strict": false,
     "noEmit": true,
     "incremental": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": [
+        "./src/*"
+      ]
+    },
     "esModuleInterop": true,
     "module": "esnext",
     "moduleResolution": "bundler",
