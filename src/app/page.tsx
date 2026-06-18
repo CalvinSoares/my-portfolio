@@ -106,16 +106,16 @@ export default function Home() {
           pulseStrength={1.15}
         />
       </div>
-      <div className="absolute inset-0 z-0 bg-[radial-gradient(circle_at_top,rgba(82,39,255,0.16),transparent_35%),linear-gradient(180deg,rgba(18,18,18,0.2)_0%,rgba(18,18,18,0.72)_55%,rgba(18,18,18,0.92)_100%)]" />
-      <div className="absolute inset-x-0 top-0 z-0 h-32 bg-gradient-to-b from-[#121212] to-transparent" />
-      <div className="absolute inset-x-0 bottom-0 z-0 h-32 bg-gradient-to-t from-[#121212] to-transparent" />
+      <div className="pointer-events-none absolute inset-0 z-0 bg-[radial-gradient(circle_at_top,rgba(82,39,255,0.16),transparent_35%),linear-gradient(180deg,rgba(18,18,18,0.2)_0%,rgba(18,18,18,0.72)_55%,rgba(18,18,18,0.92)_100%)]" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 z-0 h-32 bg-gradient-to-b from-[#121212] to-transparent" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-0 h-32 bg-gradient-to-t from-[#121212] to-transparent" />
 
       <motion.div
-        className="absolute top-20 -left-32 h-96 w-96 rounded-full bg-gradient-to-r from-purple-700/20 to-indigo-700/10 blur-3xl"
+        className="pointer-events-none absolute top-20 -left-32 h-96 w-96 rounded-full bg-gradient-to-r from-purple-700/20 to-indigo-700/10 blur-3xl"
         style={{ x: parallax2.x, y: parallax2.y }}
       />
       <motion.div
-        className="absolute bottom-20 -right-32 h-96 w-96 rounded-full bg-gradient-to-r from-violet-700/10 to-fuchsia-700/20 blur-3xl"
+        className="pointer-events-none absolute bottom-20 -right-32 h-96 w-96 rounded-full bg-gradient-to-r from-violet-700/10 to-fuchsia-700/20 blur-3xl"
         style={{ x: -parallax2.x, y: -parallax2.y }}
       />
 
