@@ -437,8 +437,29 @@ export default function ShapeGrid({
       }
     };
 
+    const clearHoveredCell = () => {
+      if (hoveredSquare.current && hoverTrailAmount > 0) {
+        trailCells.current.unshift({ ...hoveredSquare.current });
+        if (trailCells.current.length > hoverTrailAmount) {
+          trailCells.current.length = hoverTrailAmount;
+        }
+      }
+      hoveredSquare.current = null;
+    };
+
     const handleMouseMove = (event: MouseEvent) => {
       const rect = canvas.getBoundingClientRect();
+
+      if (
+        event.clientX < rect.left ||
+        event.clientX > rect.right ||
+        event.clientY < rect.top ||
+        event.clientY > rect.bottom
+      ) {
+        clearHoveredCell();
+        return;
+      }
+
       const mouseX = event.clientX - rect.left;
       const mouseY = event.clientY - rect.top;
 
@@ -487,26 +508,20 @@ export default function ShapeGrid({
     };
 
     const handleMouseLeave = () => {
-      if (hoveredSquare.current && hoverTrailAmount > 0) {
-        trailCells.current.unshift({ ...hoveredSquare.current });
-        if (trailCells.current.length > hoverTrailAmount) {
-          trailCells.current.length = hoverTrailAmount;
-        }
-      }
-      hoveredSquare.current = null;
+      clearHoveredCell();
     };
 
     window.addEventListener("resize", resizeCanvas);
-    canvas.addEventListener("mousemove", handleMouseMove);
-    canvas.addEventListener("mouseleave", handleMouseLeave);
+    window.addEventListener("mousemove", handleMouseMove);
+    window.addEventListener("mouseleave", handleMouseLeave);
 
     resizeCanvas();
     requestRef.current = window.requestAnimationFrame(updateAnimation);
 
     return () => {
       window.removeEventListener("resize", resizeCanvas);
-      canvas.removeEventListener("mousemove", handleMouseMove);
-      canvas.removeEventListener("mouseleave", handleMouseLeave);
+      window.removeEventListener("mousemove", handleMouseMove);
+      window.removeEventListener("mouseleave", handleMouseLeave);
 
       if (requestRef.current) {
         window.cancelAnimationFrame(requestRef.current);
