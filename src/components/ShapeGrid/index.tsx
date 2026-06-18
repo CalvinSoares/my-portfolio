@@ -115,7 +115,7 @@ export default function ShapeGrid({
       cx: number,
       cy: number,
       size: number,
-      flip: boolean
+      flip: boolean,
     ) => {
       ctx.beginPath();
       if (flip) {
@@ -134,7 +134,7 @@ export default function ShapeGrid({
       drawShape: () => void,
       alpha: number,
       centerDistance: number,
-      maxDistance: number
+      maxDistance: number,
     ) => {
       const distanceFade = 1 - clamp(centerDistance / maxDistance, 0, 1);
       const glowOpacity = clamp(alpha * (0.45 + distanceFade * 0.4), 0, 0.95);
@@ -153,14 +153,19 @@ export default function ShapeGrid({
       drawShape: () => void,
       centerDistance: number,
       maxDistance: number,
-      alphaBoost: number
+      alphaBoost: number,
     ) => {
       const distanceFade = 1 - clamp(centerDistance / maxDistance, 0, 1);
-      const pulse = 0.55 + 0.45 * Math.sin(timeRef.current * 0.0018 - centerDistance * 0.045);
+      const pulse =
+        0.55 +
+        0.45 * Math.sin(timeRef.current * 0.0018 - centerDistance * 0.045);
       const strokeAlpha = clamp(
-        0.18 + distanceFade * ambientGlow * 0.26 + pulse * pulseStrength * 0.18 + alphaBoost,
+        0.18 +
+          distanceFade * ambientGlow * 0.26 +
+          pulse * pulseStrength * 0.18 +
+          alphaBoost,
         0.12,
-        0.9
+        0.9,
       );
 
       ctx.save();
@@ -173,8 +178,8 @@ export default function ShapeGrid({
     };
 
     const drawGrid = () => {
-      const width = canvas.width / (Math.min(window.devicePixelRatio || 1, 2));
-      const height = canvas.height / (Math.min(window.devicePixelRatio || 1, 2));
+      const width = canvas.width / Math.min(window.devicePixelRatio || 1, 2);
+      const height = canvas.height / Math.min(window.devicePixelRatio || 1, 2);
       const centerX = width / 2;
       const centerY = height / 2;
       const maxDistance = Math.sqrt(width * width + height * height) / 2;
@@ -183,7 +188,8 @@ export default function ShapeGrid({
 
       if (isHex) {
         const colShift = Math.floor(gridOffset.current.x / hexHoriz);
-        const offsetX = ((gridOffset.current.x % hexHoriz) + hexHoriz) % hexHoriz;
+        const offsetX =
+          ((gridOffset.current.x % hexHoriz) + hexHoriz) % hexHoriz;
         const offsetY = ((gridOffset.current.y % hexVert) + hexVert) % hexVert;
         const cols = Math.ceil(width / hexHoriz) + 3;
         const rows = Math.ceil(height / hexVert) + 3;
@@ -203,7 +209,12 @@ export default function ShapeGrid({
             if (alpha > 0) {
               drawActiveShape(drawShape, alpha, centerDistance, maxDistance);
             }
-            drawStrokeShape(drawShape, centerDistance, maxDistance, alpha * 0.28);
+            drawStrokeShape(
+              drawShape,
+              centerDistance,
+              maxDistance,
+              alpha * 0.28,
+            );
           }
         }
       } else if (isTri) {
@@ -221,16 +232,22 @@ export default function ShapeGrid({
             const cx = col * halfW + offsetX;
             const cy = row * squareSize + squareSize / 2 + offsetY;
             const flip =
-              ((col + colShift + row + rowShift) % 2 + 2) % 2 !== 0;
+              (((col + colShift + row + rowShift) % 2) + 2) % 2 !== 0;
             const cellKey = `${col},${row}`;
             const alpha = cellOpacities.current.get(cellKey) ?? 0;
             const centerDistance = Math.hypot(cx - centerX, cy - centerY);
-            const drawShape = () => drawTriangle(cx, cy, squareSize * 0.8, flip);
+            const drawShape = () =>
+              drawTriangle(cx, cy, squareSize * 0.8, flip);
 
             if (alpha > 0) {
               drawActiveShape(drawShape, alpha, centerDistance, maxDistance);
             }
-            drawStrokeShape(drawShape, centerDistance, maxDistance, alpha * 0.28);
+            drawStrokeShape(
+              drawShape,
+              centerDistance,
+              maxDistance,
+              alpha * 0.28,
+            );
           }
         }
       } else if (shape === "circle") {
@@ -253,7 +270,12 @@ export default function ShapeGrid({
             if (alpha > 0) {
               drawActiveShape(drawShape, alpha, centerDistance, maxDistance);
             }
-            drawStrokeShape(drawShape, centerDistance, maxDistance, alpha * 0.25);
+            drawStrokeShape(
+              drawShape,
+              centerDistance,
+              maxDistance,
+              alpha * 0.25,
+            );
           }
         }
       } else {
@@ -282,7 +304,12 @@ export default function ShapeGrid({
             if (alpha > 0) {
               drawActiveShape(drawShape, alpha, centerDistance, maxDistance);
             }
-            drawStrokeShape(drawShape, centerDistance, maxDistance, alpha * 0.22);
+            drawStrokeShape(
+              drawShape,
+              centerDistance,
+              maxDistance,
+              alpha * 0.22,
+            );
           }
         }
       }
@@ -293,7 +320,7 @@ export default function ShapeGrid({
         0,
         centerX,
         centerY,
-        maxDistance
+        maxDistance,
       );
       purpleGlow.addColorStop(0, "rgba(82, 39, 255, 0.22)");
       purpleGlow.addColorStop(0.35, "rgba(82, 39, 255, 0.1)");
@@ -308,7 +335,7 @@ export default function ShapeGrid({
         Math.min(width, height) * 0.15,
         centerX,
         centerY,
-        maxDistance
+        maxDistance,
       );
       vignette.addColorStop(0, "rgba(0, 0, 0, 0)");
       vignette.addColorStop(0.65, "rgba(10, 8, 22, 0.08)");
@@ -321,10 +348,7 @@ export default function ShapeGrid({
       const targets = new Map<string, number>();
 
       if (hoveredSquare.current) {
-        targets.set(
-          `${hoveredSquare.current.x},${hoveredSquare.current.y}`,
-          1
-        );
+        targets.set(`${hoveredSquare.current.x},${hoveredSquare.current.y}`, 1);
       }
 
       if (hoverTrailAmount > 0) {
@@ -334,19 +358,19 @@ export default function ShapeGrid({
           if (!targets.has(key)) {
             targets.set(
               key,
-              (trailCells.current.length - i) / (trailCells.current.length + 1)
+              (trailCells.current.length - i) / (trailCells.current.length + 1),
             );
           }
         }
       }
 
-      for (const [key] of targets) {
+      targets.forEach((_, key) => {
         if (!cellOpacities.current.has(key)) {
           cellOpacities.current.set(key, 0);
         }
-      }
+      });
 
-      for (const [key, opacity] of cellOpacities.current) {
+      cellOpacities.current.forEach((opacity, key) => {
         const target = targets.get(key) ?? 0;
         const next = opacity + (target - opacity) * 0.15;
 
@@ -355,7 +379,7 @@ export default function ShapeGrid({
         } else {
           cellOpacities.current.set(key, next);
         }
-      }
+      });
     };
 
     const updateAnimation = (time: number) => {
@@ -420,7 +444,8 @@ export default function ShapeGrid({
 
       if (isHex) {
         const colShift = Math.floor(gridOffset.current.x / hexHoriz);
-        const offsetX = ((gridOffset.current.x % hexHoriz) + hexHoriz) % hexHoriz;
+        const offsetX =
+          ((gridOffset.current.x % hexHoriz) + hexHoriz) % hexHoriz;
         const offsetY = ((gridOffset.current.y % hexVert) + hexVert) % hexVert;
         const adjustedX = mouseX - offsetX;
         const adjustedY = mouseY - offsetY;
