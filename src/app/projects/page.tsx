@@ -46,7 +46,7 @@ const projectData = [
       "Entregou uma base mais sólida para o produto, com experiência refinada, APIs seguras e uma arquitetura pronta para evoluir recursos premium.",
     image: "/images/projects/quacklinks.png",
     tag: ["All", "Web"],
-    previewUrl: "https://quacklinks.duckdns.org/",
+    previewUrl: "https://quacklinks.com.br/",
     tecnologias: [
       "Vue.js",
       "TypeScript",
