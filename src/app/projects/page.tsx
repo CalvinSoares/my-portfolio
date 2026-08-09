@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import {
   motion,
   AnimatePresence,
@@ -15,18 +15,21 @@ import Link from "next/link";
 import Header from "../../components/Header";
 import ProjectTag from "../../components/ProjectTag";
 import ProjectCard from "../../components/ProjectCard";
+import ProjectDetailsModal from "../../components/ProjectDetailsModal";
 import {
   ArrowUpRight,
   Filter,
   Gem,
   Github,
   MessageCircle,
+  MonitorPlay,
   Sparkles,
 } from "lucide-react";
 import ParticleBackground from "../../components/particleBackground";
 import { useLanguage } from "../../context/LanguageContext";
 
 type ProjectFilter = "All" | "Web" | "Mobile";
+type Project = (typeof projectData)[number];
 
 const projectData = [
   {
@@ -109,6 +112,7 @@ const projectData = [
     image: "/images/projects/financeiro.png",
     tag: ["All", "Web"],
     previewUrl: "https://finance.paglemon.org",
+    demoUrl: "https://finance-demo-jade.vercel.app/",
     tecnologias: [
       "Next.js",
       "React",
@@ -255,6 +259,7 @@ export default function ProjectsSection() {
   const [tag, setTag] = useState<ProjectFilter>("All");
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [showStickyTabs, setShowStickyTabs] = useState(false);
+  const [selectedProject, setSelectedProject] = useState<Project | null>(null);
   const shouldReduceMotion = useReducedMotion();
   const { t, language } = useLanguage();
   const ref = useRef(null);
@@ -266,9 +271,31 @@ export default function ProjectsSection() {
     Mobile: t("projects.filter_mobile"),
   };
 
+  // Hydrate the filter from the URL on mount so a shared/reloaded link keeps
+  // its selection (e.g. /projects?filter=Mobile).
+  useEffect(() => {
+    const fromUrl = new URLSearchParams(window.location.search).get("filter");
+    if (fromUrl === "Web" || fromUrl === "Mobile" || fromUrl === "All") {
+      setTag(fromUrl);
+    }
+  }, []);
+
   const handleTagChange = (newTag: ProjectFilter) => {
     setTag(newTag);
     setIsFilterOpen(false);
+
+    const params = new URLSearchParams(window.location.search);
+    if (newTag === "All") {
+      params.delete("filter");
+    } else {
+      params.set("filter", newTag);
+    }
+    const query = params.toString();
+    window.history.replaceState(
+      null,
+      "",
+      query ? `${window.location.pathname}?${query}` : window.location.pathname,
+    );
   };
 
   const filteredProjects = projectData.filter((project) =>
@@ -649,6 +676,20 @@ export default function ProjectsSection() {
                       className="mt-8 flex flex-wrap gap-3"
                       variants={itemVariants}
                     >
+                      {featuredProject.demoUrl && (
+                        <Link
+                          href={featuredProject.demoUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="group/demo relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 px-5 py-3 font-semibold text-white shadow-lg shadow-emerald-500/20 transition-shadow hover:shadow-emerald-500/40"
+                        >
+                          <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 group-hover/demo:translate-x-full" />
+                          <MonitorPlay className="relative h-4 w-4" />
+                          <span className="relative">
+                            {t("projects.demo_live")}
+                          </span>
+                        </Link>
+                      )}
                       {featuredProject.previewUrl && (
                         <Link
                           href={featuredProject.previewUrl}
@@ -742,7 +783,9 @@ export default function ProjectsSection() {
                     tags={project.tag}
                     gitUrl={project?.gitUrl}
                     previewUrl={project?.previewUrl}
+                    demoUrl={project?.demoUrl}
                     tecnologias={project.tecnologias}
+                    onDetails={() => setSelectedProject(project)}
                   />
                 </motion.div>
               ))}
@@ -874,6 +917,31 @@ export default function ProjectsSection() {
           </Link>
         </motion.div>
       </div>
+
+      <ProjectDetailsModal
+        isOpen={selectedProject !== null}
+        onClose={() => setSelectedProject(null)}
+        project={{
+          title: selectedProject?.title ?? "",
+          description:
+            (language === "pt"
+              ? selectedProject?.descriptionPt
+              : selectedProject?.descriptionEn) ?? "",
+          role:
+            language === "pt"
+              ? selectedProject?.rolePt
+              : selectedProject?.roleEn,
+          impact:
+            language === "pt"
+              ? selectedProject?.impactPt
+              : selectedProject?.impactEn,
+          imgUrl: selectedProject?.image ?? "",
+          gitUrl: selectedProject?.gitUrl,
+          previewUrl: selectedProject?.previewUrl,
+          demoUrl: selectedProject?.demoUrl,
+          tecnologias: selectedProject?.tecnologias ?? [],
+        }}
+      />
     </section>
   );
 }

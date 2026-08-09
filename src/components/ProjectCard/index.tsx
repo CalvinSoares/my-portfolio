@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import { ArrowUpRight, Github } from "lucide-react";
+import { ArrowUpRight, Github, MonitorPlay, Maximize2 } from "lucide-react";
 import Image from "next/image";
 import { useLanguage } from "../../context/LanguageContext";
 
@@ -14,7 +14,9 @@ interface ProjectCardProps {
   tags: string[];
   gitUrl?: string;
   previewUrl?: string;
+  demoUrl?: string;
   tecnologias: string[];
+  onDetails?: () => void;
 }
 
 export default function ProjectCard({
@@ -25,60 +27,47 @@ export default function ProjectCard({
   tags,
   gitUrl,
   previewUrl,
+  demoUrl,
   tecnologias,
+  onDetails,
 }: ProjectCardProps) {
   const { t } = useLanguage();
   const [isRoleExpanded, setIsRoleExpanded] = useState(false);
-  const summarizeRole = (text: string) => {
-    const predefined = text
-      .replace(
-        "Atuei de ponta a ponta no produto, combinando um front-end altamente personalizável com um backend em Spring Boot para autenticação, segurança, pagamentos e integrações centrais.",
-        "Atuei de ponta a ponta no produto com front-end altamente personalizável e backend em Spring Boot.",
-      )
-      .replace(
-        "Worked across the product, combining a customizable front-end with a Spring Boot backend for authentication, security, payments and core integrations.",
-        "Worked across the product with a customizable front-end and Spring Boot backend.",
-      );
+  const [showAllTech, setShowAllTech] = useState(false);
+  // Live hover preview: mount the demo iframe only after the first hover so we
+  // never load an iframe per card on page load.
+  const [hasHovered, setHasHovered] = useState(false);
 
-    if (predefined !== text) return predefined;
+  const TECH_LIMIT = 6;
+  const visibleTech = showAllTech
+    ? tecnologias
+    : tecnologias.slice(0, TECH_LIMIT);
+  const hiddenTechCount = tecnologias.length - TECH_LIMIT;
 
-    const firstSentence = text.split(". ")[0].trim();
-    if (firstSentence.length <= 204) {
+  // Shorten copy at a natural boundary: prefer the first sentence, then fall
+  // back to a word-boundary cut with an ellipsis. Language-agnostic, so copy
+  // edits never silently break the summary.
+  const summarize = (text: string, maxLength: number) => {
+    const trimmed = text.trim();
+    if (trimmed.length <= maxLength) return trimmed;
+
+    const firstSentence = trimmed.split(/(?<=[.!?])\s/)[0].trim();
+    if (firstSentence.length <= maxLength && firstSentence.length > 0) {
       return firstSentence;
     }
 
-    const firstChunks = text.split(",").slice(0, 2).join(",").trim();
-    return firstChunks;
-  };
-
-  const summarizeDescription = (text: string) => {
-    const predefined = text
-      .replace(
-        "Uma plataforma premium de link na bio para criadores e marcas centralizarem sua presença digital com personalização, analytics e recursos prontos para monetização.",
-        "Plataforma premium de link na bio para criadores e marcas, com personalização, analytics e recursos prontos para monetização.",
-      )
-      .replace(
-        "A premium link-in-bio platform built for creators and brands to centralize their digital presence with customization, analytics and monetization-ready features.",
-        "Premium link-in-bio platform for creators and brands, with customization, analytics and monetization-ready features.",
-      );
-
-    if (predefined !== text) return predefined;
-
-    const firstSentence = text.split(". ")[0].trim();
-    if (firstSentence.length <= 240) {
-      return firstSentence;
-    }
-
-    const firstChunks = text.split(",").slice(0, 3).join(",").trim();
-    return firstChunks;
+    const slice = trimmed.slice(0, maxLength);
+    const lastSpace = slice.lastIndexOf(" ");
+    const cut = slice.slice(0, lastSpace > 40 ? lastSpace : maxLength).trim();
+    return `${cut.replace(/[.,;:]$/, "")}…`;
   };
 
   const compactRole = useMemo(
-    () => (role ? summarizeRole(role) : undefined),
+    () => (role ? summarize(role, 204) : undefined),
     [role],
   );
   const compactDescription = useMemo(
-    () => summarizeDescription(description),
+    () => summarize(description, 240),
     [description],
   );
   const hasExpandableRole = Boolean(role && compactRole !== role);
@@ -117,7 +106,11 @@ export default function ProjectCard({
       viewport={{ once: true, amount: 0.18 }}
       variants={contentVariants}
     >
-      <motion.div className="relative overflow-hidden" variants={itemVariants}>
+      <motion.div
+        className="relative h-56 overflow-hidden"
+        variants={itemVariants}
+        onMouseEnter={() => demoUrl && setHasHovered(true)}
+      >
         <Image
           src={imgUrl || "/placeholder.svg"}
           alt={title}
@@ -125,8 +118,30 @@ export default function ProjectCard({
           height={520}
           className="h-56 w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#121212] via-[#121212]/30 to-transparent" />
-        <div className="absolute left-5 top-5 flex flex-wrap gap-2">
+
+        {demoUrl && hasHovered && (
+          <div className="pointer-events-none absolute inset-0 z-[1] opacity-0 transition-opacity duration-500 group-hover:opacity-100">
+            <iframe
+              src={demoUrl}
+              title={`${title} — ${t("projects.demo_live")}`}
+              loading="lazy"
+              tabIndex={-1}
+              aria-hidden="true"
+              sandbox="allow-scripts allow-same-origin"
+              className="h-full w-full border-0 bg-[#121212]"
+              style={{
+                width: "200%",
+                height: "200%",
+                transform: "scale(0.5)",
+                transformOrigin: "top left",
+              }}
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-[#121212]/70 via-transparent to-transparent" />
+          </div>
+        )}
+
+        <div className="pointer-events-none absolute inset-0 z-[2] bg-gradient-to-t from-[#121212] via-[#121212]/30 to-transparent transition-opacity duration-500 group-hover:opacity-60" />
+        <div className="absolute left-5 top-5 z-[3] flex flex-wrap gap-2">
           {tags
             .filter((tag) => tag !== "All")
             .map((tag) => (
@@ -138,6 +153,15 @@ export default function ProjectCard({
               </span>
             ))}
         </div>
+        {demoUrl && (
+          <span className="absolute right-5 top-5 z-[3] inline-flex items-center gap-1.5 rounded-full border border-emerald-400/30 bg-emerald-500/15 px-3 py-1 text-[11px] font-medium uppercase tracking-[0.16em] text-emerald-200 backdrop-blur-sm">
+            <span className="relative flex h-2 w-2">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400/70" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+            </span>
+            {t("projects.demo")}
+          </span>
+        )}
       </motion.div>
 
       <div className="flex flex-grow flex-col p-5 md:p-6">
@@ -164,7 +188,9 @@ export default function ProjectCard({
                 variants={itemVariants}
                 whileTap={{ scale: 0.98 }}
               >
-                {isRoleExpanded ? "Ver menos" : "Ver mais"}
+                {isRoleExpanded
+                  ? t("projects.show_less")
+                  : t("projects.show_more")}
               </motion.button>
             )}
           </>
@@ -180,7 +206,7 @@ export default function ProjectCard({
           className="mt-5 flex flex-wrap gap-2"
           variants={itemVariants}
         >
-          {tecnologias.map((tech) => (
+          {visibleTech.map((tech) => (
             <span
               key={tech}
               className="rounded-full bg-white/5 px-2.5 py-1 text-[11px] text-gray-200 shadow-[0_0_0_1px_rgba(255,255,255,0.05)]"
@@ -188,10 +214,39 @@ export default function ProjectCard({
               {tech}
             </span>
           ))}
+          {hiddenTechCount > 0 && (
+            <button
+              type="button"
+              onClick={() => setShowAllTech((current) => !current)}
+              className="rounded-full bg-[#583ebc]/20 px-2.5 py-1 text-[11px] font-medium text-[#c2b5ff] shadow-[0_0_0_1px_rgba(88,62,188,0.3)] transition-colors hover:bg-[#583ebc]/30 hover:text-white"
+              aria-label={
+                showAllTech ? t("projects.show_less") : t("projects.show_more")
+              }
+            >
+              {showAllTech ? t("projects.show_less") : `+${hiddenTechCount}`}
+            </button>
+          )}
         </motion.div>
 
+        {demoUrl && (
+          <motion.a
+            href={demoUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group/demo relative mt-7 inline-flex w-full items-center justify-center gap-2 overflow-hidden rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-emerald-500/20 transition-shadow hover:shadow-emerald-500/40"
+            variants={itemVariants}
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            aria-label={`${t("projects.open_demo")} ${title}`}
+          >
+            <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 group-hover/demo:translate-x-full" />
+            <MonitorPlay className="relative h-4 w-4" />
+            <span className="relative">{t("projects.demo_live")}</span>
+          </motion.a>
+        )}
+
         <motion.div
-          className="mt-7 flex flex-wrap gap-2.5"
+          className={`flex flex-wrap gap-2.5 ${demoUrl ? "mt-3" : "mt-7"}`}
           variants={itemVariants}
         >
           {previewUrl && (
@@ -222,6 +277,20 @@ export default function ProjectCard({
               <Github className="h-4 w-4" />
               <span>{t("projects.code")}</span>
             </motion.a>
+          )}
+
+          {onDetails && (
+            <motion.button
+              type="button"
+              onClick={onDetails}
+              className="group/button inline-flex flex-1 items-center justify-center gap-2 rounded-full border border-white/10 bg-transparent px-4 py-2.5 text-sm font-medium text-white/80 transition-colors hover:bg-white/5 hover:text-white"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              aria-label={`${t("projects.view_details_for")} ${title}`}
+            >
+              <Maximize2 className="h-4 w-4" />
+              <span>{t("projects.details")}</span>
+            </motion.button>
           )}
         </motion.div>
       </div>

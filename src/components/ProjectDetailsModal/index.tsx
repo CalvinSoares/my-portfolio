@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
-import { X, ArrowUpRight, Eye, Github } from "lucide-react";
+import { X, ArrowUpRight, Eye, Github, MonitorPlay } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import SpaceshipBackground from "../SpaceShips";
@@ -15,9 +15,12 @@ interface ProjectDetailsModalProps {
   project: {
     title: string;
     description: string;
+    role?: string;
+    impact?: string;
     imgUrl: string;
     gitUrl?: string;
     previewUrl?: string;
+    demoUrl?: string;
     tecnologias: string[];
   };
 }
@@ -113,7 +116,7 @@ export default function ProjectDetailsModal({
                 className="absolute top-4 right-4 bg-black/50 p-2 rounded-full hover:bg-[#583ebc] transition-colors"
                 whileHover={{ scale: 1.1, rotate: 90 }}
                 whileTap={{ scale: 0.9 }}
-                aria-label="Close project details"
+                aria-label={t("projects.close_details")}
               >
                 <X className="w-5 h-5 text-white" />
               </motion.button>
@@ -138,6 +141,36 @@ export default function ProjectDetailsModal({
               >
                 {project.description}
               </motion.p>
+
+              {(project.role || project.impact) && (
+                <motion.div
+                  className="mb-6 grid gap-5 rounded-xl border border-white/10 bg-white/[0.03] p-5 md:grid-cols-2"
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.25 }}
+                >
+                  {project.role && (
+                    <div>
+                      <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#a48eff]">
+                        {t("projects.role_label")}
+                      </p>
+                      <p className="mt-2 text-sm leading-relaxed text-gray-300">
+                        {project.role}
+                      </p>
+                    </div>
+                  )}
+                  {project.impact && (
+                    <div>
+                      <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-300">
+                        {t("projects.featured_impact_short")}
+                      </p>
+                      <p className="mt-2 text-sm leading-relaxed text-gray-300">
+                        {project.impact}
+                      </p>
+                    </div>
+                  )}
+                </motion.div>
+              )}
 
               <motion.div
                 className="mb-6"
@@ -181,6 +214,19 @@ export default function ProjectDetailsModal({
                     <span className="font-medium">
                       {t("projects.view_source_code")}
                     </span>
+                  </Link>
+                )}
+
+                {project.demoUrl && (
+                  <Link
+                    href={project.demoUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="group relative flex items-center gap-2 overflow-hidden rounded-lg bg-gradient-to-r from-emerald-500 to-teal-500 px-4 py-2 font-medium text-white shadow-lg shadow-emerald-500/20 transition-shadow hover:shadow-emerald-500/40"
+                  >
+                    <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
+                    <MonitorPlay className="relative h-5 w-5" />
+                    <span className="relative">{t("projects.demo_live")}</span>
                   </Link>
                 )}
 
