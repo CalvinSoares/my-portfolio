@@ -60,7 +60,15 @@
     "cta_card_description": "Tem uma ideia incrivel? Vamos transformar em algo real com foco em arquitetura, performance, experiencia do usuario e uma entrega tecnica consistente.",
     "open_preview": "Abrir preview de",
     "open_repository": "Abrir repositório de",
-    "view_details_for": "Ver detalhes de"
+    "view_details_for": "Ver detalhes de",
+    "demo": "Demo",
+    "demo_live": "Demo interativa",
+    "open_demo": "Abrir demo interativa de",
+    "show_more": "Ver mais",
+    "show_less": "Ver menos",
+    "featured_impact_short": "Impacto",
+    "role_label": "Papel",
+    "close_details": "Fechar detalhes do projeto"
   },
   "about": {
     "role": "Full Stack Engineer",

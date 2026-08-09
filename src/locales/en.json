@@ -60,7 +60,15 @@
     "cta_card_description": "Have a strong idea? Let's turn it into something real with a focus on architecture, performance, user experience and consistent technical delivery.",
     "open_preview": "Open preview for",
     "open_repository": "Open repository for",
-    "view_details_for": "View details for"
+    "view_details_for": "View details for",
+    "demo": "Demo",
+    "demo_live": "Live demo",
+    "open_demo": "Open interactive demo for",
+    "show_more": "Show more",
+    "show_less": "Show less",
+    "featured_impact_short": "Impact",
+    "role_label": "Role",
+    "close_details": "Close project details"
   },
   "about": {
     "role": "Full Stack Engineer",
