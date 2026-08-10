@@ -33,6 +33,37 @@ type Project = (typeof projectData)[number];
 
 const projectData = [
   {
+    id: 10,
+    title: "DevAtlas",
+    descriptionEn:
+      "A front-only study and visualization system for design patterns, principles and software architecture — lean roadmaps, richly illustrated concept entries and an interactive architecture playground.",
+    descriptionPt:
+      "Um sistema front-only de estudo e visualização de design patterns, princípios e arquitetura de software — roadmaps enxutos, verbetes ilustrados e um playground de arquitetura interativo.",
+    roleEn:
+      "Designed and built the product end-to-end: 33 typed concept entries (the 23 GoF patterns, SOLID, CQS and 4 architecture styles) with TL;DR, navigable layers, real use cases and pitfalls; 4 markable roadmaps with measured bezier connectors; and a 'Constructor' playground where users drag layers, patterns and technologies while an engine explains each choice, suggests the next step and simulates the request flow, including failure scenarios.",
+    rolePt:
+      "Concebi e construí o produto de ponta a ponta: 33 verbetes tipados (os 23 padrões GoF, SOLID, CQS e 4 estilos de arquitetura) com TL;DR, camadas navegáveis, casos de uso reais e armadilhas; 4 roadmaps marcáveis com conectores bezier medidos; e um 'Construtor' onde o usuário arrasta camadas, padrões e tecnologias enquanto um motor explica cada escolha, sugere o próximo passo e simula a requisição, incluindo cenários de falha.",
+    impactEn:
+      "Turned abstract architecture theory into something you can see and manipulate — three complementary views of the same idea (concept, roadmap, playground). No backend: all content is typed in the repo and validated by the compiler, with user progress persisted in localStorage and shareable via URL.",
+    impactPt:
+      "Transformou teoria abstrata de arquitetura em algo visível e manipulável — três visões complementares da mesma ideia (conceito, roadmap, playground). Sem backend: todo o conteúdo é tipado no repositório e validado pelo compilador, com progresso salvo em localStorage e compartilhável por URL.",
+    image: "/images/projects/devatlas.png",
+    tag: ["All", "Web"],
+    previewUrl: "https://arch-roadmap.vercel.app/",
+    tecnologias: [
+      "Next.js 16",
+      "TypeScript",
+      "Tailwind v4",
+      "React Flow",
+      "Mermaid",
+      "Shiki",
+      "dnd-kit",
+      "next-themes",
+      "Radix",
+      "SSG",
+    ],
+  },
+  {
     id: 1,
     title: "QuackLinks",
     descriptionEn:
