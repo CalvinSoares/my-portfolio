@@ -66,6 +66,9 @@
     "open_demo": "Abrir demo interativa de",
     "show_more": "Ver mais",
     "show_less": "Ver menos",
+    "highlights_title": "Principais cases",
+    "highlights_subtitle": "Os projetos que melhor mostram como penso produto, arquitetura e entrega. Clique em qualquer card para ver o case completo.",
+    "other_projects_subtitle": "Entregas menores, freelas e experimentos.",
     "featured_impact_short": "Impacto",
     "role_label": "Papel",
     "close_details": "Fechar detalhes do projeto"
