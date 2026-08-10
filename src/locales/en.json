@@ -66,6 +66,9 @@
     "open_demo": "Open interactive demo for",
     "show_more": "Show more",
     "show_less": "Show less",
+    "highlights_title": "Main cases",
+    "highlights_subtitle": "The projects that best show how I think about product, architecture and delivery. Click any card for the full case.",
+    "other_projects_subtitle": "Smaller deliveries, freelance work and experiments.",
     "featured_impact_short": "Impact",
     "role_label": "Role",
     "close_details": "Close project details"

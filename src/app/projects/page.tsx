@@ -4,17 +4,15 @@ import { useState, useRef, useEffect } from "react";
 import {
   motion,
   AnimatePresence,
-  useInView,
   useReducedMotion,
   useScroll,
-  useTransform,
   useMotionValueEvent,
 } from "framer-motion";
-import Image from "next/image";
 import Link from "next/link";
 import Header from "../../components/Header";
 import ProjectTag from "../../components/ProjectTag";
-import ProjectCard from "../../components/ProjectCard";
+import BentoCard from "../../components/BentoCard";
+import CompactProjectCard from "../../components/CompactProjectCard";
 import ProjectDetailsModal from "../../components/ProjectDetailsModal";
 import {
   ArrowUpRight,
@@ -22,7 +20,6 @@ import {
   Gem,
   Github,
   MessageCircle,
-  MonitorPlay,
   Sparkles,
 } from "lucide-react";
 import ParticleBackground from "../../components/particleBackground";
@@ -30,10 +27,30 @@ import { useLanguage } from "../../context/LanguageContext";
 
 type ProjectFilter = "All" | "Web" | "Mobile";
 type Project = (typeof projectData)[number];
+type BentoSlot = {
+  span: string;
+  size: "large" | "medium" | "wide";
+};
+
+// Mosaic pattern for the highlights tier: one hero cell, two stacked medium
+// cells beside it, then wide cells below. Adapts when filters shrink the list.
+const bentoSlotFor = (index: number, total: number): BentoSlot => {
+  if (total === 1) return { span: "lg:col-span-6", size: "large" };
+  if (total === 2) return { span: "lg:col-span-3", size: "wide" };
+  const pattern: BentoSlot[] = [
+    { span: "lg:col-span-4 lg:row-span-2", size: "large" },
+    { span: "lg:col-span-2", size: "medium" },
+    { span: "lg:col-span-2", size: "medium" },
+    { span: "lg:col-span-3", size: "wide" },
+    { span: "lg:col-span-3", size: "wide" },
+  ];
+  return pattern[index % pattern.length];
+};
 
 const projectData = [
   {
     id: 10,
+    highlight: true,
     title: "DevAtlas",
     descriptionEn:
       "A front-only study and visualization system for design patterns, principles and software architecture — lean roadmaps, richly illustrated concept entries and an interactive architecture playground.",
@@ -65,6 +82,7 @@ const projectData = [
   },
   {
     id: 1,
+    highlight: true,
     title: "QuackLinks",
     descriptionEn:
       "A premium link-in-bio platform built for creators and brands to centralize their digital presence with customization, analytics and monetization-ready features.",
@@ -95,7 +113,7 @@ const projectData = [
   },
   {
     id: 2,
-    featured: true,
+    highlight: true,
     title: "PagLemon",
     descriptionEn:
       "A payment platform connected to the PIX ecosystem, focused on charge creation, QR Code generation and real-time transaction updates via postbacks and webhooks.",
@@ -127,6 +145,7 @@ const projectData = [
   },
   {
     id: 3,
+    highlight: true,
     title: "MCC Financeiro",
     descriptionEn:
       "A full-stack financial management platform built to centralize cash flow, accounts, categories, transactions and operational insights through a modern dashboard, responsive workflows and a structured backend API.",
@@ -160,7 +179,7 @@ const projectData = [
   },
   {
     id: 4,
-    featured: true,
+    highlight: true,
     title: "iChef24",
     descriptionEn:
       "An AI-powered recipe SaaS that combines personalized recipe generation, recipe management, subscription plans, favorites, history and a culinary community through integrated web, mobile and backend experiences.",
@@ -294,8 +313,6 @@ export default function ProjectsSection() {
   const shouldReduceMotion = useReducedMotion();
   const { t, language } = useLanguage();
   const ref = useRef(null);
-  const featuredRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, amount: 0.1 });
   const filterLabels: Record<ProjectFilter, string> = {
     All: t("projects.filter_all"),
     Web: t("projects.filter_web"),
@@ -332,27 +349,12 @@ export default function ProjectsSection() {
   const filteredProjects = projectData.filter((project) =>
     project.tag.includes(tag),
   );
-  const featuredProject =
-    filteredProjects.find((project) => project.featured) ?? filteredProjects[0];
-  const gridProjects = filteredProjects.filter(
-    (project) => project.id !== featuredProject?.id,
+  const highlightProjects = filteredProjects.filter(
+    (project) => project.highlight,
   );
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: { opacity: 1, transition: { staggerChildren: 0.1 } },
-  };
-
-  const itemVariants = {
-    hidden: { y: 56, opacity: 0, scale: 0.96, filter: "blur(10px)" },
-    visible: {
-      y: 0,
-      opacity: 1,
-      scale: 1,
-      filter: "blur(0px)",
-      transition: { type: "spring", stiffness: 110, damping: 16 },
-    },
-  };
+  const otherProjects = filteredProjects.filter(
+    (project) => !project.highlight,
+  );
 
   const filterVariants = {
     closed: { height: 0, opacity: 0 },
@@ -381,16 +383,7 @@ export default function ProjectsSection() {
     },
   };
 
-  const { scrollYProgress } = useScroll({
-    target: featuredRef,
-    offset: ["start end", "end start"],
-  });
   const { scrollY } = useScroll();
-  const featuredImageY = useTransform(
-    scrollYProgress,
-    [0, 1],
-    shouldReduceMotion ? [0, 0] : [-18, 18],
-  );
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     setShowStickyTabs(latest > 260);
@@ -583,350 +576,152 @@ export default function ProjectsSection() {
           </AnimatePresence>
         </div>
 
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={tag}
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.34, ease: [0.22, 1, 0.36, 1] }}
-          >
-            {featuredProject && (
+        <motion.div
+          key={tag}
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.34, ease: [0.22, 1, 0.36, 1] }}
+        >
+          {highlightProjects.length > 0 && (
+            <div className="mx-auto max-w-6xl">
               <motion.div
-                ref={featuredRef}
-                className="mx-auto mb-16 max-w-6xl overflow-hidden rounded-[2rem] border border-white/10 bg-[#171717]/85 backdrop-blur-md"
+                className="mb-6"
                 variants={sectionReveal}
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true, amount: 0.18 }}
+                viewport={{ once: true, amount: 0.4 }}
               >
-                <div className="grid gap-0 lg:grid-cols-[1.2fr_0.8fr]">
-                  <motion.div
-                    className="relative min-h-[320px] overflow-hidden"
-                    initial={{ opacity: 0, scale: 1.04 }}
-                    whileInView={{ opacity: 1, scale: 1 }}
-                    viewport={{ once: true, amount: 0.25 }}
-                    transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-                  >
-                    <motion.div
-                      className="absolute inset-0"
-                      style={{ y: featuredImageY }}
-                    >
-                      <Image
-                        src={featuredProject.image}
-                        alt={featuredProject.title}
-                        fill
-                        className="object-cover scale-[1.06]"
-                      />
-                    </motion.div>
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#121212] via-[#121212]/55 to-transparent" />
-                    <div className="absolute left-6 top-6 inline-flex items-center gap-2 rounded-full border border-[#583ebc]/20 bg-[#583ebc]/10 px-4 py-1.5 text-sm font-medium text-white/85">
-                      <Sparkles size={16} className="animate-pulse" />
-                      <span>{t("projects.featured_badge")}</span>
-                    </div>
-                  </motion.div>
-
-                  <motion.div
-                    className="p-6 md:p-8"
-                    initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true, amount: 0.2 }}
-                    variants={{
-                      hidden: { opacity: 0 },
-                      visible: {
-                        opacity: 1,
-                        transition: {
-                          staggerChildren: 0.08,
-                          delayChildren: 0.16,
-                        },
-                      },
-                    }}
-                  >
-                    <motion.p
-                      className="mb-3 text-sm uppercase tracking-[0.2em] text-gray-400"
-                      variants={itemVariants}
-                    >
-                      {t("projects.featured_title")}
-                    </motion.p>
-                    <motion.h3
-                      className="mb-4 text-3xl font-bold text-white"
-                      variants={itemVariants}
-                    >
-                      {featuredProject.title}
-                    </motion.h3>
-                    <motion.p
-                      className="mb-6 text-gray-300 leading-relaxed"
-                      variants={itemVariants}
-                    >
-                      {language === "pt"
-                        ? featuredProject.descriptionPt
-                        : featuredProject.descriptionEn}
-                    </motion.p>
-
-                    <motion.div
-                      className="grid gap-6 border-y border-white/10 py-6 md:grid-cols-2"
-                      variants={itemVariants}
-                    >
-                      <div>
-                        <p className="text-xs uppercase tracking-[0.2em] text-gray-500">
-                          {t("projects.featured_role")}
-                        </p>
-                        <p className="mt-3 text-sm leading-relaxed text-gray-200">
-                          {language === "pt"
-                            ? featuredProject.rolePt
-                            : featuredProject.roleEn}
-                        </p>
-                      </div>
-                      <div>
-                        <p className="text-xs uppercase tracking-[0.2em] text-gray-500">
-                          {t("projects.featured_impact")}
-                        </p>
-                        <p className="mt-3 text-sm leading-relaxed text-gray-200">
-                          {language === "pt"
-                            ? featuredProject.impactPt
-                            : featuredProject.impactEn}
-                        </p>
-                      </div>
-                    </motion.div>
-
-                    <motion.div
-                      className="mt-6 flex flex-wrap gap-2"
-                      variants={itemVariants}
-                    >
-                      {featuredProject.tecnologias.map((tech) => (
-                        <span
-                          key={tech}
-                          className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-gray-200"
-                        >
-                          {tech}
-                        </span>
-                      ))}
-                    </motion.div>
-
-                    <motion.div
-                      className="mt-8 flex flex-wrap gap-3"
-                      variants={itemVariants}
-                    >
-                      {featuredProject.demoUrl && (
-                        <Link
-                          href={featuredProject.demoUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="group/demo relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 px-5 py-3 font-semibold text-white shadow-lg shadow-emerald-500/20 transition-shadow hover:shadow-emerald-500/40"
-                        >
-                          <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 group-hover/demo:translate-x-full" />
-                          <MonitorPlay className="relative h-4 w-4" />
-                          <span className="relative">
-                            {t("projects.demo_live")}
-                          </span>
-                        </Link>
-                      )}
-                      {featuredProject.previewUrl && (
-                        <Link
-                          href={featuredProject.previewUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 rounded-full bg-[#583ebc] px-5 py-3 font-medium text-white transition-colors hover:bg-[#4a32a0]"
-                        >
-                          {t("projects.website")}
-                          <ArrowUpRight className="h-4 w-4" />
-                        </Link>
-                      )}
-                      {featuredProject.gitUrl && (
-                        <Link
-                          href={featuredProject.gitUrl}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-3 font-medium text-white transition-colors hover:bg-white/10"
-                        >
-                          {t("projects.code")}
-                          <ArrowUpRight className="h-4 w-4" />
-                        </Link>
-                      )}
-                    </motion.div>
-                  </motion.div>
-                </div>
+                <h3 className="text-2xl font-semibold text-white">
+                  {t("projects.highlights_title")}
+                </h3>
+                <p className="mt-2 max-w-2xl text-sm text-gray-400">
+                  {t("projects.highlights_subtitle")}
+                </p>
               </motion.div>
-            )}
 
+              <div className="grid grid-cols-1 gap-5 lg:auto-rows-[minmax(250px,auto)] lg:grid-cols-6">
+                {highlightProjects.map((project, index) => {
+                  const slot = bentoSlotFor(index, highlightProjects.length);
+                  return (
+                    <div key={`${tag}-${project.id}`} className={slot.span}>
+                      <BentoCard
+                        title={project.title}
+                        description={
+                          language === "pt"
+                            ? project.descriptionPt
+                            : project.descriptionEn
+                        }
+                        imgUrl={project.image}
+                        tags={project.tag}
+                        gitUrl={project.gitUrl}
+                        previewUrl={project.previewUrl}
+                        demoUrl={project.demoUrl}
+                        tecnologias={project.tecnologias}
+                        size={slot.size}
+                        onDetails={() => setSelectedProject(project)}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          <div className="mx-auto mt-16 max-w-6xl">
             <motion.div
-              className="mx-auto mb-6 flex max-w-6xl items-end justify-between gap-6"
+              className="mb-6"
               variants={sectionReveal}
               initial="hidden"
               whileInView="visible"
-              viewport={{ once: true, amount: 0.5 }}
+              viewport={{ once: true, amount: 0.4 }}
             >
-              <div>
-                <h3 className="text-2xl font-semibold text-white">
-                  {t("projects.all_projects_title")}
-                </h3>
-                <p className="mt-2 max-w-2xl text-sm text-gray-400">
-                  {t("projects.featured_description")}
-                </p>
-              </div>
+              <h3 className="text-2xl font-semibold text-white">
+                {t("projects.all_projects_title")}
+              </h3>
+              <p className="mt-2 max-w-2xl text-sm text-gray-400">
+                {t("projects.other_projects_subtitle")}
+              </p>
             </motion.div>
 
-            <motion.div
-              className="mx-auto grid max-w-6xl grid-cols-1 gap-8 md:gap-10 lg:grid-cols-2"
-              variants={containerVariants}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.08 }}
-            >
-              {gridProjects.map((project, index) => (
-                <motion.div
+            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {otherProjects.map((project) => (
+                <CompactProjectCard
                   key={`${tag}-${project.id}`}
-                  layout
-                  initial={{
-                    opacity: 0,
-                    x: shouldReduceMotion ? 0 : index % 2 === 0 ? -42 : 42,
-                    y: 28,
-                    scale: 0.985,
-                  }}
-                  animate={{
-                    opacity: 1,
-                    x: 0,
-                    y: 0,
-                    scale: 1,
-                  }}
-                  exit={{
-                    opacity: 0,
-                    x: shouldReduceMotion ? 0 : index % 2 === 0 ? -26 : 26,
-                    y: 16,
-                    scale: 0.985,
-                  }}
-                  transition={{
-                    duration: 0.48,
-                    delay: shouldReduceMotion ? 0 : 0.04 + index * 0.055,
-                    ease: [0.22, 1, 0.36, 1],
-                  }}
-                  className="relative"
-                >
-                  <ProjectCard
-                    title={project.title}
-                    description={
-                      language === "pt"
-                        ? project.descriptionPt
-                        : project.descriptionEn
-                    }
-                    role={language === "pt" ? project.rolePt : project.roleEn}
-                    imgUrl={project.image}
-                    tags={project.tag}
-                    gitUrl={project?.gitUrl}
-                    previewUrl={project?.previewUrl}
-                    demoUrl={project?.demoUrl}
-                    tecnologias={project.tecnologias}
-                    onDetails={() => setSelectedProject(project)}
-                  />
-                </motion.div>
+                  title={project.title}
+                  description={
+                    language === "pt"
+                      ? project.descriptionPt
+                      : project.descriptionEn
+                  }
+                  imgUrl={project.image}
+                  tags={project.tag}
+                  gitUrl={project.gitUrl}
+                  previewUrl={project.previewUrl}
+                  tecnologias={project.tecnologias}
+                  onDetails={() => setSelectedProject(project)}
+                />
               ))}
 
               <motion.div
                 key={`cta-${tag}`}
-                layout
-                initial={{
-                  opacity: 0,
-                  x: shouldReduceMotion
-                    ? 0
-                    : gridProjects.length % 2 === 0
-                      ? -42
-                      : 42,
-                  y: 28,
-                  scale: 0.985,
-                }}
-                animate={{ opacity: 1, x: 0, y: 0, scale: 1 }}
-                exit={{
-                  opacity: 0,
-                  x: shouldReduceMotion
-                    ? 0
-                    : gridProjects.length % 2 === 0
-                      ? -26
-                      : 26,
-                  y: 16,
-                  scale: 0.985,
-                }}
-                transition={{
-                  duration: 0.48,
-                  delay: shouldReduceMotion
-                    ? 0
-                    : 0.08 + gridProjects.length * 0.055,
-                  ease: [0.22, 1, 0.36, 1],
-                }}
-                className="relative"
+                className="flex h-full min-h-[300px] flex-col justify-between rounded-2xl border border-dashed border-[#583ebc]/40 bg-[#141416]/85 p-5 [background-image:radial-gradient(circle_at_top_left,rgba(88,62,188,0.16),transparent_55%)]"
+                initial={{ opacity: 0, y: 22 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.2 }}
+                transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
               >
-                <div className="flex h-full flex-col overflow-hidden rounded-[2rem] border border-white/10 bg-[#151515]/90 backdrop-blur-md">
-                  <div className="relative flex min-h-[280px] items-center justify-center overflow-hidden bg-gradient-to-br from-[#171717] via-[#111111] to-[#090909]">
-                    <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(88,62,188,0.18),transparent_35%),linear-gradient(135deg,rgba(255,255,255,0.04),transparent)]" />
-                    <motion.div
-                      animate={
-                        shouldReduceMotion
-                          ? undefined
-                          : { y: [0, -10, 0], opacity: [0.7, 1, 0.7] }
-                      }
-                      transition={{
-                        repeat: Infinity,
-                        duration: 4.5,
-                        ease: "easeInOut",
-                      }}
-                      className="relative z-10 text-center"
-                    >
-                      <Gem className="mx-auto h-10 w-10 text-white/70" />
-                      <p className="mt-4 text-sm font-semibold uppercase tracking-[0.2em] text-white/45">
-                        {t("projects.cta_card_badge")}
-                      </p>
-                    </motion.div>
-                  </div>
+                <div>
+                  <motion.div
+                    animate={
+                      shouldReduceMotion
+                        ? undefined
+                        : { y: [0, -6, 0], opacity: [0.75, 1, 0.75] }
+                    }
+                    transition={{
+                      repeat: Infinity,
+                      duration: 4.5,
+                      ease: "easeInOut",
+                    }}
+                    className="inline-flex"
+                  >
+                    <Gem className="h-8 w-8 text-[#a48eff]" />
+                  </motion.div>
+                  <p className="mt-3 text-[10px] font-semibold uppercase tracking-[0.2em] text-white/40">
+                    {t("projects.cta_card_badge")}
+                  </p>
+                  <h3 className="mt-2 text-xl font-semibold text-white">
+                    {t("projects.cta_card_title")}
+                  </h3>
+                  <p className="mt-1 text-sm font-medium text-gray-300">
+                    {t("projects.cta_card_subtitle")}
+                  </p>
+                  <p className="mt-3 text-xs leading-relaxed text-gray-400">
+                    {t("projects.cta_card_description")}
+                  </p>
+                </div>
 
-                  <div className="flex flex-grow flex-col p-6 md:p-7">
-                    <h3 className="text-3xl font-semibold text-white">
-                      {t("projects.cta_card_title")}
-                    </h3>
-                    <p className="mt-3 text-lg font-medium text-gray-300">
-                      {t("projects.cta_card_subtitle")}
-                    </p>
-                    <p className="mt-5 flex-grow text-[15px] leading-relaxed text-gray-300">
-                      {t("projects.cta_card_description")}
-                    </p>
-
-                    <div className="mt-6 flex flex-wrap gap-2.5">
-                      {[
-                        t("hero.metrics_delivery_value"),
-                        t("hero.metrics_stack_value"),
-                        t("hero.metrics_experience_value"),
-                      ].map((item) => (
-                        <span
-                          key={item}
-                          className="rounded-full bg-white/5 px-3 py-1.5 text-xs text-gray-200 shadow-[0_0_0_1px_rgba(255,255,255,0.06)]"
-                        >
-                          {item}
-                        </span>
-                      ))}
-                    </div>
-
-                    <div className="mt-8 flex flex-wrap gap-3">
-                      <Link
-                        href="https://github.com/CalvinSoares"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-3 text-sm font-medium text-white transition-colors hover:bg-white/10"
-                      >
-                        <Github className="h-4 w-4" />
-                        GitHub
-                      </Link>
-                      <Link
-                        href="/Contact"
-                        className="inline-flex items-center gap-2 rounded-full bg-white px-5 py-3 text-sm font-medium text-black transition-colors hover:bg-white/90"
-                      >
-                        <MessageCircle className="h-4 w-4" />
-                        {t("projects.contact_me")}
-                      </Link>
-                    </div>
-                  </div>
+                <div className="mt-5 flex flex-wrap gap-2">
+                  <Link
+                    href="https://github.com/CalvinSoares"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-4 py-2 text-xs font-medium text-white transition-colors hover:bg-white/10"
+                  >
+                    <Github className="h-3.5 w-3.5" />
+                    GitHub
+                  </Link>
+                  <Link
+                    href="/Contact"
+                    className="inline-flex items-center gap-1.5 rounded-full bg-white px-4 py-2 text-xs font-medium text-black transition-colors hover:bg-white/90"
+                  >
+                    <MessageCircle className="h-3.5 w-3.5" />
+                    {t("projects.contact_me")}
+                  </Link>
                 </div>
               </motion.div>
-            </motion.div>
-          </motion.div>
-        </AnimatePresence>
+            </div>
+          </div>
+        </motion.div>
 
         <motion.div
           className="mx-auto mt-20 max-w-3xl border-t border-white/10 pt-10 text-center"
