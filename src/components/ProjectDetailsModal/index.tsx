@@ -95,7 +95,7 @@ export default function ProjectDetailsModal({
           </div>
 
           <motion.div
-            className="bg-[#1e1e1e]/90 backdrop-blur-md rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-[#583ebc]/50 relative z-10"
+            className="scrollbar-thin bg-[#1e1e1e]/90 backdrop-blur-md rounded-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-[#583ebc]/50 relative z-10"
             variants={detailsVariants}
             initial="hidden"
             animate="visible"
