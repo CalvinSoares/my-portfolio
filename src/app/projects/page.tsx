@@ -49,6 +49,37 @@ const bentoSlotFor = (index: number, total: number): BentoSlot => {
 
 const projectData = [
   {
+    id: 11,
+    highlight: true,
+    title: "Prefeitura Quer",
+    descriptionEn:
+      "A notification service that watches city-hall procurement notices and alerts small businesses by email when a public purchase matches what they sell — plain language, no legalese, no card required.",
+    descriptionPt:
+      "Um serviço de avisos que acompanha anúncios de compras de prefeituras e avisa negócios pequenos por e-mail quando aparece algo que combina com o que eles vendem — em português claro, sem juridiquês e sem cartão.",
+    roleEn:
+      "Designed and built the product end-to-end: public landing and signup with magic-link auth, subscriber preferences (what they sell, where, and capacity), admin tooling, and the pipeline that reads official notices and sends short, actionable alerts.",
+    rolePt:
+      "Concebi e construí o produto de ponta a ponta: landing e cadastro públicos com autenticação por magic link, preferências do assinante (o que vende, onde e capacidade), painel admin e o fluxo que lê os anúncios oficiais e dispara avisos curtos e acionáveis.",
+    impactEn:
+      "Turns opaque public procurement into a daily signal for micro and small businesses — they learn about reserved opportunities in time to bid, without having to monitor government portals themselves.",
+    impactPt:
+      "Transforma compras públicas opacas em um sinal diário para micro e pequenas empresas — elas ficam sabendo de oportunidades reservadas a tempo de disputar, sem precisar vigiar portais de governo.",
+    image: "/images/projects/prefeituraquer.png",
+    tag: ["All", "Web"],
+    previewUrl: "https://state-sell.vercel.app/",
+    tecnologias: [
+      "Next.js 15",
+      "TypeScript",
+      "tRPC",
+      "Drizzle ORM",
+      "PostgreSQL",
+      "TanStack Query",
+      "Zod",
+      "Vitest",
+      "Magic Link Auth",
+    ],
+  },
+  {
     id: 10,
     highlight: true,
     title: "DevAtlas",
