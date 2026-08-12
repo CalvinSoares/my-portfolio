@@ -49,34 +49,34 @@ const bentoSlotFor = (index: number, total: number): BentoSlot => {
 
 const projectData = [
   {
-    id: 11,
+    id: 1,
     highlight: true,
-    title: "Prefeitura Quer",
+    title: "QuackLinks",
     descriptionEn:
-      "A notification service that watches city-hall procurement notices and alerts small businesses by email when a public purchase matches what they sell — plain language, no legalese, no card required.",
+      "A premium link-in-bio platform built for creators and brands to centralize their digital presence with customization, analytics and monetization-ready features.",
     descriptionPt:
-      "Um serviço de avisos que acompanha anúncios de compras de prefeituras e avisa negócios pequenos por e-mail quando aparece algo que combina com o que eles vendem — em português claro, sem juridiquês e sem cartão.",
+      "Uma plataforma premium de link na bio para criadores e marcas centralizarem sua presença digital com personalização, analytics e recursos prontos para monetização.",
     roleEn:
-      "Designed and built the product end-to-end: public landing and signup with magic-link auth, subscriber preferences (what they sell, where, and capacity), admin tooling, and the pipeline that reads official notices and sends short, actionable alerts.",
+      "Worked across the product, combining a customizable front-end with a Spring Boot backend for authentication, security, payments and core integrations.",
     rolePt:
-      "Concebi e construí o produto de ponta a ponta: landing e cadastro públicos com autenticação por magic link, preferências do assinante (o que vende, onde e capacidade), painel admin e o fluxo que lê os anúncios oficiais e dispara avisos curtos e acionáveis.",
+      "Atuei de ponta a ponta no produto, combinando um front-end altamente personalizável com um backend em Spring Boot para autenticação, segurança, pagamentos e integrações centrais.",
     impactEn:
-      "Turns opaque public procurement into a daily signal for micro and small businesses — they learn about reserved opportunities in time to bid, without having to monitor government portals themselves.",
+      "Delivered a stronger product foundation with a polished experience, secure APIs and an architecture ready to evolve premium features.",
     impactPt:
-      "Transforma compras públicas opacas em um sinal diário para micro e pequenas empresas — elas ficam sabendo de oportunidades reservadas a tempo de disputar, sem precisar vigiar portais de governo.",
-    image: "/images/projects/prefeituraquer.png",
+      "Entregou uma base mais sólida para o produto, com experiência refinada, APIs seguras e uma arquitetura pronta para evoluir recursos premium.",
+    image: "/images/projects/quacklinks.png",
     tag: ["All", "Web"],
-    previewUrl: "https://prefeitura-quer.vercel.app/",
+    previewUrl: "https://quacklinks.com.br/",
     tecnologias: [
-      "Next.js 15",
+      "Vue.js",
       "TypeScript",
-      "tRPC",
-      "Drizzle ORM",
+      "Tailwind",
+      "Java 21",
+      "Spring Boot",
+      "Spring Security",
       "PostgreSQL",
-      "TanStack Query",
-      "Zod",
-      "Vitest",
-      "Magic Link Auth",
+      "Stripe",
+      "Cloudflare R2",
     ],
   },
   {
@@ -112,37 +112,6 @@ const projectData = [
     ],
   },
   {
-    id: 1,
-    highlight: true,
-    title: "QuackLinks",
-    descriptionEn:
-      "A premium link-in-bio platform built for creators and brands to centralize their digital presence with customization, analytics and monetization-ready features.",
-    descriptionPt:
-      "Uma plataforma premium de link na bio para criadores e marcas centralizarem sua presença digital com personalização, analytics e recursos prontos para monetização.",
-    roleEn:
-      "Worked across the product, combining a customizable front-end with a Spring Boot backend for authentication, security, payments and core integrations.",
-    rolePt:
-      "Atuei de ponta a ponta no produto, combinando um front-end altamente personalizável com um backend em Spring Boot para autenticação, segurança, pagamentos e integrações centrais.",
-    impactEn:
-      "Delivered a stronger product foundation with a polished experience, secure APIs and an architecture ready to evolve premium features.",
-    impactPt:
-      "Entregou uma base mais sólida para o produto, com experiência refinada, APIs seguras e uma arquitetura pronta para evoluir recursos premium.",
-    image: "/images/projects/quacklinks.png",
-    tag: ["All", "Web"],
-    previewUrl: "https://quacklinks.com.br/",
-    tecnologias: [
-      "Vue.js",
-      "TypeScript",
-      "Tailwind",
-      "Java 21",
-      "Spring Boot",
-      "Spring Security",
-      "PostgreSQL",
-      "Stripe",
-      "Cloudflare R2",
-    ],
-  },
-  {
     id: 2,
     highlight: true,
     title: "PagLemon",
@@ -172,6 +141,68 @@ const projectData = [
       "ArgoCD",
       "CI/CD",
       "Docker",
+    ],
+  },
+  {
+    id: 12,
+    highlight: true,
+    title: "Edital Radar",
+    descriptionEn:
+      "A daily alert service for NGOs: it reads São Paulo’s Official Gazette every business day and emails organizations when a matching call, funding notice or collaboration term is published — with the excerpt and source link.",
+    descriptionPt:
+      "Um alerta diário para ONGs: lê o Diário Oficial de SP todo dia útil e avisa por e-mail quando sai chamamento, fomento ou termo compatível com a entidade — com o trecho e o link da publicação.",
+    roleEn:
+      "Designed and built the product end-to-end: Astro SSR landing and account flows, DOE-SP ingestion job with Zod validation, keyword/profile matching, magic-link auth, admin tooling and same-day email alerts — prioritizing accuracy and punctuality over jargon-heavy UI.",
+    rolePt:
+      "Concebi e construí o produto de ponta a ponta: landing e fluxos de conta em Astro SSR, job diário de coleta do DOE-SP com validação Zod, match por palavra-chave/perfil, autenticação por magic link, painel admin e alertas por e-mail no mesmo dia — priorizando precisão e pontualidade, sem jargão de Diário Oficial na UI.",
+    impactEn:
+      "Gives small NGOs a free, no-password signal so funding opportunities stop being discovered late on WhatsApp — after the deadline.",
+    impactPt:
+      "Dá a ONGs pequenas um sinal grátis e sem senha para que editais de fomento deixem de ser descobertos atrasado no WhatsApp — depois do prazo.",
+    image: "/images/projects/edital-radar.png",
+    tag: ["All", "Web"],
+    previewUrl: "https://edital-radar.vercel.app/",
+    tecnologias: [
+      "Astro 5",
+      "TypeScript",
+      "Tailwind v4",
+      "Drizzle ORM",
+      "PostgreSQL",
+      "Zod",
+      "Astro Actions",
+      "Cron Jobs",
+      "Magic Link Auth",
+    ],
+  },
+  {
+    id: 11,
+    highlight: true,
+    title: "Prefeitura Quer",
+    descriptionEn:
+      "A notification service that watches city-hall procurement notices and alerts small businesses by email when a public purchase matches what they sell — plain language, no legalese, no card required.",
+    descriptionPt:
+      "Um serviço de avisos que acompanha anúncios de compras de prefeituras e avisa negócios pequenos por e-mail quando aparece algo que combina com o que eles vendem — em português claro, sem juridiquês e sem cartão.",
+    roleEn:
+      "Designed and built the product end-to-end: public landing and signup with magic-link auth, subscriber preferences (what they sell, where, and capacity), admin tooling, and the pipeline that reads official notices and sends short, actionable alerts.",
+    rolePt:
+      "Concebi e construí o produto de ponta a ponta: landing e cadastro públicos com autenticação por magic link, preferências do assinante (o que vende, onde e capacidade), painel admin e o fluxo que lê os anúncios oficiais e dispara avisos curtos e acionáveis.",
+    impactEn:
+      "Turns opaque public procurement into a daily signal for micro and small businesses — they learn about reserved opportunities in time to bid, without having to monitor government portals themselves.",
+    impactPt:
+      "Transforma compras públicas opacas em um sinal diário para micro e pequenas empresas — elas ficam sabendo de oportunidades reservadas a tempo de disputar, sem precisar vigiar portais de governo.",
+    image: "/images/projects/prefeituraquer.png",
+    tag: ["All", "Web"],
+    previewUrl: "https://prefeitura-quer.vercel.app/",
+    tecnologias: [
+      "Next.js 15",
+      "TypeScript",
+      "tRPC",
+      "Drizzle ORM",
+      "PostgreSQL",
+      "TanStack Query",
+      "Zod",
+      "Vitest",
+      "Magic Link Auth",
     ],
   },
   {

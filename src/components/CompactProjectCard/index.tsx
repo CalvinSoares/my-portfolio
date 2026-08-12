@@ -1,5 +1,6 @@
 "use client";
 
+import { useRef } from "react";
 import { motion } from "framer-motion";
 import { ArrowUpRight, Github, Maximize2 } from "lucide-react";
 import Image from "next/image";
@@ -29,14 +30,31 @@ export default function CompactProjectCard({
   onDetails,
 }: CompactProjectCardProps) {
   const { t } = useLanguage();
+  const cardRef = useRef<HTMLElement>(null);
   const hiddenTechCount = tecnologias.length - TECH_LIMIT;
   const stop = (event: React.MouseEvent) => event.stopPropagation();
 
+  const handleMouseMove = (event: React.MouseEvent<HTMLElement>) => {
+    const el = cardRef.current;
+    if (!el) return;
+    const rect = el.getBoundingClientRect();
+    el.style.setProperty(
+      "--spot-x",
+      `${(((event.clientX - rect.left) / rect.width) * 100).toFixed(1)}%`,
+    );
+    el.style.setProperty(
+      "--spot-y",
+      `${(((event.clientY - rect.top) / rect.height) * 100).toFixed(1)}%`,
+    );
+  };
+
   return (
     <motion.article
+      ref={cardRef}
       role="button"
       tabIndex={0}
       onClick={onDetails}
+      onMouseMove={handleMouseMove}
       onKeyDown={(event) => {
         if (event.key === "Enter" || event.key === " ") {
           event.preventDefault();
@@ -44,13 +62,20 @@ export default function CompactProjectCard({
         }
       }}
       aria-label={`${t("projects.view_details_for")} ${title}`}
-      className="group flex h-full cursor-pointer flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#161617]/85 outline-none backdrop-blur-md transition-colors duration-300 hover:border-white/25 focus-visible:border-[#a48eff] focus-visible:ring-2 focus-visible:ring-[#583ebc]/60"
+      className="group relative flex h-full cursor-pointer flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#161617]/85 outline-none backdrop-blur-md transition-colors duration-300 hover:border-[#a48eff]/35 focus-visible:border-[#a48eff] focus-visible:ring-2 focus-visible:ring-[#583ebc]/60"
       initial={{ opacity: 0, y: 22 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.2 }}
       transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
       whileHover={{ y: -4 }}
     >
+      <div
+        className="pointer-events-none absolute inset-0 z-[5] opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+        style={{
+          background:
+            "radial-gradient(320px circle at var(--spot-x, 50%) var(--spot-y, 50%), rgba(164,142,255,0.12), transparent 45%)",
+        }}
+      />
       <div className="relative h-36 overflow-hidden">
         <Image
           src={imgUrl || "/placeholder.svg"}
