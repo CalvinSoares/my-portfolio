@@ -66,7 +66,7 @@ const projectData = [
       "Transforma compras públicas opacas em um sinal diário para micro e pequenas empresas — elas ficam sabendo de oportunidades reservadas a tempo de disputar, sem precisar vigiar portais de governo.",
     image: "/images/projects/prefeituraquer.png",
     tag: ["All", "Web"],
-    previewUrl: "https://state-sell.vercel.app/",
+    previewUrl: "https://prefeitura-quer.vercel.app/",
     tecnologias: [
       "Next.js 15",
       "TypeScript",
@@ -82,7 +82,7 @@ const projectData = [
   {
     id: 10,
     highlight: true,
-    title: "DevAtlas",
+    title: "DevMappa",
     descriptionEn:
       "A front-only study and visualization system for design patterns, principles and software architecture — lean roadmaps, richly illustrated concept entries and an interactive architecture playground.",
     descriptionPt:
@@ -97,7 +97,7 @@ const projectData = [
       "Transformou teoria abstrata de arquitetura em algo visível e manipulável — três visões complementares da mesma ideia (conceito, roadmap, playground). Sem backend: todo o conteúdo é tipado no repositório e validado pelo compilador, com progresso salvo em localStorage e compartilhável por URL.",
     image: "/images/projects/devatlas.png",
     tag: ["All", "Web"],
-    previewUrl: "https://arch-roadmap.vercel.app/",
+    previewUrl: "https://devmappa.vercel.app/",
     tecnologias: [
       "Next.js 16",
       "TypeScript",
