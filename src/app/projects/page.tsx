@@ -175,6 +175,36 @@ const projectData = [
     ],
   },
   {
+    id: 13,
+    highlight: true,
+    title: "Certidão Zero",
+    descriptionEn:
+      "A no-login CNPJ check for NGOs and public managers: registration status and federal sanctions packaged into a meeting-ready page — public signals with source and date, never a trust score or legal opinion.",
+    descriptionPt:
+      "Checagem de CNPJ sem login para ONGs e gestores públicos: situação cadastral e sanções federais empacotadas numa página pronta para reunião — sinais públicos com fonte e data, sem score de confiança nem parecer jurídico.",
+    roleEn:
+      "Designed and built the product end-to-end: Astro SSR lookup flow, BrasilAPI registration data with cache-first queries, Portal da Transparência sanctions integration with honest unavailable states, plain-language signal reading, fixed disclaimers on every fiche and noindex for on-demand third-party data.",
+    rolePt:
+      "Concebi e construí o produto de ponta a ponta: fluxo de consulta em Astro SSR, dados cadastrais via BrasilAPI com cache em toda consulta, integração de sanções do Portal da Transparência com estados honestos quando indisponível, leitura de sinais em português claro, disclaimer fixo em toda ficha e noindex para dado de terceiro sob demanda.",
+    impactEn:
+      "Turns last-minute partner due diligence into a single paste-and-read step — so a small NGO or city buyer can check a CNPJ before signing without pretending the tool is an official certificate.",
+    impactPt:
+      "Transforma a due diligence de última hora em colar o CNPJ e ler — para que ONG pequena ou comprador público cheque antes de assinar, sem fingir que a ferramenta é certidão oficial.",
+    image: "/images/projects/certidao-zero.png",
+    tag: ["All", "Web"],
+    previewUrl: "https://certidao-zero.vercel.app/",
+    tecnologias: [
+      "Astro 5",
+      "TypeScript",
+      "Tailwind v4",
+      "Zod",
+      "BrasilAPI",
+      "Portal da Transparência",
+      "SSR",
+      "Cache",
+    ],
+  },
+  {
     id: 11,
     highlight: true,
     title: "Prefeitura Quer",
