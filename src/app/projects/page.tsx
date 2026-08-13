@@ -205,6 +205,37 @@ const projectData = [
     ],
   },
   {
+    id: 14,
+    highlight: true,
+    title: "Plenavis",
+    descriptionEn:
+      "A public-data portal on Brazilian power: bills, votes and allowance spending for deputies, senators and the president — plus candidates and a profile comparator — without moral rankings or party framing.",
+    descriptionPt:
+      "Portal de dados públicos do poder no Brasil: projetos, votos e gastos da cota de deputados, senadores e do presidente — além de candidatos e comparador de perfis — sem ranking moral nem enquadramento partidário.",
+    roleEn:
+      "Designed and built the product end-to-end: Nuxt/Vue UI that reads only from a local API, Prisma-backed store, Chart.js visualizations, and ETL jobs that sync Câmara, Senado, CEAP/CEAPS and TSE into Postgres — with a profile score framed as an indicator, never a verdict.",
+    rolePt:
+      "Concebi e construí o produto de ponta a ponta: UI Nuxt/Vue que lê só da API local, banco com Prisma, visualizações Chart.js e jobs ETL que sincronizam Câmara, Senado, CEAP/CEAPS e TSE no Postgres — com score de perfil como indicador, nunca como juízo.",
+    impactEn:
+      "Turns scattered official spreadsheets into one place to follow who proposes, how they vote and what they spend — so anyone can compare up to three profiles without hunting open-data dumps.",
+    impactPt:
+      "Transforma planilhas oficiais espalhadas em um lugar só para acompanhar quem propõe, como vota e o que gasta — para comparar até três perfis sem caçar dumps de dados abertos.",
+    image: "/images/projects/plenavis.png",
+    tag: ["All", "Web"],
+    previewUrl: "https://plenavis.vercel.app/",
+    tecnologias: [
+      "Nuxt 4",
+      "Vue 3",
+      "TypeScript",
+      "Tailwind",
+      "Nitro",
+      "Prisma",
+      "PostgreSQL",
+      "Chart.js",
+      "ETL Jobs",
+    ],
+  },
+  {
     id: 11,
     highlight: true,
     title: "Prefeitura Quer",
