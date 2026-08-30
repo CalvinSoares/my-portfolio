@@ -1,15 +1,24 @@
 "use client";
 
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   motion,
+  AnimatePresence,
   useMotionValue,
   useReducedMotion,
   useSpring,
 } from "framer-motion";
-import { ArrowUpRight, Github, Maximize2, MonitorPlay } from "lucide-react";
+import {
+  ArrowUpRight,
+  ChevronLeft,
+  ChevronRight,
+  Github,
+  Maximize2,
+  MonitorPlay,
+} from "lucide-react";
 import Image from "next/image";
 import { useLanguage } from "../../context/LanguageContext";
+import { getProjectImages } from "../../lib/projectImages";
 
 type BentoSize = "large" | "medium" | "wide";
 
@@ -17,6 +26,8 @@ interface BentoCardProps {
   title: string;
   description: string;
   imgUrl: string;
+  images?: string[];
+  hoverImage?: string;
   tags: string[];
   gitUrl?: string;
   previewUrl?: string;
@@ -36,6 +47,8 @@ export default function BentoCard({
   title,
   description,
   imgUrl,
+  images,
+  hoverImage,
   tags,
   gitUrl,
   previewUrl,
@@ -47,11 +60,49 @@ export default function BentoCard({
   const { t } = useLanguage();
   const shouldReduceMotion = useReducedMotion();
   const cardRef = useRef<HTMLElement>(null);
-  // Live hover preview: mount the demo iframe only after the first hover so we
-  // never load an iframe per card on page load.
-  const [hasHovered, setHasHovered] = useState(false);
 
-  // Cursor-follow tilt (springed) + spotlight position via CSS vars.
+  // Normaliza a galeria usando o helper (inclui images, imgUrl e hoverImage se existirem)
+  const gallery: string[] = useMemo(() => {
+    const list = getProjectImages({ images, image: imgUrl, hoverImage });
+    return list.length > 0 ? list : [imgUrl].filter(Boolean);
+  }, [images, imgUrl, hoverImage]);
+
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [hasHovered, setHasHovered] = useState(false);
+  const [isHoveringMedia, setIsHoveringMedia] = useState(false);
+
+  // Troca a imagem automaticamente no hover se houver mais de uma
+  useEffect(() => {
+    if (shouldReduceMotion) return;
+    if (!isHoveringMedia) return;
+    if (gallery.length < 2) return;
+    const timer = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % gallery.length);
+    }, 1400);
+    return () => clearInterval(timer);
+  }, [isHoveringMedia, gallery.length, shouldReduceMotion]);
+
+  const handleMediaEnter = () => {
+    setHasHovered(true);
+    setIsHoveringMedia(true);
+  };
+
+  const handleMediaLeave = () => {
+    setIsHoveringMedia(false);
+    setActiveIndex(0);
+  };
+
+  const goPrev = (event: React.MouseEvent) => {
+    event.stopPropagation();
+    setActiveIndex((prev) => (prev - 1 + gallery.length) % gallery.length);
+  };
+
+  const goNext = (event: React.MouseEvent) => {
+    event.stopPropagation();
+    setActiveIndex((prev) => (prev + 1) % gallery.length);
+  };
+
+  // Efeito de tilt no cursor
   const tiltX = useMotionValue(0);
   const tiltY = useMotionValue(0);
   const rotateX = useSpring(tiltX, { stiffness: 220, damping: 22 });
@@ -63,17 +114,20 @@ export default function BentoCard({
     const rect = el.getBoundingClientRect();
     const px = (event.clientX - rect.left) / rect.width;
     const py = (event.clientY - rect.top) / rect.height;
+
     el.style.setProperty("--spot-x", `${(px * 100).toFixed(1)}%`);
     el.style.setProperty("--spot-y", `${(py * 100).toFixed(1)}%`);
+
     if (!shouldReduceMotion) {
       tiltX.set((py - 0.5) * -5);
       tiltY.set((px - 0.5) * 7);
     }
   };
 
-  const handleMouseLeave = () => {
+  const handleCardLeave = () => {
     tiltX.set(0);
     tiltY.set(0);
+    handleMediaLeave();
   };
 
   const techLimit = size === "large" ? 5 : 3;
@@ -91,6 +145,9 @@ export default function BentoCard({
 
   const stop = (event: React.MouseEvent) => event.stopPropagation();
 
+  const showArrows = gallery.length > 1;
+  const currentImage = gallery[activeIndex] ?? "/placeholder.svg";
+
   return (
     <motion.article
       ref={cardRef}
@@ -105,7 +162,7 @@ export default function BentoCard({
       }}
       onMouseEnter={() => demoUrl && setHasHovered(true)}
       onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
+      onMouseLeave={handleCardLeave}
       aria-label={`${t("projects.view_details_for")} ${title}`}
       className={`group relative flex h-full cursor-pointer flex-col justify-end overflow-hidden rounded-[1.7rem] border border-white/10 bg-[#171717] outline-none transition-colors duration-300 hover:border-[#a48eff]/35 focus-visible:border-[#a48eff] focus-visible:ring-2 focus-visible:ring-[#583ebc]/60 ${sizeStyles[size]}`}
       style={{ rotateX, rotateY, transformPerspective: 1100 }}
@@ -114,21 +171,41 @@ export default function BentoCard({
       viewport={{ once: true, amount: 0.15 }}
       transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
     >
-      {/* Media layer — full bleed, no text competes with it */}
-      <div className="absolute inset-0">
-        <Image
-          src={imgUrl || "/placeholder.svg"}
-          alt={title}
-          fill
-          sizes={
-            size === "large"
-              ? "(max-width: 1024px) 100vw, 66vw"
-              : "(max-width: 1024px) 100vw, 33vw"
-          }
-          className="object-cover object-top transition-transform duration-700 group-hover:scale-[1.05]"
-        />
+      {/* Media layer */}
+      <div
+        className="absolute inset-0"
+        onMouseEnter={handleMediaEnter}
+        onMouseLeave={handleMediaLeave}
+      >
+        <AnimatePresence mode="popLayout" initial={false}>
+          <motion.div
+            key={currentImage}
+            className="absolute inset-0"
+            initial={{ opacity: 0, scale: 1.04 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 1 }}
+            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <Image
+              src={currentImage}
+              alt={
+                gallery.length > 1
+                  ? `${title} — ${activeIndex + 1} de ${gallery.length}`
+                  : title
+              }
+              fill
+              sizes={
+                size === "large"
+                  ? "(max-width: 1024px) 100vw, 66vw"
+                  : "(max-width: 1024px) 100vw, 33vw"
+              }
+              className="object-cover object-top transition-transform duration-700 group-hover:scale-[1.05]"
+            />
+          </motion.div>
+        </AnimatePresence>
 
-        {demoUrl && hasHovered && (
+        {/* Live demo iframe */}
+        {demoUrl && hasHovered && activeIndex === 0 && (
           <div className="pointer-events-none absolute inset-0 z-[1] opacity-0 transition-opacity duration-500 group-hover:opacity-100">
             <iframe
               src={demoUrl}
@@ -148,8 +225,29 @@ export default function BentoCard({
           </div>
         )}
 
-        {/* Light scrim only — legibility comes from the glass panel below */}
         <div className="pointer-events-none absolute inset-0 z-[2] bg-gradient-to-t from-[#0d0d0f]/60 via-transparent to-[#0d0d0f]/25" />
+
+        {/* Carousel arrows */}
+        {showArrows && (
+          <>
+            <button
+              type="button"
+              onClick={goPrev}
+              aria-label={t("projects.previous_image")}
+              className="absolute left-3 top-1/2 z-[3] inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-black/55 text-white/85 opacity-0 backdrop-blur-md transition-all duration-300 group-hover:opacity-100 hover:scale-105 hover:bg-[#583ebc] hover:text-white focus-visible:opacity-100 focus-visible:outline-none"
+            >
+              <ChevronLeft className="h-4 w-4" />
+            </button>
+            <button
+              type="button"
+              onClick={goNext}
+              aria-label={t("projects.next_image")}
+              className="absolute right-3 top-1/2 z-[3] inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-black/55 text-white/85 opacity-0 backdrop-blur-md transition-all duration-300 group-hover:opacity-100 hover:scale-105 hover:bg-[#583ebc] hover:text-white focus-visible:opacity-100 focus-visible:outline-none"
+            >
+              <ChevronRight className="h-4 w-4" />
+            </button>
+          </>
+        )}
       </div>
 
       {/* Cursor spotlight */}
@@ -184,15 +282,19 @@ export default function BentoCard({
             {t("projects.demo")}
           </span>
         )}
-        {/* Expand affordance — slides in on hover */}
         <span className="inline-flex h-7 w-7 -translate-y-1 items-center justify-center rounded-full border border-white/15 bg-black/55 text-white/80 opacity-0 backdrop-blur-md transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
           <Maximize2 className="h-3.5 w-3.5" />
         </span>
       </div>
 
-      {/* Slide-up reveal panel: at rest only the title bar shows, keeping the
-          screenshot visible; hover/focus slides the full details up over a
-          solid background so text never fights the image. */}
+      {/* Image index indicator */}
+      {showArrows && (
+        <div className="absolute bottom-3 right-4 z-[3] rounded-full border border-white/10 bg-black/55 px-2.5 py-1 font-mono text-[10px] text-white/80 backdrop-blur-md">
+          {activeIndex + 1} / {gallery.length}
+        </div>
+      )}
+
+      {/* Slide-up reveal panel */}
       <div
         className={`absolute inset-x-0 bottom-0 z-[3] transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-y-0 group-focus-within:translate-y-0 ${
           size === "large"

@@ -1,13 +1,27 @@
 "use client";
 
-import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
-import { X, ArrowUpRight, Eye, Github, MonitorPlay } from "lucide-react";
+import {
+  AnimatePresence,
+  motion,
+  useMotionValue,
+  useReducedMotion,
+} from "framer-motion";
+import {
+  ArrowUpRight,
+  ChevronLeft,
+  ChevronRight,
+  Eye,
+  Github,
+  MonitorPlay,
+  X,
+} from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import SpaceshipBackground from "../SpaceShips";
 import { createPortal } from "react-dom";
-import { useEffect, useState, useRef } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useLanguage } from "../../context/LanguageContext";
+import { getProjectImages } from "../../lib/projectImages";
 
 interface ProjectDetailsModalProps {
   isOpen: boolean;
@@ -18,6 +32,7 @@ interface ProjectDetailsModalProps {
     role?: string;
     impact?: string;
     imgUrl: string;
+    images?: string[];
     gitUrl?: string;
     previewUrl?: string;
     demoUrl?: string;
@@ -31,9 +46,33 @@ export default function ProjectDetailsModal({
   project,
 }: ProjectDetailsModalProps) {
   const [mounted, setMounted] = useState(false);
+  const [activeIndex, setActiveIndex] = useState(0);
   const closeButtonRef = useRef<HTMLButtonElement>(null);
   const shouldReduceMotion = useReducedMotion();
   const { t } = useLanguage();
+
+  // Build the gallery from the explicit `images` array when present, falling
+  // back to the cover image so the modal works for legacy data.
+  const gallery: string[] = useMemo(() => {
+    const list = getProjectImages({
+      images: project.images,
+      image: project.imgUrl,
+    });
+    return list.length > 0 ? list : ["/placeholder.svg"];
+  }, [project.images, project.imgUrl]);
+
+  // Reset to the cover whenever a new project is opened.
+  useEffect(() => {
+    if (isOpen) setActiveIndex(0);
+  }, [isOpen, project.title]);
+
+  const goPrev = useCallback(() => {
+    setActiveIndex((prev) => (prev - 1 + gallery.length) % gallery.length);
+  }, [gallery.length]);
+
+  const goNext = useCallback(() => {
+    setActiveIndex((prev) => (prev + 1) % gallery.length);
+  }, [gallery.length]);
 
   useEffect(() => {
     setMounted(true);
@@ -52,12 +91,20 @@ export default function ProjectDetailsModal({
     const handleKeyDown = (event: KeyboardEvent) => {
       if (event.key === "Escape") {
         onClose();
+        return;
+      }
+      if (event.key === "ArrowLeft") {
+        event.preventDefault();
+        goPrev();
+      } else if (event.key === "ArrowRight") {
+        event.preventDefault();
+        goNext();
       }
     };
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [isOpen, onClose]);
+  }, [isOpen, onClose, goPrev, goNext]);
 
   const detailsVariants = {
     hidden: { opacity: 0, scale: 0.9, y: 20 },
@@ -78,7 +125,14 @@ export default function ProjectDetailsModal({
     }),
   };
 
+  // Drag-to-swipe the gallery on touch devices.
+  const dragX = useMotionValue(0);
+  const swipeThreshold = 80;
+
   if (!mounted) return null;
+
+  const showArrows = gallery.length > 1;
+  const currentImage = gallery[activeIndex];
 
   return createPortal(
     <AnimatePresence>
@@ -103,23 +157,122 @@ export default function ProjectDetailsModal({
             onClick={(e) => e.stopPropagation()}
           >
             <div className="relative">
-              <Image
-                src={project.imgUrl || "/placeholder.svg"}
-                alt={project.title}
-                width={800}
-                height={400}
-                className="w-full h-56 object-cover rounded-t-xl"
-              />
-              <motion.button
-                ref={closeButtonRef}
-                onClick={onClose}
-                className="absolute top-4 right-4 bg-black/50 p-2 rounded-full hover:bg-[#583ebc] transition-colors"
-                whileHover={{ scale: 1.1, rotate: 90 }}
-                whileTap={{ scale: 0.9 }}
-                aria-label={t("projects.close_details")}
+              <div
+                className="relative h-64 sm:h-[360px] w-full overflow-hidden rounded-t-xl bg-[#121212]"
+                onClick={(e) => e.stopPropagation()}
               >
-                <X className="w-5 h-5 text-white" />
-              </motion.button>
+                <AnimatePresence mode="wait" initial={false}>
+                  <motion.div
+                    key={currentImage}
+                    className="absolute inset-0"
+                    initial={
+                      shouldReduceMotion
+                        ? { opacity: 0 }
+                        : { opacity: 0, x: 24 }
+                    }
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={
+                      shouldReduceMotion
+                        ? { opacity: 0 }
+                        : { opacity: 0, x: -24 }
+                    }
+                    transition={{ duration: 0.32, ease: [0.22, 1, 0.36, 1] }}
+                    drag={shouldReduceMotion ? false : "x"}
+                    dragConstraints={{ left: 0, right: 0 }}
+                    dragElastic={0.2}
+                    style={{ x: dragX }}
+                    onDragEnd={(_, info) => {
+                      if (info.offset.x < -swipeThreshold) {
+                        goNext();
+                      } else if (info.offset.x > swipeThreshold) {
+                        goPrev();
+                      }
+                    }}
+                  >
+                    <Image
+                      src={currentImage}
+                      alt={
+                        gallery.length > 1
+                          ? `${project.title} — ${activeIndex + 1} de ${gallery.length}`
+                          : project.title
+                      }
+                      width={800}
+                      height={400}
+                      className="w-full h-64 sm:h-[360px] object-cover"
+                      draggable={false}
+                    />
+                  </motion.div>
+                </AnimatePresence>
+
+                {/* Close button — above everything */}
+                <motion.button
+                  ref={closeButtonRef}
+                  onClick={onClose}
+                  className="absolute top-4 right-4 z-20 bg-black/50 p-2 rounded-full hover:bg-[#583ebc] transition-colors"
+                  whileHover={{ scale: 1.1, rotate: 90 }}
+                  whileTap={{ scale: 0.9 }}
+                  aria-label={t("projects.close_details")}
+                >
+                  <X className="w-5 h-5 text-white" />
+                </motion.button>
+
+                {/* Carousel arrows */}
+                {showArrows && (
+                  <>
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        goPrev();
+                      }}
+                      aria-label={t("projects.previous_image")}
+                      className="absolute left-3 top-1/2 z-10 inline-flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-black/55 text-white/90 backdrop-blur-md transition-all hover:scale-105 hover:bg-[#583ebc] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+                    >
+                      <ChevronLeft className="h-5 w-5" />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        goNext();
+                      }}
+                      aria-label={t("projects.next_image")}
+                      className="absolute right-3 top-1/2 z-10 inline-flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-black/55 text-white/90 backdrop-blur-md transition-all hover:scale-105 hover:bg-[#583ebc] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
+                    >
+                      <ChevronRight className="h-5 w-5" />
+                    </button>
+                  </>
+                )}
+
+                {/* Counter pill */}
+                {showArrows && (
+                  <div className="absolute bottom-3 left-1/2 z-10 -translate-x-1/2 rounded-full border border-white/15 bg-black/60 px-3 py-1 font-mono text-[11px] text-white/85 backdrop-blur-md">
+                    {activeIndex + 1} / {gallery.length}
+                  </div>
+                )}
+              </div>
+
+              {/* Dots — under the image, only when there's more than one */}
+              {showArrows && (
+                <div
+                  className="flex items-center justify-center gap-1.5 bg-[#1e1e1e]/90 px-4 py-3"
+                  onClick={(e) => e.stopPropagation()}
+                >
+                  {gallery.map((src, i) => (
+                    <button
+                      key={src + i}
+                      type="button"
+                      onClick={() => setActiveIndex(i)}
+                      aria-label={`${t("projects.image")} ${i + 1}`}
+                      className={`h-1.5 rounded-full transition-all ${
+                        i === activeIndex
+                          ? "w-6 bg-[#a48eff]"
+                          : "w-1.5 bg-white/25 hover:bg-white/45"
+                      }`}
+                    />
+                  ))}
+                </div>
+              )}
             </div>
 
             <div className="p-6">
@@ -250,6 +403,6 @@ export default function ProjectDetailsModal({
         </div>
       )}
     </AnimatePresence>,
-    document.body
+    document.body,
   );
 }
