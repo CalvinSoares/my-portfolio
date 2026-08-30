@@ -61,35 +61,43 @@ export default function BentoCard({
   const shouldReduceMotion = useReducedMotion();
   const cardRef = useRef<HTMLElement>(null);
 
-  // Normaliza a galeria usando o helper (inclui images, imgUrl e hoverImage se existirem)
   const gallery: string[] = useMemo(() => {
     const list = getProjectImages({ images, image: imgUrl, hoverImage });
     return list.length > 0 ? list : [imgUrl].filter(Boolean);
   }, [images, imgUrl, hoverImage]);
 
+  // Se houver hoverImage explícita ou uma 2ª imagem na galeria, usamos ela no hover
+  const targetHoverImage =
+    hoverImage ?? (gallery.length > 1 ? gallery[1] : null);
+
   const [activeIndex, setActiveIndex] = useState(0);
   const [hasHovered, setHasHovered] = useState(false);
   const [isHoveringMedia, setIsHoveringMedia] = useState(false);
 
-  // Troca a imagem automaticamente no hover se houver mais de uma
+  // Auto-avanço da galeria se o usuário continuar com o mouse em cima por mais tempo
   useEffect(() => {
     if (shouldReduceMotion) return;
     if (!isHoveringMedia) return;
     if (gallery.length < 2) return;
     const timer = setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % gallery.length);
-    }, 1400);
+    }, 1600);
     return () => clearInterval(timer);
   }, [isHoveringMedia, gallery.length, shouldReduceMotion]);
 
   const handleMediaEnter = () => {
     setHasHovered(true);
     setIsHoveringMedia(true);
+    // Ao entrar, se houver imagem de hover, já pula imediatamente para ela
+    if (targetHoverImage) {
+      const hoverIdx = gallery.indexOf(targetHoverImage);
+      setActiveIndex(hoverIdx !== -1 ? hoverIdx : 1);
+    }
   };
 
   const handleMediaLeave = () => {
     setIsHoveringMedia(false);
-    setActiveIndex(0);
+    setActiveIndex(0); // Volta para a capa principal ao sair
   };
 
   const goPrev = (event: React.MouseEvent) => {
@@ -160,7 +168,10 @@ export default function BentoCard({
           onDetails();
         }
       }}
-      onMouseEnter={() => demoUrl && setHasHovered(true)}
+      onMouseEnter={() => {
+        if (demoUrl) setHasHovered(true);
+        handleMediaEnter();
+      }}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleCardLeave}
       aria-label={`${t("projects.view_details_for")} ${title}`}
@@ -172,11 +183,7 @@ export default function BentoCard({
       transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
     >
       {/* Media layer */}
-      <div
-        className="absolute inset-0"
-        onMouseEnter={handleMediaEnter}
-        onMouseLeave={handleMediaLeave}
-      >
+      <div className="absolute inset-0">
         <AnimatePresence mode="popLayout" initial={false}>
           <motion.div
             key={currentImage}
@@ -204,7 +211,6 @@ export default function BentoCard({
           </motion.div>
         </AnimatePresence>
 
-        {/* Live demo iframe */}
         {demoUrl && hasHovered && activeIndex === 0 && (
           <div className="pointer-events-none absolute inset-0 z-[1] opacity-0 transition-opacity duration-500 group-hover:opacity-100">
             <iframe
@@ -259,7 +265,7 @@ export default function BentoCard({
         }}
       />
 
-      {/* Top badges */}
+      {/* Badges */}
       <div className="absolute left-4 top-4 z-[3] flex flex-wrap gap-2">
         {tags
           .filter((tag) => tag !== "All")
@@ -287,14 +293,13 @@ export default function BentoCard({
         </span>
       </div>
 
-      {/* Image index indicator */}
       {showArrows && (
         <div className="absolute bottom-3 right-4 z-[3] rounded-full border border-white/10 bg-black/55 px-2.5 py-1 font-mono text-[10px] text-white/80 backdrop-blur-md">
           {activeIndex + 1} / {gallery.length}
         </div>
       )}
 
-      {/* Slide-up reveal panel */}
+      {/* Slide-up panel */}
       <div
         className={`absolute inset-x-0 bottom-0 z-[3] transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-y-0 group-focus-within:translate-y-0 ${
           size === "large"

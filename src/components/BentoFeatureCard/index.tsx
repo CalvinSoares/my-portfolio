@@ -38,17 +38,17 @@ interface BentoFeatureCardProps {
  * - Left  → sticky text block (title, description, tech, CTAs). Stays put
  *           while the user scrolls past the card, so the headline reads
  *           even when the screenshot scrolls out of view.
- * - Right → media column with the carousel (manual arrows + auto-cycle on
- *           hover when there's more than one image).
- *
- * The sticky effect is internal — the card is a fixed-height container, the
- * left pane scrolls up, the right pane scrolls down with the page.
+ * - Right → media column with carousel / hover-swap:
+ *             • 1 image + hoverImage  → simple swap on hover (no arrows)
+ *             • 2+ images + hoverImage → swap to 2nd image on hover (no arrows)
+ *             • 3+ images            → full carousel with arrows + auto-cycle
  */
 export default function BentoFeatureCard({
   title,
   description,
   imgUrl,
   images,
+  hoverImage,
   tags,
   gitUrl,
   previewUrl,
@@ -66,23 +66,36 @@ export default function BentoFeatureCard({
     return list.filter(Boolean);
   }, [images, imgUrl]);
 
-  const [activeIndex, setActiveIndex] = useState(0);
+  // Hover-swap: when the card has a `hoverImage` available AND:
+  //   - it has 1 gallery image, OR
+  //   - it has 2+ gallery images
+  // → show the 2nd image on hover instead of cycling. Clean reveal, no arrows.
+  const useHoverSwap = gallery.length >= 1 && Boolean(hoverImage);
 
-  // Auto-advance on hover when there's more than one image. The user can
-  // still click arrows — the cycle pauses while they interact.
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isHoverSwapped, setIsHoverSwapped] = useState(false);
+
+  // Auto-advance on hover only when NOT in hover-swap mode AND 3+ images.
+  // (2 images uses the swap instead; 1 image uses swap or is static.)
   useEffect(() => {
     if (shouldReduceMotion) return;
     if (!isHoveringMedia) return;
-    if (gallery.length < 2) return;
+    if (useHoverSwap) return;
+    if (gallery.length < 3) return;
     const timer = setInterval(() => {
       setActiveIndex((prev) => (prev + 1) % gallery.length);
     }, 1500);
     return () => clearInterval(timer);
-  }, [isHoveringMedia, gallery.length, shouldReduceMotion]);
+  }, [isHoveringMedia, gallery.length, shouldReduceMotion, useHoverSwap]);
 
-  const handleMediaEnter = () => setIsHoveringMedia(true);
+  const handleMediaEnter = () => {
+    setIsHoveringMedia(true);
+    if (useHoverSwap) setIsHoverSwapped(true);
+  };
+
   const handleMediaLeave = () => {
     setIsHoveringMedia(false);
+    if (useHoverSwap) setIsHoverSwapped(false);
     setActiveIndex(0);
   };
 
@@ -90,10 +103,12 @@ export default function BentoFeatureCard({
     event.stopPropagation();
     setActiveIndex((prev) => (prev - 1 + gallery.length) % gallery.length);
   };
+
   const goNext = (event: React.MouseEvent) => {
     event.stopPropagation();
     setActiveIndex((prev) => (prev + 1) % gallery.length);
   };
+
   const stop = (event: React.MouseEvent) => event.stopPropagation();
 
   // Subtle tilt for the right pane only — keeps the sticky text rock steady.
@@ -121,8 +136,12 @@ export default function BentoFeatureCard({
     handleMediaLeave();
   };
 
-  const showArrows = gallery.length > 1;
-  const currentImage = gallery[activeIndex];
+  // Arrows only for 3+ images (2-image cards use hover-swap instead).
+  const showArrows = !useHoverSwap && gallery.length >= 3;
+  // currentImage: if swamped on hover show 2nd image (or hoverImage), else carousel.
+  const currentImage = isHoverSwapped
+    ? (gallery[1] ?? hoverImage ?? gallery[0])
+    : (gallery[activeIndex] ?? "/placeholder.svg");
 
   return (
     <div
@@ -139,8 +158,7 @@ export default function BentoFeatureCard({
       aria-label={`${t("projects.view_details_for")} ${title}`}
       className="group relative grid h-full min-h-[520px] cursor-pointer grid-cols-1 overflow-hidden rounded-[1.7rem] border border-white/10 bg-[#161617] outline-none transition-colors duration-300 hover:border-[#a48eff]/35 focus-visible:border-[#a48eff] focus-visible:ring-2 focus-visible:ring-[#583ebc]/60 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.4fr)]"
     >
-      {/* LEFT — sticky text pane. Pinned near the top of the card so the user
-          reads the headline first, then sees the rest scroll into view. */}
+      {/* LEFT — sticky text pane */}
       <div className="relative flex flex-col justify-between p-6 md:p-8">
         <div className="sticky top-6">
           <div className="flex flex-wrap items-center gap-2">
@@ -233,10 +251,9 @@ export default function BentoFeatureCard({
         </div>
       </div>
 
-      {/* RIGHT — media column. Tall enough to allow the sticky text to
-          actually feel sticky when the page scrolls. */}
+      {/* RIGHT — media column */}
       <motion.div
-        className="relative h-[320px] overflow-hidden border-t border-white/5 bg-[#121212] lg:h-auto lg:border-l lg:border-t-0"
+        className="relative h-[320px] overflow-hidden border-t border-white/5 bg-[#121212] lg:h-auto lg:min-h-[520px] lg:border-l lg:border-t-0"
         style={{ rotateX, rotateY, transformPerspective: 1100 }}
         onMouseEnter={handleMediaEnter}
         onMouseLeave={handleMediaMouseLeave}
@@ -276,7 +293,7 @@ export default function BentoFeatureCard({
         />
         <div className="pointer-events-none absolute inset-0 bg-gradient-to-l from-transparent via-transparent to-[#161617]/40" />
 
-        {/* Arrows */}
+        {/* Carousel arrows — only for 3+ images */}
         {showArrows && (
           <>
             <button
