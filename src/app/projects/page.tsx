@@ -12,6 +12,7 @@ import Link from "next/link";
 import Header from "../../components/Header";
 import ProjectTag from "../../components/ProjectTag";
 import BentoCard from "../../components/BentoCard";
+import BentoFeatureCard from "../../components/BentoFeatureCard";
 import CompactProjectCard from "../../components/CompactProjectCard";
 import ProjectDetailsModal from "../../components/ProjectDetailsModal";
 import {
@@ -24,27 +25,54 @@ import {
 } from "lucide-react";
 import ParticleBackground from "../../components/particleBackground";
 import { useLanguage } from "../../context/LanguageContext";
+import { getProjectImages } from "../../lib/projectImages";
 
 type ProjectFilter = "All" | "Web" | "Mobile";
 type Project = (typeof projectData)[number];
-type BentoSlot = {
+
+// Tiered layout for the highlights grid (calm mosaic):
+//   row 1 → 1 feature (full width, lg:col-span-6, lg:row-span-2) with sticky text + carousel
+//   row 2 → 3 wide cards side by side (lg:col-span-2 each)
+//   row 3 → 2 wide cards (lg:col-span-3 each)
+//   row 4 → 1 wide + CTA placeholder (handled outside this fn)
+//
+// Adapts gracefully when the filtered list shrinks — the first card always
+// gets the feature treatment, the rest spread out so the row never feels
+// half-empty.
+type BentoVariant = "feature" | "wide";
+
+interface BentoSlot {
   span: string;
   size: "large" | "medium" | "wide";
-};
+  variant: BentoVariant;
+}
 
-// Mosaic pattern for the highlights tier: one hero cell, two stacked medium
-// cells beside it, then wide cells below. Adapts when filters shrink the list.
 const bentoSlotFor = (index: number, total: number): BentoSlot => {
-  if (total === 1) return { span: "lg:col-span-6", size: "large" };
-  if (total === 2) return { span: "lg:col-span-3", size: "wide" };
-  const pattern: BentoSlot[] = [
-    { span: "lg:col-span-4 lg:row-span-2", size: "large" },
-    { span: "lg:col-span-2", size: "medium" },
-    { span: "lg:col-span-2", size: "medium" },
-    { span: "lg:col-span-3", size: "wide" },
-    { span: "lg:col-span-3", size: "wide" },
-  ];
-  return pattern[index % pattern.length];
+  // First card: feature. Always.
+  if (index === 0) {
+    return {
+      span: "lg:col-span-6 lg:row-span-2",
+      size: "large",
+      variant: "feature",
+    };
+  }
+  // 1 card only (after the feature) — wide.
+  if (total === 2) {
+    return { span: "lg:col-span-6", size: "wide", variant: "wide" };
+  }
+  // 2-4 cards total: feature on top, the rest split into one row of 3 (or 2 + center).
+  if (total <= 4) {
+    return { span: "lg:col-span-2", size: "medium", variant: "wide" };
+  }
+  // 5-7 cards: 1 feature + row of 3 + row of 2 (or 1).
+  // The remainder after the feature fills 3 per row, then 2 per row.
+  const positionFromFeature = index - 1; // 0-based among the wide tier
+  const isFirstRow = positionFromFeature < 3;
+  if (isFirstRow) {
+    return { span: "lg:col-span-2", size: "medium", variant: "wide" };
+  }
+  // Second row + beyond: pair them up (col-span-3 each).
+  return { span: "lg:col-span-3", size: "wide", variant: "wide" };
 };
 
 const projectData = [
@@ -65,6 +93,7 @@ const projectData = [
     impactPt:
       "Entregou uma base mais sólida para o produto, com experiência refinada, APIs seguras e uma arquitetura pronta para evoluir recursos premium.",
     image: "/images/projects/quacklinks.png",
+    images: ["/images/projects/quacklinks.png"],
     tag: ["All", "Web"],
     previewUrl: "https://quacklinks.com.br/",
     tecnologias: [
@@ -95,7 +124,14 @@ const projectData = [
       "Turned abstract architecture theory into something you can see and manipulate — three complementary views of the same idea (concept, roadmap, playground). No backend: all content is typed in the repo and validated by the compiler, with user progress persisted in localStorage and shareable via URL.",
     impactPt:
       "Transformou teoria abstrata de arquitetura em algo visível e manipulável — três visões complementares da mesma ideia (conceito, roadmap, playground). Sem backend: todo o conteúdo é tipado no repositório e validado pelo compilador, com progresso salvo em localStorage e compartilhável por URL.",
-    image: "/images/projects/devatlas.png",
+    image: "/images/projects/devatlas3.png",
+    images: [
+      "/images/projects/devatlas3.png",
+      "/images/projects/devatlas2.png",
+      "/images/projects/devatlas1.png",
+      "/images/projects/devatlas.png",
+    ],
+    hoverImage: "/images/projects/devatlas2.png",
     tag: ["All", "Web"],
     previewUrl: "https://devmappa.vercel.app/",
     tecnologias: [
@@ -128,6 +164,7 @@ const projectData = [
     impactPt:
       "Ajudou a automatizar recebimentos, reduzir a friccao no checkout e melhorar a conciliacao e a rastreabilidade ponta a ponta das transacoes.",
     image: "/images/projects/paglemon.png",
+    images: ["/images/projects/paglemon.png"],
     tag: ["All", "Web"],
     previewUrl: "https://app.paglemon.org/",
     tecnologias: [
@@ -160,6 +197,7 @@ const projectData = [
     impactPt:
       "Dá a ONGs pequenas um sinal grátis e sem senha para que editais de fomento deixem de ser descobertos atrasado no WhatsApp — depois do prazo.",
     image: "/images/projects/edital-radar.png",
+    images: ["/images/projects/edital-radar.png"],
     tag: ["All", "Web"],
     previewUrl: "https://edital-radar.vercel.app/",
     tecnologias: [
@@ -191,6 +229,7 @@ const projectData = [
     impactPt:
       "Transforma a due diligence de última hora em colar o CNPJ e ler — para que ONG pequena ou comprador público cheque antes de assinar, sem fingir que a ferramenta é certidão oficial.",
     image: "/images/projects/certidao-zero.png",
+    images: ["/images/projects/certidao-zero.png"],
     tag: ["All", "Web"],
     previewUrl: "https://certidao-zero.vercel.app/",
     tecnologias: [
@@ -221,6 +260,7 @@ const projectData = [
     impactPt:
       "Transforma planilhas oficiais espalhadas em um lugar só para acompanhar quem propõe, como vota e o que gasta — para comparar até três perfis sem caçar dumps de dados abertos.",
     image: "/images/projects/plenavis.png",
+    images: ["/images/projects/plenavis.png"],
     tag: ["All", "Web"],
     previewUrl: "https://plenavis.vercel.app/",
     tecnologias: [
@@ -252,6 +292,7 @@ const projectData = [
     impactPt:
       "Transforma compras públicas opacas em um sinal diário para micro e pequenas empresas — elas ficam sabendo de oportunidades reservadas a tempo de disputar, sem precisar vigiar portais de governo.",
     image: "/images/projects/prefeituraquer.png",
+    images: ["/images/projects/prefeituraquer.png"],
     tag: ["All", "Web"],
     previewUrl: "https://prefeitura-quer.vercel.app/",
     tecnologias: [
@@ -283,6 +324,7 @@ const projectData = [
     impactPt:
       "Entregou uma base full stack mais sólida para o produto financeiro, melhorando a visibilidade da operação com fluxos seguros de dados, lógica de domínio organizada e acompanhamento claro de saldos, atrasos, lançamentos recentes e análise de despesas por categoria.",
     image: "/images/projects/financeiro.png",
+    images: ["/images/projects/financeiro.png"],
     tag: ["All", "Web"],
     previewUrl: "https://finance.paglemon.org",
     demoUrl: "https://finance-demo-jade.vercel.app/",
@@ -317,6 +359,7 @@ const projectData = [
     impactPt:
       "Entregou uma base mais solida para uma plataforma culinaria com IA, melhorando a forma como usuarios criam, salvam e compartilham receitas, ao mesmo tempo em que sustenta monetizacao por assinatura, acesso multilingue e integracoes escalaveis para pagamentos, imagens e engajamento.",
     image: "/images/projects/ichef-web.png",
+    images: ["/images/projects/ichef-web.png", "/images/projects/ichef24.png"],
     tag: ["All", "Web", "Mobile"],
     previewUrl: "https://ichef24.com/",
     tecnologias: [
@@ -347,6 +390,7 @@ const projectData = [
     impactPt:
       "Centralizou informações operacionais e facilitou o monitoramento do dia a dia.",
     image: "/images/projects/logistic.png",
+    images: ["/images/projects/logistic.png"],
     tag: ["All", "Web"],
     gitUrl: "https://github.com/CalvinSoares/logistic-system",
     previewUrl:
@@ -366,6 +410,7 @@ const projectData = [
     impactPt:
       "Transformou um conceito de jogo em uma experiência mobile publicada.",
     image: "/images/projects/searchGame.png",
+    images: ["/images/projects/searchGame.png"],
     tag: ["All", "Mobile"],
     gitUrl: "https://github.com/CalvinSoares/word-search-game",
     previewUrl:
@@ -384,6 +429,7 @@ const projectData = [
     impactPt:
       "Melhorou a leitura de informações de negócio com uma interface analítica mais clara.",
     image: "/images/projects/dashboard.png",
+    images: ["/images/projects/dashboard.png"],
     tag: ["All", "Web"],
     gitUrl: "https://github.com/CalvinSoares/dashboardEcharts",
     previewUrl: "https://dashboard-echarts.vercel.app/",
@@ -403,6 +449,7 @@ const projectData = [
     impactEn: "Supported faster account management for internal teams.",
     impactPt: "Apoiou uma gestão mais rápida de contas para equipes internas.",
     image: "/images/projects/bank1.png",
+    images: ["/images/projects/bank1.png"],
     tag: ["All", "Web"],
     previewUrl:
       "https://www.linkedin.com/feed/update/urn:li:activity:7181364631100088320/",
@@ -421,6 +468,7 @@ const projectData = [
     impactPt:
       "Entregou um produto leve com fluxo direto para criação de notas.",
     image: "/images/projects/duNotes.png",
+    images: ["/images/projects/duNotes.png"],
     tag: ["All", "Web"],
     gitUrl: "https://github.com/CalvinSoares/DuNotes",
     previewUrl: "https://du-notes.vercel.app/",
@@ -722,27 +770,38 @@ export default function ProjectsSection() {
                 </p>
               </motion.div>
 
-              <div className="grid grid-cols-1 gap-5 lg:auto-rows-[minmax(250px,auto)] lg:grid-cols-6">
+              <div className="grid grid-cols-1 gap-5 lg:auto-rows-[minmax(260px,auto)] lg:grid-cols-6">
                 {highlightProjects.map((project, index) => {
                   const slot = bentoSlotFor(index, highlightProjects.length);
+                  const description =
+                    language === "pt"
+                      ? project.descriptionPt
+                      : project.descriptionEn;
+                  const sharedProps = {
+                    title: project.title,
+                    description,
+                    imgUrl: project.image,
+                    images: getProjectImages(project),
+                    hoverImage: project.hoverImage,
+                    tags: project.tag,
+                    gitUrl: project.gitUrl,
+                    previewUrl: project.previewUrl,
+                    demoUrl: project.demoUrl,
+                    tecnologias: project.tecnologias,
+                    onDetails: () => setSelectedProject(project),
+                  };
                   return (
-                    <div key={`${tag}-${project.id}`} className={slot.span}>
-                      <BentoCard
-                        title={project.title}
-                        description={
-                          language === "pt"
-                            ? project.descriptionPt
-                            : project.descriptionEn
-                        }
-                        imgUrl={project.image}
-                        tags={project.tag}
-                        gitUrl={project.gitUrl}
-                        previewUrl={project.previewUrl}
-                        demoUrl={project.demoUrl}
-                        tecnologias={project.tecnologias}
-                        size={slot.size}
-                        onDetails={() => setSelectedProject(project)}
-                      />
+                    <div
+                      key={`${tag}-${project.id}`}
+                      className={`${slot.span} ${
+                        index === 0 ? "min-h-[520px]" : ""
+                      }`}
+                    >
+                      {slot.variant === "feature" ? (
+                        <BentoFeatureCard {...sharedProps} />
+                      ) : (
+                        <BentoCard {...sharedProps} size={slot.size} />
+                      )}
                     </div>
                   );
                 })}
@@ -777,6 +836,8 @@ export default function ProjectsSection() {
                       : project.descriptionEn
                   }
                   imgUrl={project.image}
+                  images={getProjectImages(project)}
+                  hoverImage={project.hoverImage}
                   tags={project.tag}
                   gitUrl={project.gitUrl}
                   previewUrl={project.previewUrl}
@@ -885,6 +946,7 @@ export default function ProjectsSection() {
               ? selectedProject?.impactPt
               : selectedProject?.impactEn,
           imgUrl: selectedProject?.image ?? "",
+          images: selectedProject ? getProjectImages(selectedProject) : [],
           gitUrl: selectedProject?.gitUrl,
           previewUrl: selectedProject?.previewUrl,
           demoUrl: selectedProject?.demoUrl,
