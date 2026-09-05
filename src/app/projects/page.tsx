@@ -81,17 +81,17 @@ const projectData = [
     highlight: true,
     title: "QuackLinks",
     descriptionEn:
-      "A premium link-in-bio platform built for creators and brands to centralize their digital presence with customization, analytics and monetization-ready features.",
+      "A premium link-in-bio platform designed for creators and brands to centralize their digital presence, with deep visual customization, real-time analytics, and integrated monetization tools.",
     descriptionPt:
-      "Uma plataforma premium de link na bio para criadores e marcas centralizarem sua presença digital com personalização, analytics e recursos prontos para monetização.",
+      "Plataforma de link na bio para criadores e marcas centralizarem sua presença digital, com personalização visual avançada, métricas em tempo real e ferramentas de monetização.",
     roleEn:
-      "Worked across the product, combining a customizable front-end with a Spring Boot backend for authentication, security, payments and core integrations.",
+      "Engineered the full application, combining an interactive Vue.js interface with a Java 21 and Spring Boot API, covering Spring Security authentication, Stripe payments, and Cloudflare R2 media storage.",
     rolePt:
-      "Atuei de ponta a ponta no produto, combinando um front-end altamente personalizável com um backend em Spring Boot para autenticação, segurança, pagamentos e integrações centrais.",
+      "Desenvolvi a solução completa, unindo uma interface interativa em Vue.js a uma API em Java 21 e Spring Boot, com autenticação via Spring Security, pagamentos pelo Stripe e armazenamento no Cloudflare R2.",
     impactEn:
-      "Delivered a stronger product foundation with a polished experience, secure APIs and an architecture ready to evolve premium features.",
+      "Built a scalable foundation for user subscriptions and public profile pages, delivering fast load times and reliable payment processing.",
     impactPt:
-      "Entregou uma base mais sólida para o produto, com experiência refinada, APIs seguras e uma arquitetura pronta para evoluir recursos premium.",
+      "Estruturei uma base escalável para assinaturas e gestão de perfis públicos, garantindo carregamento rápido das páginas e segurança no processamento financeiro.",
     image: "/images/projects/quacklinks.png",
     images: ["/images/projects/quacklinks.png"],
     tag: ["All", "Web"],
@@ -113,17 +113,17 @@ const projectData = [
     highlight: true,
     title: "DevMappa",
     descriptionEn:
-      "A front-only study and visualization system for design patterns, principles and software architecture — lean roadmaps, richly illustrated concept entries and an interactive architecture playground.",
+      "An interactive learning platform for software architecture, design patterns, and distributed systems, featuring gamified tracks, quizzes, and a visual architecture simulator.",
     descriptionPt:
-      "Um sistema front-only de estudo e visualização de design patterns, princípios e arquitetura de software — roadmaps enxutos, verbetes ilustrados e um playground de arquitetura interativo.",
+      "Plataforma interativa para estudo de arquitetura de software, design patterns e sistemas distribuídos, com jornada gamificada, quizzes e simulador visual de infraestrutura.",
     roleEn:
-      "Designed and built the product end-to-end: 33 typed concept entries (the 23 GoF patterns, SOLID, CQS and 4 architecture styles) with TL;DR, navigable layers, real use cases and pitfalls; 4 markable roadmaps with measured bezier connectors; and a 'Constructor' playground where users drag layers, patterns and technologies while an engine explains each choice, suggests the next step and simulates the request flow, including failure scenarios.",
+      "Architected and built the full platform, including 79 in-depth concept guides, 5 interactive graph roadmaps, an architectural request flow simulator with ADR export, and annotated real incident postmortems. Implemented the backend using Next.js 16 App Router, Auth.js v5, Drizzle ORM on Neon Postgres, and Upstash Redis for weekly leagues and leaderboards.",
     rolePt:
-      "Concebi e construí o produto de ponta a ponta: 33 verbetes tipados (os 23 padrões GoF, SOLID, CQS e 4 estilos de arquitetura) com TL;DR, camadas navegáveis, casos de uso reais e armadilhas; 4 roadmaps marcáveis com conectores bezier medidos; e um 'Construtor' onde o usuário arrasta camadas, padrões e tecnologias enquanto um motor explica cada escolha, sugere o próximo passo e simula a requisição, incluindo cenários de falha.",
+      "Arquitetei e construí a plataforma completa, incluindo catálogo de 79 conceitos técnicos, 5 trilhas de roadmaps em grafo, simulador de fluxo de requisições no Construtor de arquitetura e postmortems de incidentes reais. Desenvolvi o backend no Next.js 16 App Router com Auth.js v5, Drizzle ORM sobre Neon Postgres e Upstash Redis para ligas semanais e cache.",
     impactEn:
-      "Turned abstract architecture theory into something you can see and manipulate — three complementary views of the same idea (concept, roadmap, playground). No backend: all content is typed in the repo and validated by the compiler, with user progress persisted in localStorage and shareable via URL.",
+      "Turned abstract architecture theory into hands-on simulations. The application works offline-first for immediate exploration and synchronizes with a relational backend for XP progression, leagues, and cross-device persistence when authenticated.",
     impactPt:
-      "Transformou teoria abstrata de arquitetura em algo visível e manipulável — três visões complementares da mesma ideia (conceito, roadmap, playground). Sem backend: todo o conteúdo é tipado no repositório e validado pelo compilador, com progresso salvo em localStorage e compartilhável por URL.",
+      "Transformei conceitos complexos de engenharia em aprendizado prático e visual. O sistema opera tanto offline quanto integrado a uma infraestrutura com banco relacional, gamificação com XP e sincronização entre dispositivos.",
     image: "/images/projects/devatlas3.png",
     images: [
       "/images/projects/devatlas3.png",
@@ -138,13 +138,15 @@ const projectData = [
       "Next.js 16",
       "TypeScript",
       "Tailwind v4",
+      "Drizzle ORM",
+      "PostgreSQL",
+      "Upstash Redis",
+      "Auth.js v5",
       "React Flow",
       "Mermaid",
-      "Shiki",
       "dnd-kit",
-      "next-themes",
-      "Radix",
-      "SSG",
+      "Shiki",
+      "Vitest",
     ],
   },
   {
@@ -152,17 +154,17 @@ const projectData = [
     highlight: true,
     title: "PagLemon",
     descriptionEn:
-      "A payment platform connected to the PIX ecosystem, focused on charge creation, QR Code generation and real-time transaction updates via postbacks and webhooks.",
+      "A payment platform integrated with the Brazilian PIX ecosystem, supporting dynamic charge generation, instant QR codes, and real-time transaction status updates via webhooks.",
     descriptionPt:
-      "Uma plataforma de pagamentos conectada ao ecossistema PIX, com foco em geracao de cobrancas, QR Code e atualizacoes em tempo real via postbacks e webhooks.",
+      "Plataforma de pagamentos conectada ao ecossistema PIX, com geração dinâmica de cobranças, emissão de QR Codes e notificações de status em tempo real via webhooks e postbacks.",
     roleEn:
-      "Led the technical evolution of the payment solution, redesigning integrations, asynchronous flows and infrastructure to support reliable processing and operational visibility.",
+      "Led the architectural evolution of the payment engine, redesigning asynchronous message flows with Redis and Amazon SQS, and managing Kubernetes infrastructure through ArgoCD and automated CI/CD pipelines.",
     rolePt:
-      "Liderei a evolucao tecnica da solucao de pagamentos, redesenhando integracoes, fluxos assincronos e infraestrutura para suportar processamento confiavel e visibilidade operacional.",
+      "Liderei a arquitetura e a evolução técnica da solução, redesenhando fluxos assíncronos com Redis e Amazon SQS, e estruturando a infraestrutura em Kubernetes com ArgoCD e CI/CD automatizado.",
     impactEn:
-      "Helped automate collections, reduce checkout friction and improve reconciliation and end-to-end transaction traceability for the business.",
+      "Achieved high processing availability, lowered transaction confirmation latency, and streamlined financial reconciliation across all accounts.",
     impactPt:
-      "Ajudou a automatizar recebimentos, reduzir a friccao no checkout e melhorar a conciliacao e a rastreabilidade ponta a ponta das transacoes.",
+      "Garanti alta disponibilidade no processamento de pagamentos, reduzindo o tempo de confirmação das transações e facilitando a conciliação financeira das operações.",
     image: "/images/projects/paglemon.png",
     images: ["/images/projects/paglemon.png"],
     tag: ["All", "Web"],
@@ -185,17 +187,17 @@ const projectData = [
     highlight: true,
     title: "Edital Radar",
     descriptionEn:
-      "A daily alert service for NGOs: it reads São Paulo’s Official Gazette every business day and emails organizations when a matching call, funding notice or collaboration term is published — with the excerpt and source link.",
+      "A monitoring service that tracks São Paulo's Official Gazette and alerts non-profit organizations by email whenever relevant public funding notices, grants, or tenders are published.",
     descriptionPt:
-      "Um alerta diário para ONGs: lê o Diário Oficial de SP todo dia útil e avisa por e-mail quando sai chamamento, fomento ou termo compatível com a entidade — com o trecho e o link da publicação.",
+      "Serviço que monitora diariamente as publicações do Diário Oficial de São Paulo e notifica organizações sociais por e-mail quando editais, chamamentos públicos ou termos de fomento do seu interesse são abertos.",
     roleEn:
-      "Designed and built the product end-to-end: Astro SSR landing and account flows, DOE-SP ingestion job with Zod validation, keyword/profile matching, magic-link auth, admin tooling and same-day email alerts — prioritizing accuracy and punctuality over jargon-heavy UI.",
+      "Built the entire platform using Astro 5 SSR, creating automated scraping and ingestion pipelines with Zod validation, keyword matching algorithms, passwordless magic-link authentication, and scheduled email dispatch.",
     rolePt:
-      "Concebi e construí o produto de ponta a ponta: landing e fluxos de conta em Astro SSR, job diário de coleta do DOE-SP com validação Zod, match por palavra-chave/perfil, autenticação por magic link, painel admin e alertas por e-mail no mesmo dia — priorizando precisão e pontualidade, sem jargão de Diário Oficial na UI.",
+      "Desenvolvi a plataforma completa em Astro 5 SSR, implementando jobs automáticos de coleta de dados com validação Zod, motor de correspondência por palavras-chave, autenticação por magic link e envio imediato de alertas.",
     impactEn:
-      "Gives small NGOs a free, no-password signal so funding opportunities stop being discovered late on WhatsApp — after the deadline.",
+      "Automated the tedious process of tracking government gazettes, helping grassroots organizations spot grant opportunities well before deadlines.",
     impactPt:
-      "Dá a ONGs pequenas um sinal grátis e sem senha para que editais de fomento deixem de ser descobertos atrasado no WhatsApp — depois do prazo.",
+      "Automatizou a varredura de diários oficiais para pequenas entidades, permitindo identificar oportunidades de captação de recursos com antecedência e sem custos.",
     image: "/images/projects/edital-radar.png",
     images: ["/images/projects/edital-radar.png"],
     tag: ["All", "Web"],
@@ -217,17 +219,17 @@ const projectData = [
     highlight: true,
     title: "Certidão Zero",
     descriptionEn:
-      "A no-login CNPJ check for NGOs and public managers: registration status and federal sanctions packaged into a meeting-ready page — public signals with source and date, never a trust score or legal opinion.",
+      "A fast public lookup tool for Brazilian corporate registries (CNPJ), consolidating registration status and federal sanctions into a clear overview for due diligence meetings and preliminary audits.",
     descriptionPt:
-      "Checagem de CNPJ sem login para ONGs e gestores públicos: situação cadastral e sanções federais empacotadas numa página pronta para reunião — sinais públicos com fonte e data, sem score de confiança nem parecer jurídico.",
+      "Ferramenta de consulta rápida de CNPJ para ONGs e gestores públicos, reunindo situação cadastral e sanções federais em uma visualização direta para reuniões e checagens preliminares.",
     roleEn:
-      "Designed and built the product end-to-end: Astro SSR lookup flow, BrasilAPI registration data with cache-first queries, Portal da Transparência sanctions integration with honest unavailable states, plain-language signal reading, fixed disclaimers on every fiche and noindex for on-demand third-party data.",
+      "Developed the application using Astro 5 and TypeScript, integrating BrasilAPI lookups with an aggressive caching layer, federal sanctions from the Transparency Portal, and clear source attributions.",
     rolePt:
-      "Concebi e construí o produto de ponta a ponta: fluxo de consulta em Astro SSR, dados cadastrais via BrasilAPI com cache em toda consulta, integração de sanções do Portal da Transparência com estados honestos quando indisponível, leitura de sinais em português claro, disclaimer fixo em toda ficha e noindex para dado de terceiro sob demanda.",
+      "Desenvolvi a aplicação em Astro 5 e TypeScript, integrando consultas à BrasilAPI com camada de cache, dados de sanções do Portal da Transparência e formatação clara das informações públicas com registro de data e fonte.",
     impactEn:
-      "Turns last-minute partner due diligence into a single paste-and-read step — so a small NGO or city buyer can check a CNPJ before signing without pretending the tool is an official certificate.",
+      "Sped up preliminary compliance checks for prospective partners and suppliers, presenting disparate official records in a single instant report without login requirements.",
     impactPt:
-      "Transforma a due diligence de última hora em colar o CNPJ e ler — para que ONG pequena ou comprador público cheque antes de assinar, sem fingir que a ferramenta é certidão oficial.",
+      "Agilizou a verificação prévia de conformidade de fornecedores e parceiros, consolidando múltiplos dados públicos em um relatório instantâneo e sem necessidade de cadastro.",
     image: "/images/projects/certidao-zero.png",
     images: ["/images/projects/certidao-zero.png"],
     tag: ["All", "Web"],
@@ -248,17 +250,17 @@ const projectData = [
     highlight: true,
     title: "Plenavis",
     descriptionEn:
-      "A public-data portal on Brazilian power: bills, votes and allowance spending for deputies, senators and the president — plus candidates and a profile comparator — without moral rankings or party framing.",
+      "A public transparency portal covering the Brazilian National Congress, organizing legislative proposals, roll-call voting records, and parliamentary allowance expenses in an objective interface.",
     descriptionPt:
-      "Portal de dados públicos do poder no Brasil: projetos, votos e gastos da cota de deputados, senadores e do presidente — além de candidatos e comparador de perfis — sem ranking moral nem enquadramento partidário.",
+      "Portal de transparência pública sobre o Congresso Nacional brasileiro, reunindo projetos de lei, votações nominais e gastos da cota parlamentar de deputados e senadores em uma plataforma neutra.",
     roleEn:
-      "Designed and built the product end-to-end: Nuxt/Vue UI that reads only from a local API, Prisma-backed store, Chart.js visualizations, and ETL jobs that sync Câmara, Senado, CEAP/CEAPS and TSE into Postgres — with a profile score framed as an indicator, never a verdict.",
+      "Built the solution with Nuxt 4, Vue 3, and Tailwind on the frontend, powered by a Nitro API and Prisma on PostgreSQL. Created automated ETL jobs to ingest open data from both legislative chambers and the electoral court, coupled with interactive Chart.js graphs.",
     rolePt:
-      "Concebi e construí o produto de ponta a ponta: UI Nuxt/Vue que lê só da API local, banco com Prisma, visualizações Chart.js e jobs ETL que sincronizam Câmara, Senado, CEAP/CEAPS e TSE no Postgres — com score de perfil como indicador, nunca como juízo.",
+      "Desenvolvi a solução com Nuxt 4, Vue 3 e Tailwind no frontend, apoiado por uma API em Nitro e Prisma sobre PostgreSQL. Criei rotinas ETL para coletar e sincronizar dados da Câmara, Senado e TSE, além de gráficos interativos com Chart.js.",
     impactEn:
-      "Turns scattered official spreadsheets into one place to follow who proposes, how they vote and what they spend — so anyone can compare up to three profiles without hunting open-data dumps.",
+      "Consolidated millions of open government records into a coherent platform, making it simple to track legislative activity and compare representatives side by side.",
     impactPt:
-      "Transforma planilhas oficiais espalhadas em um lugar só para acompanhar quem propõe, como vota e o que gasta — para comparar até três perfis sem caçar dumps de dados abertos.",
+      "Centralizou milhões de registros públicos em um único ambiente navegável, facilitando o acompanhamento da atividade parlamentar e a comparação direta entre representantes.",
     image: "/images/projects/plenavis.png",
     images: ["/images/projects/plenavis.png"],
     tag: ["All", "Web"],
@@ -280,17 +282,17 @@ const projectData = [
     highlight: true,
     title: "Prefeitura Quer",
     descriptionEn:
-      "A notification service that watches city-hall procurement notices and alerts small businesses by email when a public purchase matches what they sell — plain language, no legalese, no card required.",
+      "A municipal procurement alert service that connects micro and small businesses with local government purchasing notices tailored to the goods and services they supply.",
     descriptionPt:
-      "Um serviço de avisos que acompanha anúncios de compras de prefeituras e avisa negócios pequenos por e-mail quando aparece algo que combina com o que eles vendem — em português claro, sem juridiquês e sem cartão.",
+      "Serviço de alertas de compras públicas municipais, conectando micro e pequenos empreendedores a editais e dispensas de licitação alinhados aos produtos e serviços que oferecem.",
     roleEn:
-      "Designed and built the product end-to-end: public landing and signup with magic-link auth, subscriber preferences (what they sell, where, and capacity), admin tooling, and the pipeline that reads official notices and sends short, actionable alerts.",
+      "Developed the full-stack platform using Next.js 15, tRPC, TypeScript, and Drizzle ORM with PostgreSQL, featuring passwordless magic-link onboarding, preference filters, and automated notification pipelines.",
     rolePt:
-      "Concebi e construí o produto de ponta a ponta: landing e cadastro públicos com autenticação por magic link, preferências do assinante (o que vende, onde e capacidade), painel admin e o fluxo que lê os anúncios oficiais e dispara avisos curtos e acionáveis.",
+      "Desenvolvi a plataforma full stack utilizando Next.js 15, tRPC, TypeScript e Drizzle ORM sobre PostgreSQL, incluindo fluxos de cadastro por magic link, gestão de categorias comerciais e rotinas de triagem e envio de e-mails.",
     impactEn:
-      "Turns opaque public procurement into a daily signal for micro and small businesses — they learn about reserved opportunities in time to bid, without having to monitor government portals themselves.",
+      "Connected small local suppliers with relevant municipal contracting opportunities, delivering actionable alerts in time for bid preparation.",
     impactPt:
-      "Transforma compras públicas opacas em um sinal diário para micro e pequenas empresas — elas ficam sabendo de oportunidades reservadas a tempo de disputar, sem precisar vigiar portais de governo.",
+      "Aproximou pequenos fornecedores de contratos públicos da sua região, enviando notificações diretas e no prazo para participação nos processos de compra.",
     image: "/images/projects/prefeituraquer.png",
     images: ["/images/projects/prefeituraquer.png"],
     tag: ["All", "Web"],
@@ -312,17 +314,17 @@ const projectData = [
     highlight: true,
     title: "MCC Financeiro",
     descriptionEn:
-      "A full-stack financial management platform built to centralize cash flow, accounts, categories, transactions and operational insights through a modern dashboard, responsive workflows and a structured backend API.",
+      "A comprehensive financial management platform providing cash flow tracking, accounts payable/receivable, bank reconciliation, and expense analytics.",
     descriptionPt:
-      "Uma plataforma full stack de gestão financeira criada para centralizar fluxo de caixa, contas, categorias, transações e indicadores operacionais por meio de um dashboard moderno, fluxos responsivos e uma API backend estruturada.",
+      "Sistema web para gestão financeira empresarial, com controle de contas a pagar e receber, conciliação bancária, fluxo de caixa e relatórios analíticos de despesas.",
     roleEn:
-      "Worked across both front-end and back-end, building the dashboard, financial management flows, authentication integration, theme system, reusable UI components and the API structure responsible for business rules, data access and financial summaries.",
+      "Handled full-stack development with Next.js, React, and TypeScript, building interactive analytics with Recharts, reusable interface components, and API routes handling business calculations and balance consolidation.",
     rolePt:
-      "Atuei tanto no front-end quanto no back-end, construindo o dashboard, os fluxos de gestão financeira, a integração de autenticação, o sistema de temas, componentes reutilizáveis de UI e a estrutura da API responsável por regras de negócio, acesso aos dados e consolidação dos resumos financeiros.",
+      "Atuei no desenvolvimento full stack com Next.js, React e TypeScript, criando os dashboards financeiros com Recharts, componentes modulares de interface e rotas de API para regras de negócio e consolidação de saldos.",
     impactEn:
-      "Delivered a stronger full-stack foundation for the financial product, improving daily operation visibility with secure data flows, organized domain logic and clear monitoring of balances, overdue items, recent transactions and category-based expense analysis.",
+      "Centralized financial operations for the business, offering clear insights into cash reserves, overdue payments, and budget forecasts.",
     impactPt:
-      "Entregou uma base full stack mais sólida para o produto financeiro, melhorando a visibilidade da operação com fluxos seguros de dados, lógica de domínio organizada e acompanhamento claro de saldos, atrasos, lançamentos recentes e análise de despesas por categoria.",
+      "Centralizou o controle operacional das contas da empresa, proporcionando relatórios claros sobre saúde financeira, contas atrasadas e previsão orçamentária.",
     image: "/images/projects/financeiro.png",
     images: ["/images/projects/financeiro.png"],
     tag: ["All", "Web"],
@@ -347,17 +349,17 @@ const projectData = [
     highlight: true,
     title: "iChef24",
     descriptionEn:
-      "An AI-powered recipe SaaS that combines personalized recipe generation, recipe management, subscription plans, favorites, history and a culinary community through integrated web, mobile and backend experiences.",
+      "An AI-powered culinary platform generating tailored recipes from available pantry ingredients, featuring meal planning, community discussions, and cross-platform mobile access.",
     descriptionPt:
-      "Um SaaS de receitas com IA que combina geracao personalizada de receitas, gerenciamento de receitas, planos por assinatura, favoritos, historico e comunidade culinaria em uma experiencia integrada entre web, mobile e backend.",
+      "Plataforma culinária com inteligência artificial para geração personalizada de receitas a partir de ingredientes disponíveis, com planejamento de cardápio, comunidade e aplicativo mobile.",
     roleEn:
-      "Worked across the full stack, building the web experience, mobile app flows and backend API architecture responsible for authentication, recipe generation with AI, plan control, payments, community features and real-time updates.",
+      "Built the Next.js web application and the React Native (Expo) mobile client, backed by a NestJS API with PostgreSQL and Redis, integrating Stripe subscription billing and OpenAI APIs.",
     rolePt:
-      "Atuei de ponta a ponta no produto, construindo a experiencia web, os fluxos do app mobile e a arquitetura da API backend responsavel por autenticacao, geracao de receitas com IA, controle de planos, pagamentos, recursos de comunidade e atualizacoes em tempo real.",
+      "Desenvolvi a interface web em Next.js e o aplicativo mobile em React Native com Expo, integrando ambos a uma API em NestJS, PostgreSQL e Redis, com pagamentos via Stripe e geração de conteúdo via API da OpenAI.",
     impactEn:
-      "Delivered a stronger product foundation for an AI culinary platform, improving how users create, save and share recipes while supporting subscription monetization, multilingual access and scalable integrations for payments, image handling and user engagement.",
+      "Delivered a responsive cross-platform experience with fast AI generation times, multilingual support, and seamless monetization workflows.",
     impactPt:
-      "Entregou uma base mais solida para uma plataforma culinaria com IA, melhorando a forma como usuarios criam, salvam e compartilham receitas, ao mesmo tempo em que sustenta monetizacao por assinatura, acesso multilingue e integracoes escalaveis para pagamentos, imagens e engajamento.",
+      "Criei uma experiência fluida e sincronizada entre web e mobile, com respostas de IA rápidas, suporte a múltiplos idiomas e planos de assinatura integrados.",
     image: "/images/projects/ichef-web.png",
     images: ["/images/projects/ichef-web.png", "/images/projects/ichef24.png"],
     tag: ["All", "Web", "Mobile"],
@@ -379,16 +381,18 @@ const projectData = [
   {
     id: 5,
     title: "Logistic Dashboard",
-    descriptionEn: "Logistic management system",
-    descriptionPt: "Sistema de gerenciamento logístico",
+    descriptionEn:
+      "Operations dashboard for real-time fleet monitoring and delivery logistics management.",
+    descriptionPt:
+      "Painel para monitoramento e gestão operacional de frotas e entregas em tempo real.",
     roleEn:
-      "Dashboard front-end focused on data visibility and operational flow.",
+      "Engineered the React and TypeScript UI connected to Node.js and MongoDB endpoints, prioritizing clear metrics and dispatch visibility.",
     rolePt:
-      "Front-end do dashboard com foco em visibilidade de dados e fluxo operacional.",
+      "Desenvolvi a interface do dashboard em React e TypeScript integrada a serviços em Node.js e MongoDB, com foco em métricas operacionais e status de rotas.",
     impactEn:
-      "Centralized operational information and improved daily monitoring.",
+      "Streamlined daily fleet tracking and sped up operational response times for delayed dispatches.",
     impactPt:
-      "Centralizou informações operacionais e facilitou o monitoramento do dia a dia.",
+      "Otimizou o acompanhamento diário de frotas e facilitou a resolução rápida de pendências na distribuição de cargas.",
     image: "/images/projects/logistic.png",
     images: ["/images/projects/logistic.png"],
     tag: ["All", "Web"],
@@ -400,15 +404,18 @@ const projectData = [
   {
     id: 6,
     title: "Search Game (freelancer)",
-    descriptionEn: "Word search app",
-    descriptionPt: "Aplicativo de caça-palavras",
+    descriptionEn:
+      "Interactive mobile word search game with dynamic grid generation and multiple difficulty levels.",
+    descriptionPt:
+      "Jogo mobile de caça-palavras interativo com geração procedural de tabuleiros e múltiplos níveis de dificuldade.",
     roleEn:
-      "Freelance mobile app delivery for an interactive word search experience.",
+      "Developed the mobile app in React Native with Styled Components for a freelance client, implementing puzzle logic, touch gestures, and animations.",
     rolePt:
-      "Entrega mobile freelance para uma experiência interativa de caça-palavras.",
-    impactEn: "Turned a game concept into a published mobile experience.",
+      "Desenvolvi o aplicativo em React Native com Styled Components para cliente freelance, cuidando da lógica do jogo, animações e responsividade em diferentes telas.",
+    impactEn:
+      "Successfully launched on the Google Play Store, offering smooth gameplay across various Android devices.",
     impactPt:
-      "Transformou um conceito de jogo em uma experiência mobile publicada.",
+      "Publicado na Google Play Store, entregando uma experiência de jogo fluida e sem travamentos para os usuários.",
     image: "/images/projects/searchGame.png",
     images: ["/images/projects/searchGame.png"],
     tag: ["All", "Mobile"],
@@ -420,14 +427,18 @@ const projectData = [
   {
     id: 7,
     title: "Dashboard Page",
-    descriptionEn: "Data management system",
-    descriptionPt: "Sistema de gerenciamento de dados",
-    roleEn: "Dashboard UI with charts and data organization.",
-    rolePt: "UI de dashboard com gráficos e organização de dados.",
+    descriptionEn:
+      "Analytics dashboard interface designed for visual exploration and management of business datasets.",
+    descriptionPt:
+      "Interface analítica para visualização gráfica e gerenciamento de grandes volumes de dados de negócio.",
+    roleEn:
+      "Built the Next.js and Tailwind CSS frontend with interactive Apache ECharts visualizations, connected to a Node.js and MongoDB backend.",
+    rolePt:
+      "Construí a aplicação frontend em Next.js e Tailwind CSS integrada a gráficos interativos com Apache ECharts e backend em Node.js com MongoDB.",
     impactEn:
-      "Improved readability of business information with a cleaner analytics interface.",
+      "Improved data accessibility with fast render times and intuitive interactive charts.",
     impactPt:
-      "Melhorou a leitura de informações de negócio com uma interface analítica mais clara.",
+      "Permitiu análise ágil de indicadores comerciais por meio de visualizações interativas e filtros rápidos.",
     image: "/images/projects/dashboard.png",
     images: ["/images/projects/dashboard.png"],
     tag: ["All", "Web"],
@@ -439,15 +450,17 @@ const projectData = [
     id: 8,
     title: "Banco Bet",
     descriptionEn:
-      "Front-end of an internal system for bank management of affiliate accounts.",
+      "Internal administrative portal for managing affiliate accounts and verifying banking transactions.",
     descriptionPt:
-      "Front-end de um sistema interno para gestão bancária de contas de afiliados.",
+      "Sistema administrativo interno para gestão bancária e conferência de repasses a contas de afiliados.",
     roleEn:
-      "Internal front-end focused on financial workflow and operational support.",
+      "Developed the React and Tailwind CSS frontend, implementing dynamic data tables, transaction auditing, and internal API integrations.",
     rolePt:
-      "Front-end interno com foco em fluxo financeiro e suporte operacional.",
-    impactEn: "Supported faster account management for internal teams.",
-    impactPt: "Apoiou uma gestão mais rápida de contas para equipes internas.",
+      "Desenvolvi a interface web em React e Tailwind CSS, implementando tabelas dinâmicas, validação de transações e integração com APIs internas.",
+    impactEn:
+      "Accelerated back-office review workflows for financial settlements and partner account tracking.",
+    impactPt:
+      "Agilizou a rotina das equipes operacionais no controle e liquidação de repasses financeiros.",
     image: "/images/projects/bank1.png",
     images: ["/images/projects/bank1.png"],
     tag: ["All", "Web"],
@@ -458,15 +471,18 @@ const projectData = [
   {
     id: 9,
     title: "React Notes Web Site",
-    descriptionEn: "Creation of notes application",
-    descriptionPt: "Criação de aplicação de notas",
-    roleEn: "Notes experience focused on usability and simple productivity.",
+    descriptionEn:
+      "A clean web application for capturing notes and ideas, featuring instant search, tag organization, and persistent storage.",
+    descriptionPt:
+      "Aplicação web para organização de notas e ideias, com suporte a busca rápida, marcação por tags e persistência segura.",
+    roleEn:
+      "Built the application using React, TypeScript, and Tailwind CSS backed by Node.js, emphasizing clean ergonomics and minimal latency.",
     rolePt:
-      "Experiência de notas com foco em usabilidade e produtividade simples.",
+      "Desenvolvi o frontend em React, TypeScript e Tailwind CSS integrado a serviços Node.js, com foco em simplicidade de uso e resposta imediata.",
     impactEn:
-      "Delivered a lightweight product with a straightforward note-taking flow.",
+      "Delivered a lightweight, distraction-free tool for drafting and organizing daily technical notes.",
     impactPt:
-      "Entregou um produto leve com fluxo direto para criação de notas.",
+      "Ofereceu uma ferramenta leve e direta para criação e consulta de notas sem distrações.",
     image: "/images/projects/duNotes.png",
     images: ["/images/projects/duNotes.png"],
     tag: ["All", "Web"],
