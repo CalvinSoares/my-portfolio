@@ -13,6 +13,7 @@ import {
   Eye,
   Github,
   MonitorPlay,
+  Download,
   X,
 } from "lucide-react";
 import Image from "next/image";
@@ -36,6 +37,7 @@ interface ProjectDetailsModalProps {
     gitUrl?: string;
     previewUrl?: string;
     demoUrl?: string;
+    desktopUrl?: string;
     tecnologias: string[];
   };
 }
@@ -380,6 +382,18 @@ export default function ProjectDetailsModal({
                     <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
                     <MonitorPlay className="relative h-5 w-5" />
                     <span className="relative">{t("projects.demo_live")}</span>
+                  </Link>
+                )}
+
+                {project.desktopUrl && (
+                  <Link
+                    href={project.desktopUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 rounded-lg border border-[#8d62f7] bg-[#2d2044] px-4 py-2 text-[#f6c744] transition-colors hover:border-[#f6c744]"
+                  >
+                    <Download className="h-5 w-5" />
+                    <span className="font-medium">{t("projects.download_desktop")}</span>
                   </Link>
                 )}
 

@@ -25,7 +25,7 @@ import {
 import { useLanguage } from "../../context/LanguageContext";
 import { getProjectImages } from "../../lib/projectImages";
 
-type ProjectFilter = "All" | "Web" | "Mobile";
+type ProjectFilter = "All" | "Web" | "Mobile" | "Desktop";
 type Project = (typeof projectData)[number];
 
 // Tiered layout for the highlights grid (calm mosaic):
@@ -74,6 +74,44 @@ const bentoSlotFor = (index: number, total: number): BentoSlot => {
 };
 
 const projectData = [
+  {
+    id: 15,
+    highlight: true,
+    title: "dev.notes",
+    descriptionEn:
+      "A connected study environment for programming, bringing notes, flashcards, code challenges, review sessions, and interactive diagrams into one workspace available on the web and desktop.",
+    descriptionPt:
+      "Ambiente conectado para estudo de programação, reunindo anotações, flashcards, desafios de código, sessões de revisão e diagramas interativos em uma única experiência web e desktop.",
+    roleEn:
+      "Built the product as a React and TypeScript application with a Tauri 2 desktop runtime. Designed local persistence that uses SQLite in the installed app and IndexedDB in the web fallback.",
+    rolePt:
+      "Desenvolvi o produto em React e TypeScript com runtime desktop em Tauri 2. Estruturei a persistência local com SQLite no aplicativo instalado e IndexedDB no modo web.",
+    impactEn:
+      "Connects study material, active recall, coding practice, and visual reasoning without scattering a learning routine across separate tools.",
+    impactPt:
+      "Conecta material de estudo, revisão ativa, prática de código e raciocínio visual sem espalhar a rotina de aprendizado em ferramentas separadas.",
+    image: "/images/projects/dev-notes-dashboard.png",
+    images: [
+      "/images/projects/dev-notes-dashboard.png",
+      "/images/projects/dev-notes-review.png",
+    ],
+    hoverImage: "/images/projects/dev-notes-review.png",
+    tag: ["All", "Web", "Desktop"],
+    gitUrl: "https://github.com/CalvinSoares/dev.notes",
+    desktopUrl: "https://github.com/CalvinSoares/dev.notes/releases/tag/v0.1.0",
+    tecnologias: [
+      "React",
+      "TypeScript",
+      "Vite",
+      "Tauri 2",
+      "Rust",
+      "SQLite",
+      "IndexedDB",
+      "Zustand",
+      "React Flow",
+      "Tailwind CSS",
+    ],
+  },
   {
     id: 1,
     highlight: true,
@@ -502,13 +540,19 @@ export default function ProjectsSection() {
     All: t("projects.filter_all"),
     Web: t("projects.filter_web"),
     Mobile: t("projects.filter_mobile"),
+    Desktop: t("projects.filter_desktop"),
   };
 
   // Hydrate the filter from the URL on mount so a shared/reloaded link keeps
   // its selection (e.g. /projects?filter=Mobile).
   useEffect(() => {
     const fromUrl = new URLSearchParams(window.location.search).get("filter");
-    if (fromUrl === "Web" || fromUrl === "Mobile" || fromUrl === "All") {
+    if (
+      fromUrl === "Web" ||
+      fromUrl === "Mobile" ||
+      fromUrl === "Desktop" ||
+      fromUrl === "All"
+    ) {
       setTag(fromUrl);
     }
   }, []);
@@ -531,9 +575,15 @@ export default function ProjectsSection() {
     );
   };
 
-  const filteredProjects = projectData.filter((project) =>
-    project.tag.includes(tag),
-  );
+  // QuackLinks remains the featured opening case; the remaining projects
+  // preserve the curated order below it.
+  const filteredProjects = [...projectData]
+    .sort((first, second) => {
+      if (first.title === "QuackLinks") return -1;
+      if (second.title === "QuackLinks") return 1;
+      return 0;
+    })
+    .filter((project) => project.tag.includes(tag));
   const highlightProjects = filteredProjects.filter(
     (project) => project.highlight,
   );
@@ -612,6 +662,12 @@ export default function ProjectsSection() {
                   isSelected={tag === "Mobile"}
                   className="w-24 justify-center text-[13px]"
                 />
+                <ProjectTag
+                  onClick={() => handleTagChange("Desktop")}
+                  name={filterLabels.Desktop}
+                  isSelected={tag === "Desktop"}
+                  className="w-24 justify-center text-[13px]"
+                />
               </div>
             </div>
           </motion.aside>
@@ -684,6 +740,12 @@ export default function ProjectsSection() {
                     isSelected={tag === "Mobile"}
                     className="min-w-[84px]"
                   />
+                  <ProjectTag
+                    onClick={() => handleTagChange("Desktop")}
+                    name={filterLabels.Desktop}
+                    isSelected={tag === "Desktop"}
+                    className="min-w-[84px]"
+                  />
                 </motion.div>
               )}
             </AnimatePresence>
@@ -731,6 +793,12 @@ export default function ProjectsSection() {
                   >
                     {filterLabels.Mobile}
                   </button>
+                  <button
+                    className={`text-left px-4 py-2 rounded-md ${tag === "Desktop" ? "bg-[#583ebc] text-white" : "text-white hover:bg-[#2a2a2a]"}`}
+                    onClick={() => handleTagChange("Desktop")}
+                  >
+                    {filterLabels.Desktop}
+                  </button>
                 </div>
               </motion.div>
             )}
@@ -777,6 +845,7 @@ export default function ProjectsSection() {
                     gitUrl: project.gitUrl,
                     previewUrl: project.previewUrl,
                     demoUrl: project.demoUrl,
+                    desktopUrl: project.desktopUrl,
                     tecnologias: project.tecnologias,
                     onDetails: () => setSelectedProject(project),
                   };
@@ -940,6 +1009,7 @@ export default function ProjectsSection() {
           gitUrl: selectedProject?.gitUrl,
           previewUrl: selectedProject?.previewUrl,
           demoUrl: selectedProject?.demoUrl,
+          desktopUrl: selectedProject?.desktopUrl,
           tecnologias: selectedProject?.tecnologias ?? [],
         }}
       />
