@@ -3,10 +3,18 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 255, 255, 255;
-  --background-start-rgb: 18, 18, 18;
-  --background-end-rgb: 18, 18, 18;
-  --accent-rgb: 88, 62, 188;
+  --foreground-rgb: 238, 237, 232;
+  --background-start-rgb: 15, 16, 15;
+  --background-end-rgb: 15, 16, 15;
+  --accent-rgb: 246, 199, 68;
+  --paper: #f8f4ff;
+  --ink: #120d1d;
+  --surface: #211734;
+  --surface-raised: #2d2044;
+  --line: #4c3b66;
+  --muted: #b9accb;
+  --acid: #f6c744;
+  --purple: #8d62f7;
   --scrollbar-size: 10px;
   --scrollbar-thumb: rgba(88, 62, 188, 0.55);
   --scrollbar-thumb-hover: rgba(164, 142, 255, 0.75);
@@ -21,13 +29,10 @@ html {
 
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background: #120d1d;
   min-height: 100vh;
+  font-family: Inter, ui-sans-serif, system-ui, sans-serif;
+  letter-spacing: -0.015em;
 }
 
 /* Firefox */
@@ -83,6 +88,15 @@ body {
   height: 0;
 }
 
+/* Surfaces are intentionally opaque. The portfolio uses solid editorial panels,
+   never frosted or translucent "glass" layers. */
+*,
+*::before,
+*::after {
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+
 @keyframes marquee {
   from {
     transform: translateX(0);
@@ -128,6 +142,33 @@ button {
 }
 
 @layer utilities {
+  .font-technical {
+    font-family: "Cascadia Mono", "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    letter-spacing: 0.08em;
+  }
+
+  .eyebrow {
+    font-family: "Cascadia Mono", "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+    color: var(--acid);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .editorial-rule {
+    border-color: var(--line);
+  }
+
+  .pixel-frame {
+    clip-path: polygon(0.8rem 0, calc(100% - 0.8rem) 0, 100% 0.8rem, 100% calc(100% - 0.8rem), calc(100% - 0.8rem) 100%, 0.8rem 100%, 0 calc(100% - 0.8rem), 0 0.8rem);
+  }
+
+  .pixel-grid {
+    background-image: linear-gradient(rgba(141, 98, 247, 0.14) 1px, transparent 1px), linear-gradient(90deg, rgba(141, 98, 247, 0.14) 1px, transparent 1px);
+    background-size: 18px 18px;
+  }
+
   .text-balance {
     text-wrap: balance;
   }

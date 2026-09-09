@@ -33,7 +33,7 @@ export default function CopyText({ text, className = "" }: CopyTextProps) {
         aria-label="Copy to clipboard"
       >
         {copied ? (
-          <CheckCircle className="w-5 h-5 text-green-500" />
+          <CheckCircle className="w-5 h-5 text-[#f6c744]" />
         ) : (
           <Copy className="w-5 h-5 text-gray-400 hover:text-white" />
         )}

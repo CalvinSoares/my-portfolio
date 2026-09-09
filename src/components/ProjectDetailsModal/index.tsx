@@ -314,7 +314,7 @@ export default function ProjectDetailsModal({
                   )}
                   {project.impact && (
                     <div>
-                      <p className="text-xs font-semibold uppercase tracking-[0.2em] text-emerald-300">
+                      <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#f6c744]">
                         {t("projects.featured_impact_short")}
                       </p>
                       <p className="mt-2 text-sm leading-relaxed text-gray-300">
@@ -375,7 +375,7 @@ export default function ProjectDetailsModal({
                     href={project.demoUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group relative flex items-center gap-2 overflow-hidden rounded-lg bg-gradient-to-r from-emerald-500 to-teal-500 px-4 py-2 font-medium text-white shadow-lg shadow-emerald-500/20 transition-shadow hover:shadow-emerald-500/40"
+                    className="group relative flex items-center gap-2 overflow-hidden rounded-lg bg-[#f6c744] px-4 py-2 font-medium text-[#211734] transition-colors hover:bg-[#ffe89d]"
                   >
                     <span className="absolute inset-0 -translate-x-full bg-gradient-to-r from-transparent via-white/25 to-transparent transition-transform duration-700 group-hover:translate-x-full" />
                     <MonitorPlay className="relative h-5 w-5" />

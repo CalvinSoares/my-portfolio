@@ -240,7 +240,7 @@ export default function BentoCard({
               type="button"
               onClick={goPrev}
               aria-label={t("projects.previous_image")}
-              className="absolute left-3 top-1/2 z-[3] inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-black/55 text-white/85 opacity-0 backdrop-blur-md transition-all duration-300 group-hover:opacity-100 hover:scale-105 hover:bg-[#583ebc] hover:text-white focus-visible:opacity-100 focus-visible:outline-none"
+              className="absolute left-3 top-1/2 z-[3] inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-black text-white/85 opacity-0 transition-all duration-300 group-hover:opacity-100 hover:scale-105 hover:bg-[#583ebc] hover:text-white focus-visible:opacity-100 focus-visible:outline-none"
             >
               <ChevronLeft className="h-4 w-4" />
             </button>
@@ -248,7 +248,7 @@ export default function BentoCard({
               type="button"
               onClick={goNext}
               aria-label={t("projects.next_image")}
-              className="absolute right-3 top-1/2 z-[3] inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-black/55 text-white/85 opacity-0 backdrop-blur-md transition-all duration-300 group-hover:opacity-100 hover:scale-105 hover:bg-[#583ebc] hover:text-white focus-visible:opacity-100 focus-visible:outline-none"
+              className="absolute right-3 top-1/2 z-[3] inline-flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-black text-white/85 opacity-0 transition-all duration-300 group-hover:opacity-100 hover:scale-105 hover:bg-[#583ebc] hover:text-white focus-visible:opacity-100 focus-visible:outline-none"
             >
               <ChevronRight className="h-4 w-4" />
             </button>
@@ -272,7 +272,7 @@ export default function BentoCard({
           .map((tag) => (
             <span
               key={tag}
-              className="rounded-full border border-white/10 bg-black/55 px-3 py-1 text-[10px] uppercase tracking-[0.16em] text-white/90 backdrop-blur-md"
+              className="rounded-full border border-white/10 bg-black px-3 py-1 text-[10px] uppercase tracking-[0.16em] text-white/90"
             >
               {tag}
             </span>
@@ -280,21 +280,21 @@ export default function BentoCard({
       </div>
       <div className="absolute right-4 top-4 z-[3] flex items-center gap-2">
         {demoUrl && (
-          <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/30 bg-emerald-950/60 px-3 py-1 text-[10px] font-medium uppercase tracking-[0.16em] text-emerald-200 backdrop-blur-md">
+          <span className="inline-flex items-center gap-1.5 rounded-full border border-[#8d62f7] bg-[#2d2044] px-3 py-1 text-[10px] font-medium uppercase tracking-[0.16em] text-[#f6c744]">
             <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400/70" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#f6c744]/70" />
+              <span className="relative inline-flex h-2 w-2 rounded-full bg-[#f6c744]" />
             </span>
             {t("projects.demo")}
           </span>
         )}
-        <span className="inline-flex h-7 w-7 -translate-y-1 items-center justify-center rounded-full border border-white/15 bg-black/55 text-white/80 opacity-0 backdrop-blur-md transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
+        <span className="inline-flex h-7 w-7 -translate-y-1 items-center justify-center rounded-full border border-white/15 bg-black text-white/80 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100">
           <Maximize2 className="h-3.5 w-3.5" />
         </span>
       </div>
 
       {showArrows && (
-        <div className="absolute bottom-3 right-4 z-[3] rounded-full border border-white/10 bg-black/55 px-2.5 py-1 font-mono text-[10px] text-white/80 backdrop-blur-md">
+        <div className="absolute bottom-3 right-4 z-[3] rounded-full border border-white/10 bg-black px-2.5 py-1 font-mono text-[10px] text-white/80">
           {activeIndex + 1} / {gallery.length}
         </div>
       )}
@@ -308,7 +308,7 @@ export default function BentoCard({
         }`}
       >
         <div
-          className={`border-t border-white/10 bg-gradient-to-b from-[rgba(14,14,17,0.92)] to-[rgba(11,11,13,0.97)] backdrop-blur-md ${
+          className={`border-t border-white/10 bg-[#11120f] ${
             size === "large" ? "p-5 pt-0" : "p-4 pt-0"
           }`}
         >
@@ -359,7 +359,7 @@ export default function BentoCard({
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={stop}
-                className="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 px-3.5 py-1.5 text-xs font-semibold text-white shadow-lg shadow-emerald-500/20 transition-shadow hover:shadow-emerald-500/40"
+                className="inline-flex items-center gap-1.5 rounded-full bg-[#f6c744] px-3.5 py-1.5 text-xs font-semibold text-[#211734] transition-colors hover:bg-[#ffe89d]"
                 aria-label={`${t("projects.open_demo")} ${title}`}
               >
                 <MonitorPlay className="h-3.5 w-3.5" />

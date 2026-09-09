@@ -110,7 +110,7 @@ export default function MenuOverlay({ isOpen, onClose }: MenuOverlayProps) {
                   />
                 </div>
                 <motion.div
-                  className="absolute bottom-0 right-0 w-6 h-6 bg-green-500 rounded-full border-2 border-[#1e1e1e]"
+                  className="absolute bottom-0 right-0 h-6 w-6 rounded-full border-2 border-[#1e1e1e] bg-[#f6c744]"
                   animate={{
                     scale: [1, 1.2, 1],
                   }}
