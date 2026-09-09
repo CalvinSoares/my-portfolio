@@ -21,9 +21,7 @@ import {
   Gem,
   Github,
   MessageCircle,
-  Sparkles,
 } from "lucide-react";
-import ParticleBackground from "../../components/particleBackground";
 import { useLanguage } from "../../context/LanguageContext";
 import { getProjectImages } from "../../lib/projectImages";
 
@@ -579,32 +577,9 @@ export default function ProjectsSection() {
   return (
     <section
       id="Projects"
-      className="relative flex min-h-screen min-w-full flex-col justify-center overflow-hidden bg-[#121212]"
+      className="relative flex min-h-screen min-w-full flex-col justify-center overflow-hidden bg-[#120d1d]"
     >
-      <div className="absolute inset-0 z-0 opacity-40">
-        <ParticleBackground />
-      </div>
-
-      <motion.div
-        className="absolute top-20 -left-32 w-96 h-96 rounded-full bg-gradient-to-r from-purple-700/30 to-indigo-700/20 blur-3xl"
-        animate={
-          shouldReduceMotion
-            ? undefined
-            : { y: [0, -30, 0], opacity: [0.35, 0.55, 0.35] }
-        }
-        transition={{ repeat: Infinity, duration: 10, ease: "easeInOut" }}
-      />
-      <motion.div
-        className="absolute bottom-20 -right-32 w-96 h-96 rounded-full bg-gradient-to-r from-violet-700/20 to-fuchsia-700/30 blur-3xl"
-        animate={
-          shouldReduceMotion
-            ? undefined
-            : { y: [0, 30, 0], opacity: [0.35, 0.55, 0.35] }
-        }
-        transition={{ repeat: Infinity, duration: 12, ease: "easeInOut" }}
-      />
-
-      <div className="pt-0 md:pt-8 relative z-50">
+      <div className="relative z-50">
         <Header />
       </div>
 
@@ -617,7 +592,7 @@ export default function ProjectsSection() {
             exit={{ opacity: 0, x: 24, scale: 0.97 }}
             transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
           >
-            <div className="rounded-[1.5rem] border border-white/10 bg-[#0f0f10]/82 p-2 backdrop-blur-xl shadow-2xl shadow-black/30">
+            <div className="rounded-2xl border border-[#4c3b66] bg-[#211734] p-2 shadow-xl shadow-black/20">
               <div className="flex flex-col gap-2">
                 <ProjectTag
                   onClick={() => handleTagChange("All")}
@@ -645,31 +620,30 @@ export default function ProjectsSection() {
 
       <div className="relative z-10 p-6 md:p-12" ref={ref}>
         <motion.div
-          className="mx-auto mb-12 max-w-3xl text-center"
+          className="mx-auto mb-12 max-w-3xl border-b border-[#4c3b66] pb-10 text-left"
           variants={titleVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.4 }}
         >
           <motion.div
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#583ebc]/20 border border-[#583ebc]/30 text-[#a48eff] mb-4"
+            className="eyebrow mb-5"
             initial={{ opacity: 0, scale: 0.8 }}
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true, amount: 0.4 }}
             transition={{ delay: 0.2, duration: 0.5 }}
           >
-            <Sparkles size={16} className="animate-pulse" />
             <span className="text-sm font-medium">
-              {t("projects.portfolio_showcase")}
+              02 — {t("projects.portfolio_showcase")}
             </span>
           </motion.div>
 
-          <h2 className="text-center text-4xl md:text-5xl font-bold text-white mb-4 bg-clip-text text-transparent bg-gradient-to-r from-white to-gray-400">
+          <h2 className="text-5xl font-semibold tracking-[-0.06em] text-[#efeee8] md:text-6xl">
             {t("projects.section_title")}
           </h2>
 
           <motion.p
-            className="mx-auto max-w-2xl text-center text-gray-400"
+            className="max-w-2xl text-[#b9accb]"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4 }}
@@ -684,7 +658,7 @@ export default function ProjectsSection() {
               {(!showStickyTabs || typeof window === "undefined") && (
                 <motion.div
                   key="top-tabs"
-                  className="hidden rounded-full border border-white/10 bg-[#101011]/75 p-1.5 md:flex md:items-center md:justify-center md:gap-1.5"
+                  className="hidden rounded-full border border-[#4c3b66] bg-[#211734] p-1.5 md:flex md:items-center md:justify-center md:gap-1.5"
                   initial={{ opacity: 0, y: 18, scale: 0.98 }}
                   whileInView={{ opacity: 1, y: 0, scale: 1 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -715,7 +689,7 @@ export default function ProjectsSection() {
             </AnimatePresence>
 
             <motion.button
-              className="flex items-center gap-2 rounded-full border border-[#583ebc] bg-[#1e1e1e]/80 px-4 py-2 text-white backdrop-blur-sm md:hidden"
+              className="flex items-center gap-2 border border-[#52584e] bg-[#171917] px-4 py-2 text-[#efeee8] md:hidden"
               onClick={() => setIsFilterOpen(!isFilterOpen)}
               whileTap={{ scale: 0.95 }}
               initial={{ opacity: 0 }}
@@ -732,7 +706,7 @@ export default function ProjectsSection() {
           <AnimatePresence>
             {isFilterOpen && (
               <motion.div
-                className="absolute z-20 mt-2 w-full overflow-hidden rounded-2xl border border-[#583ebc] bg-[#1e1e1e]/90 backdrop-blur-md md:hidden"
+                className="absolute z-20 mt-2 w-full overflow-hidden border border-[#52584e] bg-[#171917] md:hidden"
                 variants={filterVariants}
                 initial="closed"
                 animate="open"

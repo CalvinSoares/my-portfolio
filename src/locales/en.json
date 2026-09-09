@@ -71,7 +71,9 @@
     "other_projects_subtitle": "Smaller deliveries, freelance work and experiments.",
     "featured_impact_short": "Impact",
     "role_label": "Role",
-    "close_details": "Close project details"
+    "close_details": "Close project details",
+    "previous_image": "Previous image",
+    "next_image": "Next image"
   },
   "about": {
     "role": "Full Stack Engineer",

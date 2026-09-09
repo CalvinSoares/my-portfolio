@@ -71,7 +71,9 @@
     "other_projects_subtitle": "Entregas menores, freelas e experimentos.",
     "featured_impact_short": "Impacto",
     "role_label": "Papel",
-    "close_details": "Fechar detalhes do projeto"
+    "close_details": "Fechar detalhes do projeto",
+    "previous_image": "Imagem anterior",
+    "next_image": "Próxima imagem"
   },
   "about": {
     "role": "Full Stack Engineer",

@@ -173,10 +173,10 @@ export default function BentoFeatureCard({
                 </span>
               ))}
             {demoUrl && (
-              <span className="inline-flex items-center gap-1.5 rounded-full border border-emerald-400/30 bg-emerald-950/60 px-3 py-1 text-[10px] font-medium uppercase tracking-[0.16em] text-emerald-200">
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-[#8d62f7] bg-[#2d2044] px-3 py-1 text-[10px] font-medium uppercase tracking-[0.16em] text-[#f6c744]">
                 <span className="relative flex h-2 w-2">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400/70" />
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#f6c744]/70" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-[#f6c744]" />
                 </span>
                 {t("projects.demo")}
               </span>
@@ -213,7 +213,7 @@ export default function BentoFeatureCard({
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={stop}
-                className="inline-flex items-center gap-1.5 rounded-full bg-gradient-to-r from-emerald-500 to-teal-500 px-3.5 py-2 text-xs font-semibold text-white shadow-lg shadow-emerald-500/20 transition-shadow hover:shadow-emerald-500/40"
+                className="inline-flex items-center gap-1.5 rounded-full bg-[#f6c744] px-3.5 py-2 text-xs font-semibold text-[#211734] transition-colors hover:bg-[#ffe89d]"
               >
                 <MonitorPlay className="h-3.5 w-3.5" />
                 {t("projects.demo_live")}
@@ -300,7 +300,7 @@ export default function BentoFeatureCard({
               type="button"
               onClick={goPrev}
               aria-label={t("projects.previous_image")}
-              className="absolute left-4 top-1/2 inline-flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-black/55 text-white/90 opacity-0 backdrop-blur-md transition-all duration-300 group-hover:opacity-100 hover:scale-105 hover:bg-[#583ebc] hover:text-white focus-visible:opacity-100 focus-visible:outline-none"
+              className="absolute left-4 top-1/2 inline-flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-black text-white/90 opacity-0 transition-all duration-300 group-hover:opacity-100 hover:scale-105 hover:bg-[#583ebc] hover:text-white focus-visible:opacity-100 focus-visible:outline-none"
             >
               <ChevronLeft className="h-5 w-5" />
             </button>
@@ -308,11 +308,11 @@ export default function BentoFeatureCard({
               type="button"
               onClick={goNext}
               aria-label={t("projects.next_image")}
-              className="absolute right-4 top-1/2 inline-flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-black/55 text-white/90 opacity-0 backdrop-blur-md transition-all duration-300 group-hover:opacity-100 hover:scale-105 hover:bg-[#583ebc] hover:text-white focus-visible:opacity-100 focus-visible:outline-none"
+              className="absolute right-4 top-1/2 inline-flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-white/20 bg-black text-white/90 opacity-0 transition-all duration-300 group-hover:opacity-100 hover:scale-105 hover:bg-[#583ebc] hover:text-white focus-visible:opacity-100 focus-visible:outline-none"
             >
               <ChevronRight className="h-5 w-5" />
             </button>
-            <div className="absolute bottom-4 right-4 rounded-full border border-white/15 bg-black/60 px-3 py-1 font-mono text-[11px] text-white/85 backdrop-blur-md">
+            <div className="absolute bottom-4 right-4 rounded-full border border-white/15 bg-black px-3 py-1 font-mono text-[11px] text-white/85">
               {activeIndex + 1} / {gallery.length}
             </div>
           </>

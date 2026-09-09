@@ -165,7 +165,7 @@ export default function CompactProjectCard({
           .map((tag) => (
             <span
               key={tag}
-              className="rounded-full border border-white/10 bg-black/55 px-2.5 py-0.5 text-[9px] uppercase tracking-[0.14em] text-white/80 backdrop-blur-md"
+              className="rounded-full border border-white/10 bg-black px-2.5 py-0.5 text-[9px] uppercase tracking-[0.14em] text-white/80"
             >
               {tag}
             </span>
@@ -215,7 +215,7 @@ export default function CompactProjectCard({
               type="button"
               onClick={goPrev}
               aria-label={t("projects.previous_image")}
-              className="absolute left-2 top-1/2 z-[3] inline-flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-black/55 text-white/85 opacity-0 backdrop-blur-md transition-all duration-300 group-hover:opacity-100 hover:scale-105 hover:bg-[#583ebc] hover:text-white focus-visible:opacity-100 focus-visible:outline-none"
+              className="absolute left-2 top-1/2 z-[3] inline-flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-black text-white/85 opacity-0 transition-all duration-300 group-hover:opacity-100 hover:scale-105 hover:bg-[#583ebc] hover:text-white focus-visible:opacity-100 focus-visible:outline-none"
             >
               <ChevronLeft className="h-4 w-4" />
             </button>
@@ -223,11 +223,11 @@ export default function CompactProjectCard({
               type="button"
               onClick={goNext}
               aria-label={t("projects.next_image")}
-              className="absolute right-2 top-1/2 z-[3] inline-flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-black/55 text-white/85 opacity-0 backdrop-blur-md transition-all duration-300 group-hover:opacity-100 hover:scale-105 hover:bg-[#583ebc] hover:text-white focus-visible:opacity-100 focus-visible:outline-none"
+              className="absolute right-2 top-1/2 z-[3] inline-flex h-8 w-8 -translate-y-1/2 items-center justify-center rounded-full border border-white/15 bg-black text-white/85 opacity-0 transition-all duration-300 group-hover:opacity-100 hover:scale-105 hover:bg-[#583ebc] hover:text-white focus-visible:opacity-100 focus-visible:outline-none"
             >
               <ChevronRight className="h-4 w-4" />
             </button>
-            <div className="absolute bottom-2 right-2 z-[3] rounded-full border border-white/10 bg-black/55 px-2 py-0.5 font-mono text-[9px] text-white/80 backdrop-blur-md">
+            <div className="absolute bottom-2 right-2 z-[3] rounded-full border border-white/10 bg-black px-2 py-0.5 font-mono text-[9px] text-white/80">
               {activeIndex + 1}/{gallery.length}
             </div>
           </>
@@ -236,7 +236,7 @@ export default function CompactProjectCard({
 
       {/* Text panel — slides up on hover */}
       <div className="absolute inset-x-0 bottom-0 z-[3] translate-y-[calc(100%-4rem)] transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-y-0 group-focus-within:translate-y-0">
-        <div className="border-t border-white/10 bg-gradient-to-b from-[rgba(14,14,17,0.94)] to-[rgba(11,11,13,0.98)] p-4 backdrop-blur-md">
+        <div className="border-t border-white/10 bg-[#11120f] p-4">
           <div className="flex h-16 items-center justify-between gap-3">
             <h3 className="truncate text-base font-semibold text-white">{title}</h3>
             <ArrowUpRight className="h-4 w-4 shrink-0 text-white/40 transition-all duration-300 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-[#c2b5ff]" />

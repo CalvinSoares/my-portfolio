@@ -23,12 +23,16 @@ export default function Header() {
   };
 
   return (
-    <nav className="bg-[#242424]/95 rounded-none md:rounded-full z-50 mx-auto w-screen md:w-[90%] border-b border-white/10 md:border hover:shadow-[#583ebc] hover:shadow-md duration-500 backdrop-blur-md">
-      <div className="flex container flex-wrap items-center justify-around mx-auto py-4 px-2">
+    <nav className="z-50 w-full border-b border-[#4c3b66] bg-[#120d1d]">
+      <div className="mx-auto flex min-h-[76px] max-w-6xl flex-wrap items-center justify-between px-6 py-3 lg:px-8">
+        <Link href="/" className="hidden items-baseline gap-2 text-[#f8f4ff] md:flex">
+          <span className="font-technical text-xs font-bold tracking-[0.18em]">CS</span>
+          <span className="text-sm text-[#b9accb]">/ software engineer</span>
+        </Link>
         <div className="md:hidden">
           <button
             onClick={toggleMenuOpen}
-            className="flex items-center px-3 py-2 border rounded border-slate-200 text-slate-200 hover:text-white hover:border-white"
+            className="flex items-center rounded-lg border border-[#8d62f7] bg-[#211734] px-3 py-2 text-[#f8f4ff] hover:border-[#f6c744] hover:text-[#f6c744]"
             aria-label={navbarOpen ? t("nav.close_menu") : t("nav.open_menu")}
             aria-expanded={navbarOpen}
             aria-controls="mobile-menu"
@@ -41,14 +45,14 @@ export default function Header() {
           </button>
         </div>
         <div className="menu hidden md:block md:w-auto" id="navbar">
-          <div className="flex items-center text-white md:flex-row md:gap-3 md:p-0">
+          <div className="flex items-center text-white md:flex-row md:gap-1 md:p-0">
             {navItems.map((item) => (
               <Link
                 key={item.href}
-                className={`flex h-12 min-w-[116px] items-center justify-center rounded-3xl px-5 duration-300 cursor-pointer ${
+                className={`flex h-10 items-center justify-center rounded-full border px-4 text-sm font-medium duration-200 ${
                   pathname === item.href
-                    ? "bg-[#583ebc] text-white shadow-lg shadow-[#583ebc]/30"
-                    : "hover:bg-[#583ebc]"
+                    ? "border-[#8d62f7] bg-[#2d2044] text-[#f6c744]"
+                    : "border-transparent text-[#b9accb] hover:border-[#4c3b66] hover:text-[#f8f4ff]"
                 }`}
                 href={item.href}
               >
@@ -56,10 +60,10 @@ export default function Header() {
               </Link>
             ))}
 
-            <div className="flex items-center gap-2 ml-4">
+            <div className="ml-4 flex items-center gap-2 border-l border-[#4c3b66] pl-4">
               <button
                 onClick={() => setLanguage("pt")}
-                className={`p-1 rounded-full transition-all ${language === "pt" ? "ring-2 ring-[#583ebc] scale-110" : "opacity-70 grayscale hover:grayscale-0"}`}
+                className={`rounded-full p-1 transition-all ${language === "pt" ? "ring-2 ring-[#f6c744]" : "opacity-55 grayscale hover:opacity-100 hover:grayscale-0"}`}
                 aria-label={t("nav.language_pt")}
               >
                 <Image
@@ -72,7 +76,7 @@ export default function Header() {
               </button>
               <button
                 onClick={() => setLanguage("en")}
-                className={`p-1 rounded-full transition-all ${language === "en" ? "ring-2 ring-[#583ebc] scale-110" : "opacity-70 grayscale hover:grayscale-0"}`}
+                className={`rounded-full p-1 transition-all ${language === "en" ? "ring-2 ring-[#f6c744]" : "opacity-55 grayscale hover:opacity-100 hover:grayscale-0"}`}
                 aria-label={t("nav.language_en")}
               >
                 <Image

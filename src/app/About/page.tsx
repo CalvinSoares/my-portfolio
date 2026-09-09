@@ -18,10 +18,7 @@ import {
   Layers,
   Rocket,
   ServerCog,
-  Sparkles,
 } from "lucide-react";
-import ParticleField from "../../components/ParticlesField";
-import LetterGlitch from "../../components/LetterGlitch";
 import { useLanguage } from "../../context/LanguageContext";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -174,8 +171,6 @@ export default function AboutSection() {
     offset: ["start start", "end start"],
   });
 
-  const y1 = useTransform(scrollYProgress, [0, 1], [0, -80]);
-  const y2 = useTransform(scrollYProgress, [0, 1], [0, -140]);
   const portraitY = useTransform(
     scrollYProgress,
     [0, 1],
@@ -186,22 +181,9 @@ export default function AboutSection() {
     <section
       id="About"
       ref={containerRef}
-      className="relative min-h-screen w-full overflow-hidden bg-[#121212]"
+      className="relative min-h-screen w-full overflow-hidden bg-[#120d1d]"
     >
-      <div className="absolute inset-0 z-0">
-        <ParticleField />
-      </div>
-
-      <motion.div
-        className="absolute top-20 -left-32 h-96 w-96 rounded-full bg-gradient-to-r from-purple-700/20 to-indigo-700/10 blur-3xl"
-        style={{ y: y1 }}
-      />
-      <motion.div
-        className="absolute bottom-20 -right-32 h-96 w-96 rounded-full bg-gradient-to-r from-violet-700/10 to-fuchsia-700/20 blur-3xl"
-        style={{ y: y2 }}
-      />
-
-      <div className="relative z-50 pt-0 md:pt-8">
+      <div className="relative z-50">
         <Header />
       </div>
 
@@ -211,33 +193,32 @@ export default function AboutSection() {
           <div>
             <div
               data-about-intro
-              className="mb-5 inline-flex items-center gap-2 rounded-full border border-[#583ebc]/30 bg-[#583ebc]/20 px-4 py-1.5 text-[#a48eff]"
+              className="eyebrow mb-6"
             >
-              <Sparkles size={16} className="animate-pulse" />
-              <span className="text-sm font-medium">{t("about.role")}</span>
+              <span>03 — {t("about.role")}</span>
             </div>
 
             <p
               data-about-intro
-              className="text-sm uppercase tracking-[0.22em] text-gray-500"
+              className="font-technical text-[11px] font-semibold uppercase text-[#a6aaa2]"
             >
               {t("nav.about")}
             </p>
             <h1
               data-about-intro
-              className="mt-3 text-4xl font-bold text-white md:text-5xl"
+              className="mt-3 text-5xl font-semibold tracking-[-0.06em] text-[#efeee8] md:text-6xl"
             >
               Calvin Soares
             </h1>
             <p
               data-about-intro
-              className="mt-6 max-w-xl text-lg leading-relaxed text-gray-300"
+              className="mt-6 max-w-xl text-lg leading-relaxed text-[#d8dad3]"
             >
               {t("about.summary_1")}
             </p>
             <p
               data-about-intro
-              className="mt-4 max-w-xl text-base leading-relaxed text-gray-400"
+              className="mt-4 max-w-xl text-base leading-relaxed text-[#a6aaa2]"
             >
               {t("about.summary_2")}
             </p>
@@ -248,7 +229,7 @@ export default function AboutSection() {
             >
               <Link
                 href="/projects"
-                className="group relative inline-flex items-center gap-2 overflow-hidden rounded-full bg-[#583ebc] px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-[#4a32a0]"
+                className="pixel-frame group relative inline-flex items-center gap-2 bg-[#f6c744] px-5 py-2.5 text-sm font-bold text-[#211734] transition-colors hover:bg-[#ffe89d]"
               >
                 {t("about.cta_projects")}
                 <ArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
@@ -257,7 +238,7 @@ export default function AboutSection() {
                 href="/images/CalvinSoares.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/5 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-white/10"
+                className="inline-flex items-center gap-2 rounded-xl border border-[#8d62f7] bg-[#211734] px-5 py-2.5 text-sm font-semibold text-[#f8f4ff] transition-colors hover:border-[#f6c744]"
               >
                 <Download className="h-4 w-4" />
                 {t("hero.download_cv")}
@@ -271,7 +252,7 @@ export default function AboutSection() {
                     target="_blank"
                     rel="noopener noreferrer"
                     aria-label={`${t("hero.social_label")} ${link.name}`}
-                    className="flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-[#1e1e1e]/60 text-white backdrop-blur-sm transition-colors duration-300 hover:bg-[#583ebc]"
+                    className="flex h-10 w-10 items-center justify-center border border-[#8d62f7] bg-[#2d2044] text-white transition-colors duration-300 hover:border-[#f6c744]"
                     whileHover={{ y: -4, scale: 1.06 }}
                     whileTap={{ scale: 0.95 }}
                   >
@@ -294,8 +275,8 @@ export default function AboutSection() {
               {metrics.map((metric) => (
                 <motion.div
                   key={metric.label}
-                  className="rounded-2xl border border-white/10 bg-[#171717]/70 p-4 backdrop-blur-sm"
-                  whileHover={{ y: -4, borderColor: "rgba(164,142,255,0.35)" }}
+                  className="rounded-2xl border border-[#4c3b66] bg-[#211734] p-4"
+                  whileHover={{ y: -4, borderColor: "#f6c744" }}
                   transition={{ type: "spring", stiffness: 260, damping: 20 }}
                 >
                   <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#a48eff]">
@@ -310,37 +291,27 @@ export default function AboutSection() {
           </div>
 
           <div data-about-portrait className="relative mx-auto w-full max-w-md">
-            <div className="absolute -inset-8 rounded-[3rem] bg-[#583ebc]/20 blur-3xl" />
             <motion.div
               style={{ y: portraitY }}
-              className="group relative h-[380px] rotate-2 overflow-hidden rounded-[2rem] border border-white/10 shadow-2xl shadow-black/40 transition-transform duration-500 hover:rotate-0 md:h-[460px]"
+              className="pixel-frame group relative h-[380px] overflow-hidden border border-[#8d62f7] bg-[#211734] transition-transform duration-500 md:h-[460px]"
             >
-              <LetterGlitch
-                glitchColors={["#2b2158", "#583ebc", "#a48eff"]}
-                glitchSpeed={50}
-                smooth
-                outerVignette
-              />
-              <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-[#121212]/85 via-transparent to-transparent" />
+              <div className="absolute inset-0 grid grid-cols-2 grid-rows-2 border-[#4c3b66] text-[#b9accb]">
+                <div className="border-b border-r border-[#4c3b66] p-6"><p className="eyebrow">01</p><p className="mt-4 text-sm leading-relaxed">Sistemas que permanecem claros quando o contexto fica complexo.</p></div>
+                <div className="border-b border-[#4c3b66] p-6"><p className="eyebrow">02</p><p className="mt-4 text-sm leading-relaxed">Decisões técnicas guiadas por produto, não por tendência.</p></div>
+                <div className="border-r border-[#4c3b66] p-6"><p className="eyebrow">03</p><p className="mt-4 text-sm leading-relaxed">Integrações críticas desenhadas para falhar bem.</p></div>
+                <div className="p-6"><p className="eyebrow">04</p><p className="mt-4 text-sm leading-relaxed">Interfaces que tornam operações e dados compreensíveis.</p></div>
+              </div>
               <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-                <div className="rounded-2xl border border-white/10 bg-black/45 px-6 py-4 text-center backdrop-blur-md">
-                  <p className="font-mono text-xs uppercase tracking-[0.3em] text-[#a48eff]">
+                <div className="border border-[#52584e] bg-[#0f100f] px-6 py-4 text-center">
+                  <p className="font-technical text-xs uppercase text-[#f6c744]">
                     {"<"}Calvin{" />"}
                   </p>
-                  <p className="mt-2 text-sm font-medium text-white/90">
+                  <p className="mt-2 text-sm font-medium text-[#efeee8]">
                     {t("hero.role")}
                   </p>
                 </div>
               </div>
-              <div className="absolute bottom-4 left-4 inline-flex items-center gap-2 rounded-full border border-white/10 bg-black/45 px-3.5 py-1.5 backdrop-blur-md">
-                <span className="relative flex h-2 w-2">
-                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400/70" />
-                  <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
-                </span>
-                <span className="text-xs font-medium text-white/90">
-                  {t("hero.availability")}
-                </span>
-              </div>
+              <p className="absolute bottom-4 left-4 border-l-2 border-[#f6c744] pl-3 font-technical text-[10px] font-bold uppercase text-[#f8f4ff]">{t("hero.availability")}</p>
             </motion.div>
           </div>
         </div>
@@ -348,12 +319,7 @@ export default function AboutSection() {
         {/* Focus areas */}
         <div data-about-focus-group className="mt-20">
           <div className="mb-8">
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#583ebc]/30 bg-[#583ebc]/20 px-4 py-1.5 text-[#a48eff]">
-              <Sparkles size={16} className="animate-pulse" />
-              <span className="text-sm font-medium">
-                {t("hero.highlights_title")}
-              </span>
-            </div>
+            <p className="eyebrow">{t("hero.highlights_title")}</p>
           </div>
 
           <div className="grid gap-5 md:grid-cols-3">
@@ -361,23 +327,22 @@ export default function AboutSection() {
               <motion.div
                 key={item.title}
                 data-about-focus
-                className="group relative overflow-hidden rounded-[1.8rem] border border-white/10 bg-[#171717]/78 p-6 backdrop-blur-sm transition-colors duration-300 hover:border-[#583ebc]/45 md:p-7"
+                className="group relative overflow-hidden rounded-2xl border border-[#4c3b66] bg-[#211734] p-6 transition-colors duration-300 hover:border-[#f6c744] md:p-7"
                 whileHover={{ y: -6 }}
                 transition={{ type: "spring", stiffness: 240, damping: 20 }}
               >
-                <div className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-[#583ebc]/0 blur-2xl transition-colors duration-500 group-hover:bg-[#583ebc]/25" />
                 <div className="flex items-center justify-between">
-                  <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-[#583ebc]/30 bg-[#583ebc]/15 text-[#c2b5ff] transition-colors duration-300 group-hover:bg-[#583ebc]/30">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-[#8d62f7] text-[#f6c744]">
                     <item.icon className="h-5 w-5" />
                   </div>
-                  <span className="text-sm font-semibold text-white/25 transition-colors duration-300 group-hover:text-[#c2b5ff]">
+                  <span className="font-technical text-sm font-semibold text-[#a6aaa2]">
                     0{index + 1}
                   </span>
                 </div>
-                <p className="mt-5 text-sm font-semibold uppercase tracking-[0.16em] text-white">
+                <p className="mt-5 font-technical text-xs font-semibold uppercase text-[#efeee8]">
                   {item.title}
                 </p>
-                <p className="mt-3 leading-relaxed text-gray-300">
+                <p className="mt-3 leading-relaxed text-[#a6aaa2]">
                   {item.text}
                 </p>
               </motion.div>
@@ -388,12 +353,11 @@ export default function AboutSection() {
         {/* Featured experience spotlight */}
         <div
           data-about-exp
-          className="mt-16 overflow-hidden rounded-[2rem] border border-white/10 bg-gradient-to-br from-[#171717] to-[#101010]"
+          className="mt-16 overflow-hidden border border-[#353a33] bg-[#171917]"
         >
           <div className="grid gap-0 md:grid-cols-[260px_1fr]">
             <div className="relative border-b border-white/10 p-6 md:border-b-0 md:border-r md:p-8">
-              <div className="absolute inset-y-0 left-0 w-1 bg-gradient-to-b from-[#583ebc] to-[#7c5ce6]" />
-              <p className="text-xs uppercase tracking-[0.22em] text-[#a48eff]">
+              <p className="eyebrow">
                 {t("about.featured_experience")}
               </p>
               <h2 className="mt-3 text-3xl font-semibold text-white">
@@ -412,7 +376,7 @@ export default function AboutSection() {
                 {featuredExperienceTags.map((tag) => (
                   <span
                     key={tag}
-                    className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-gray-200"
+                  className="border border-[#353a33] bg-[#20231f] px-3 py-1.5 text-xs text-[#d8dad3]"
                   >
                     {tag}
                   </span>
@@ -425,12 +389,7 @@ export default function AboutSection() {
         {/* Skills — two counter-scrolling marquee rows */}
         <div className="mt-20">
           <div className="mb-10 max-w-2xl">
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[#583ebc]/30 bg-[#583ebc]/20 px-4 py-1.5 text-[#a48eff]">
-              <Sparkles size={16} className="animate-pulse" />
-              <span className="text-sm font-medium">
-                {t("about.expertise")}
-              </span>
-            </div>
+            <p className="eyebrow mb-4">{t("about.expertise")}</p>
             <h2 className="text-3xl font-bold text-white">
               {t("about.skills")}
             </h2>

@@ -14,10 +14,8 @@ import {
   Mail,
   Phone,
   MapPin,
-  Sparkles,
   MessageCircle,
 } from "lucide-react";
-import ParticleField from "../../components/ParticlesField";
 
 import { useLanguage } from "../../context/LanguageContext";
 
@@ -99,15 +97,10 @@ export default function ContactSection() {
   return (
     <section
       id="Contact"
-      className="relative min-h-screen w-full overflow-hidden bg-[#121212]"
+      className="relative min-h-screen w-full overflow-hidden bg-[#120d1d]"
     >
-      {/* Background Elements */}
-      <div className="absolute inset-0 z-0">
-        <ParticleField />
-      </div>
-
       {/* Header */}
-      <div className="pt-0 md:pt-8 relative z-50">
+      <div className="relative z-50">
         <Header />
       </div>
 
@@ -128,23 +121,22 @@ export default function ContactSection() {
       {/* Main Content */}
       <div className="relative z-10 container mx-auto px-6 py-20">
         <motion.div
-          className="text-center mb-12"
+          className="mb-12 border-b border-[#4c3b66] pb-10 text-center"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7 }}
         >
           <motion.div
-            className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#583ebc]/20 border border-[#583ebc]/30 text-[#a48eff] mb-4"
+            className="eyebrow mb-5"
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.3, duration: 0.5 }}
           >
-            <Sparkles size={16} className="animate-pulse" />
-            <span className="text-sm font-medium">{t("contact.badge")}</span>
+            <span>04 — {t("contact.badge")}</span>
           </motion.div>
 
           <motion.h1
-            className="text-4xl md:text-5xl font-bold text-white mb-4"
+            className="mb-4 text-5xl font-semibold tracking-[-0.06em] text-[#efeee8] md:text-6xl"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.4, duration: 0.7 }}
@@ -153,7 +145,7 @@ export default function ContactSection() {
           </motion.h1>
 
           <motion.p
-            className="text-gray-400 max-w-xl mx-auto"
+            className="mx-auto max-w-xl text-[#b9accb]"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5, duration: 0.7 }}
@@ -174,20 +166,20 @@ export default function ContactSection() {
             {/* Contact Details */}
             <div>
               <motion.h2
-                className="text-2xl font-bold text-white mb-6 flex items-center gap-2"
+                className="mb-6 flex items-center gap-2 text-2xl font-semibold text-[#efeee8]"
                 variants={itemVariants}
               >
-                <MapPin className="w-5 h-5 text-[#583ebc]" />
+                <MapPin className="h-5 w-5 text-[#f6c744]" />
                 {t("contact.info_title")}
               </motion.h2>
 
               <motion.div
-                className="bg-[#1e1e1e]/60 backdrop-blur-sm rounded-xl p-6 border border-[#2a2a2a] mb-6"
+                className="mb-6 rounded-2xl border border-[#4c3b66] bg-[#211734] p-6"
                 variants={itemVariants}
               >
                 <div className="flex items-start gap-4 mb-6">
-                  <div className="w-10 h-10 rounded-full bg-[#583ebc]/20 flex items-center justify-center flex-shrink-0">
-                    <Mail className="w-5 h-5 text-[#583ebc]" />
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center border border-[#52584e]">
+                    <Mail className="h-5 w-5 text-[#f6c744]" />
                   </div>
                   <div className="flex-1">
                     <h3 className="text-white font-medium mb-1">
@@ -206,7 +198,7 @@ export default function ContactSection() {
                         aria-label={t("contact.copy_email")}
                       >
                         {copiedEmail ? (
-                          <CheckCircle className="w-5 h-5 text-green-500" />
+                          <CheckCircle className="w-5 h-5 text-[#f6c744]" />
                         ) : (
                           <Copy className="w-5 h-5 text-gray-400" />
                         )}
@@ -216,8 +208,8 @@ export default function ContactSection() {
                 </div>
 
                 <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-full bg-[#583ebc]/20 flex items-center justify-center flex-shrink-0">
-                    <Phone className="w-5 h-5 text-[#583ebc]" />
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center border border-[#52584e]">
+                    <Phone className="h-5 w-5 text-[#f6c744]" />
                   </div>
                   <div className="flex-1">
                     <h3 className="text-white font-medium mb-1">
@@ -236,7 +228,7 @@ export default function ContactSection() {
                         aria-label={t("contact.copy_phone")}
                       >
                         {copiedPhone ? (
-                          <CheckCircle className="w-5 h-5 text-green-500" />
+                          <CheckCircle className="w-5 h-5 text-[#f6c744]" />
                         ) : (
                           <Copy className="w-5 h-5 text-gray-400" />
                         )}
@@ -247,7 +239,7 @@ export default function ContactSection() {
               </motion.div>
 
               <motion.div
-                className="bg-[#1e1e1e]/60 backdrop-blur-sm rounded-xl p-6 border border-[#2a2a2a]"
+                className="rounded-2xl border border-[#4c3b66] bg-[#211734] p-6"
                 variants={itemVariants}
               >
                 <h3 className="text-white font-medium mb-4">
@@ -260,7 +252,7 @@ export default function ContactSection() {
                       href={link.url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="p-3 bg-[#2a2a2a] rounded-full text-white hover:bg-[#583ebc] transition-colors duration-300"
+                      className="border border-[#8d62f7] bg-[#2d2044] p-3 text-white transition-colors duration-300 hover:border-[#f6c744]"
                       whileHover={{ y: -8, scale: 1.1 }}
                       whileTap={{ scale: 0.9 }}
                       initial={{ opacity: 0, scale: 0 }}
@@ -280,7 +272,7 @@ export default function ContactSection() {
               </motion.div>
 
               <motion.div
-                className="bg-[#1e1e1e]/60 backdrop-blur-sm rounded-xl p-6 border border-[#2a2a2a] mt-6"
+                className="mt-6 rounded-2xl border border-[#4c3b66] bg-[#211734] p-6"
                 variants={itemVariants}
               >
                 <h3 className="text-white font-medium mb-4">
@@ -289,7 +281,7 @@ export default function ContactSection() {
                 <div className="grid gap-3 md:grid-cols-3">
                   <a
                     href={`mailto:${email}`}
-                    className="flex items-center justify-center gap-2 rounded-xl bg-[#583ebc] px-4 py-3 text-sm font-medium text-white transition-colors hover:bg-[#4a32a0]"
+                    className="flex items-center justify-center gap-2 rounded-xl bg-[#f6c744] px-4 py-3 text-sm font-bold text-[#211734] transition-colors hover:bg-[#ffe89d]"
                   >
                     <Mail className="h-4 w-4" />
                     {t("contact.send_email")}
@@ -298,14 +290,14 @@ export default function ContactSection() {
                     href={whatsappUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center justify-center gap-2 rounded-xl bg-emerald-600 px-4 py-3 text-sm font-medium text-white transition-colors hover:bg-emerald-500"
+                    className="flex items-center justify-center gap-2 border border-[#8d62f7] bg-[#2d2044] px-4 py-3 text-sm font-semibold text-[#f8f4ff] transition-colors hover:border-[#f6c744]"
                   >
                     <MessageCircle className="h-4 w-4" />
                     {t("contact.whatsapp")}
                   </a>
                   <a
                     href={`tel:${phoneRaw}`}
-                    className="flex items-center justify-center gap-2 rounded-xl bg-white/5 px-4 py-3 text-sm font-medium text-white transition-colors hover:bg-white/10"
+                    className="flex items-center justify-center gap-2 border border-[#8d62f7] bg-[#2d2044] px-4 py-3 text-sm font-semibold text-[#f8f4ff] transition-colors hover:border-[#f6c744]"
                   >
                     <Phone className="h-4 w-4" />
                     {t("contact.call_now")}
@@ -316,14 +308,14 @@ export default function ContactSection() {
 
             {/* Availability Card */}
             <motion.div
-              className="bg-gradient-to-br from-[#583ebc]/90 to-[#7c5ce6]/90 backdrop-blur-sm rounded-xl p-6 mt-6 border border-[#583ebc]/50"
+              className="mt-6 rounded-2xl border border-[#8d62f7] bg-[#2d2044] p-6"
               variants={itemVariants}
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1, duration: 0.7 }}
             >
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                <div className="h-3 w-3 rounded-sm bg-[#f6c744]"></div>
                 <h3 className="text-white font-medium">
                   {t("contact.available_status")}
                 </h3>
@@ -333,11 +325,10 @@ export default function ContactSection() {
               </p>
               <Link href="/projects">
                 <motion.button
-                  className="group relative overflow-hidden rounded-full border border-[#583ebc]/40 bg-[#171717]/70 px-6 py-3 text-sm font-medium text-white shadow-lg shadow-[#583ebc]/10"
+                  className="group relative border border-[#8d62f7] bg-[#211734] px-6 py-3 text-sm font-semibold text-[#f8f4ff] hover:border-[#f6c744] hover:text-[#f6c744]"
                   whileHover={{ scale: 1.04, y: -2 }}
                   whileTap={{ scale: 0.97 }}
                 >
-                  <span className="absolute inset-0 bg-gradient-to-r from-[#583ebc] to-[#7c5ce6] opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
                   <span className="relative z-10 flex items-center gap-2">
                     {t("contact.view_work")}
                     <svg

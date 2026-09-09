@@ -1,5 +1,4 @@
 import React, { ReactNode } from "react";
-import { Inter } from "next/font/google";
 import type { Metadata } from "next";
 import "./globals.css";
 import {
@@ -13,8 +12,6 @@ import {
   websiteSchema,
 } from "../config/seo";
 import { LanguageProvider } from "../context/LanguageContext";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -76,7 +73,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteSchema) }}
         />
       </head>
-      <body suppressHydrationWarning={true} className={inter.className}>
+      <body suppressHydrationWarning={true}>
         <LanguageProvider>{children}</LanguageProvider>
       </body>
     </html>
