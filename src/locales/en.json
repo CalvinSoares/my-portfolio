@@ -37,6 +37,7 @@
     "filter_all": "All",
     "filter_web": "Web",
     "filter_mobile": "Mobile",
+    "filter_desktop": "Desktop",
     "filter_label": "Filter",
     "website": "Website",
     "code": "Code",
@@ -73,7 +74,8 @@
     "role_label": "Role",
     "close_details": "Close project details",
     "previous_image": "Previous image",
-    "next_image": "Next image"
+    "next_image": "Next image",
+    "download_desktop": "Download for desktop"
   },
   "about": {
     "role": "Full Stack Engineer",

@@ -15,6 +15,7 @@ import {
   Github,
   Maximize2,
   MonitorPlay,
+  Download,
 } from "lucide-react";
 import Image from "next/image";
 import { useLanguage } from "../../context/LanguageContext";
@@ -29,6 +30,7 @@ interface BentoFeatureCardProps {
   gitUrl?: string;
   previewUrl?: string;
   demoUrl?: string;
+  desktopUrl?: string;
   tecnologias: string[];
   onDetails: () => void;
 }
@@ -53,6 +55,7 @@ export default function BentoFeatureCard({
   gitUrl,
   previewUrl,
   demoUrl,
+  desktopUrl,
   tecnologias,
   onDetails,
 }: BentoFeatureCardProps) {
@@ -207,6 +210,18 @@ export default function BentoFeatureCard({
           </div>
 
           <div className="mt-6 flex flex-wrap items-center gap-2">
+            {desktopUrl && (
+              <a
+                href={desktopUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={stop}
+                className="inline-flex items-center gap-1.5 rounded-full border border-[#8d62f7] bg-[#2d2044] px-3.5 py-2 text-xs font-semibold text-[#f6c744] transition-colors hover:border-[#f6c744]"
+              >
+                <Download className="h-3.5 w-3.5" />
+                {t("projects.download_desktop")}
+              </a>
+            )}
             {demoUrl && (
               <a
                 href={demoUrl}
