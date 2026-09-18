@@ -25,7 +25,7 @@ import {
 import { useLanguage } from "../../context/LanguageContext";
 import { getProjectImages } from "../../lib/projectImages";
 
-type ProjectFilter = "All" | "Web" | "Mobile" | "Desktop";
+type ProjectFilter = "All" | "Web" | "Mobile" | "Desktop" | "Data & APIs";
 type Project = (typeof projectData)[number];
 
 // Tiered layout for the highlights grid (calm mosaic):
@@ -142,6 +142,67 @@ const projectData = [
       "PostgreSQL",
       "Stripe",
       "Cloudflare R2",
+    ],
+  },
+  {
+    id: 16,
+    highlight: true,
+    title: "Leet-Clock",
+    descriptionEn:
+      "A smart Flutter alarm clock that turns waking up into a cognitive routine: the alarm only stops after a flashcard or LeetCode-style challenge is solved.",
+    descriptionPt:
+      "Despertador inteligente em Flutter que transforma o despertar em uma rotina cognitiva: o alarme só é desligado após resolver um desafio de flashcard ou no estilo LeetCode.",
+    roleEn:
+      "Built the cross-platform application in Flutter and Dart, combining native alarm scheduling, local notifications, time-zone handling, and locally persisted alarm preferences. Added an isolated Docker-backed runner for programming challenges.",
+    rolePt:
+      "Desenvolvi o aplicativo multiplataforma em Flutter e Dart, unindo agendamento nativo de alarmes, notificações locais, tratamento de fuso horário e preferências persistidas no dispositivo. Também adicionei um runner isolado em Docker para os desafios de programação.",
+    impactEn:
+      "Turns the first moment of the day into an intentional study habit instead of a dismiss-and-snooze interaction.",
+    impactPt:
+      "Transforma o primeiro momento do dia em um hábito intencional de estudo, em vez de apenas desligar e adiar o alarme.",
+    image: "/images/projects/leet-clock.png",
+    images: ["/images/projects/leet-clock.png"],
+    tag: ["All", "Mobile"],
+    gitUrl: "https://github.com/CalvinSoares/Leet-Clock",
+    tecnologias: [
+      "Flutter",
+      "Dart",
+      "Local Notifications",
+      "SharedPreferences",
+      "Timezone",
+      "Docker",
+      "Python",
+    ],
+  },
+  {
+    id: 17,
+    highlight: true,
+    title: "Payment Integrity Control Tower",
+    descriptionEn:
+      "An agnostic payment-integrity platform for ingesting events, reconciling settlements, investigating exceptions, and materializing trustworthy operational analytics.",
+    descriptionPt:
+      "Plataforma agnóstica de integridade de pagamentos para ingerir eventos, reconciliar settlements, investigar exceções e materializar análises operacionais confiáveis.",
+    roleEn:
+      "Designed a Python and FastAPI control tower around canonical events, transactional inbox/outbox, idempotent workers, immutable ledger records, and auditable reconciliation. Kept PostgreSQL as the financial source of truth, with Parquet, DuckDB, and MinIO as rebuildable analytical projections.",
+    rolePt:
+      "Projetei uma control tower em Python e FastAPI com eventos canônicos, inbox/outbox transacional, workers idempotentes, registros imutáveis de ledger e reconciliação auditável. Mantive o PostgreSQL como fonte financeira de verdade, com Parquet, DuckDB e MinIO como projeções analíticas reconstruíveis.",
+    impactEn:
+      "Makes payment operations explainable end-to-end while separating critical transactional data from analytical workloads.",
+    impactPt:
+      "Torna a operação de pagamentos explicável de ponta a ponta, separando dados transacionais críticos das cargas analíticas.",
+    image: "/images/projects/payment-control-tower.svg",
+    images: ["/images/projects/payment-control-tower.svg"],
+    tag: ["All", "Data & APIs"],
+    gitUrl: "https://github.com/CalvinSoares/payment-integrity-control-tower",
+    tecnologias: [
+      "Python 3.12",
+      "FastAPI",
+      "PostgreSQL",
+      "Docker Compose",
+      "DuckDB",
+      "Parquet",
+      "MinIO",
+      "Uvicorn",
     ],
   },
   {
@@ -541,6 +602,7 @@ export default function ProjectsSection() {
     Web: t("projects.filter_web"),
     Mobile: t("projects.filter_mobile"),
     Desktop: t("projects.filter_desktop"),
+    "Data & APIs": t("projects.filter_data"),
   };
 
   // Hydrate the filter from the URL on mount so a shared/reloaded link keeps
@@ -551,6 +613,7 @@ export default function ProjectsSection() {
       fromUrl === "Web" ||
       fromUrl === "Mobile" ||
       fromUrl === "Desktop" ||
+      fromUrl === "Data & APIs" ||
       fromUrl === "All"
     ) {
       setTag(fromUrl);
@@ -668,6 +731,12 @@ export default function ProjectsSection() {
                   isSelected={tag === "Desktop"}
                   className="w-24 justify-center text-[13px]"
                 />
+                <ProjectTag
+                  onClick={() => handleTagChange("Data & APIs")}
+                  name={filterLabels["Data & APIs"]}
+                  isSelected={tag === "Data & APIs"}
+                  className="w-24 justify-center text-[13px]"
+                />
               </div>
             </div>
           </motion.aside>
@@ -746,6 +815,12 @@ export default function ProjectsSection() {
                     isSelected={tag === "Desktop"}
                     className="min-w-[84px]"
                   />
+                  <ProjectTag
+                    onClick={() => handleTagChange("Data & APIs")}
+                    name={filterLabels["Data & APIs"]}
+                    isSelected={tag === "Data & APIs"}
+                    className="min-w-[116px]"
+                  />
                 </motion.div>
               )}
             </AnimatePresence>
@@ -798,6 +873,12 @@ export default function ProjectsSection() {
                     onClick={() => handleTagChange("Desktop")}
                   >
                     {filterLabels.Desktop}
+                  </button>
+                  <button
+                    className={`text-left px-4 py-2 rounded-md ${tag === "Data & APIs" ? "bg-[#583ebc] text-white" : "text-white hover:bg-[#2a2a2a]"}`}
+                    onClick={() => handleTagChange("Data & APIs")}
+                  >
+                    {filterLabels["Data & APIs"]}
                   </button>
                 </div>
               </motion.div>

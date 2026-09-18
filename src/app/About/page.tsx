@@ -83,6 +83,12 @@ export default function AboutSection() {
     { name: "PostgreSQL", icon: "/postgresql.svg" },
     { name: "Git", icon: "/git.svg" },
     { name: "Docker", icon: "/docker.svg" },
+    { name: "Flutter", icon: "/flutter.svg", className: "brightness-0 invert" },
+    { name: "Dart", icon: "/dart.svg", className: "brightness-0 invert" },
+    { name: "Python", icon: "/python.svg", className: "brightness-0 invert" },
+    { name: "FastAPI", icon: "/fastapi.svg", className: "brightness-0 invert" },
+    { name: "DuckDB", icon: "/duckdb.svg", className: "brightness-0 invert" },
+    { name: "MinIO", icon: "/minio.svg", className: "brightness-0 invert" },
     { name: "Jest", icon: "/jest.svg" },
   ];
   const skillsRowA = [...skills, ...skills];
@@ -418,7 +424,7 @@ export default function AboutSection() {
                       alt={skill.name}
                       width={20}
                       height={20}
-                      className="h-5 w-5 object-contain"
+                      className={`h-5 w-5 object-contain ${skill.className ?? ""}`}
                     />
                   </div>
                   <span className="text-sm font-medium">{skill.name}</span>
@@ -441,7 +447,7 @@ export default function AboutSection() {
                       alt={skill.name}
                       width={20}
                       height={20}
-                      className="h-5 w-5 object-contain"
+                      className={`h-5 w-5 object-contain ${skill.className ?? ""}`}
                     />
                   </div>
                   <span className="text-sm font-medium">{skill.name}</span>
